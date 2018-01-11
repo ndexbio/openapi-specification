@@ -63,7 +63,7 @@ paths:
         - Get the current status of the server. 
         - Use this function to check if the server is running and various server properties.
         - The `format` query parameter determines the response to this operation.
-      security: [] 
+      security: []  # Not required
       parameters: 
         - in: query
           name: format
@@ -94,8 +94,7 @@ paths:
       description: |
         - Returns a JSON array of Group objects. 
         - The HTTP request body contains a JSON array of UUIDs which identify which Group objects to fetch.
-      security:
-        - BASIC_AUTH: []
+      security: []  # Not required
       tags:
         - Batch
       requestBody:
@@ -132,7 +131,7 @@ paths:
         - The format which to export is specified using the `exportFormat` property in the request body.
         - The /admin/status?format=full function can be used to get a complete list of importers/exporters the server supports."
         - Returns a JSON object which maps Network UUIDs to ExportTaskIDs.  The taskId can then be used to download the exported file.  Refer to the *Download Exported File by Task UUID* operation.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Batch
@@ -170,7 +169,7 @@ paths:
       summary: Get Aspects of a Network  ***** UNDER DEVELOPMENT
       description: |
         - Returns a CX document containing selected aspects of the Network specified by **networkid** path parameter.  The aspects to return are specified in the POSTed JSON array of aspect names.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Batch
@@ -203,7 +202,7 @@ paths:
       description: |
         - Returns what permissions the authenticated user has on the given network.
         - The response payload is a JSON map in which the keys are network UUIDs and the corresponding values are the highest permission assigned to the authenticated user.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Batch
@@ -240,7 +239,8 @@ paths:
         - The HTTP request body contains a JSON array of UUIDs which identify which Network Summary objects to fetch.
         - This function only returns summaries for public networks if the user is not authenticated, otherwise it returns public and the networks for which the authenticated user has READ permission.
         - The number of POSTed Network UUIDs is limited to 2000.
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Batch
@@ -276,7 +276,7 @@ paths:
       summary: Get Tasks by UUIDs
       description: |
         - Returns an array of Task objects selected by the POSTed JSON array if Task UUIDs.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Batch
@@ -311,8 +311,7 @@ paths:
       description: |
         - Returns a JSON array of User objects. 
         - The HTTP request body contains a JSON array of UUIDs which identify which User objects to fetch.
-      security:
-        - BASIC_AUTH: []
+      security: []  # Not required
       tags:
         - Batch
       requestBody:
@@ -356,7 +355,7 @@ paths:
         - Returns an error if:
           - the `groupName` property is not specified or already in use
           - the user is not authenticated
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Group
@@ -386,8 +385,7 @@ paths:
       description: |
         - Retrieves the group specified by **groupid** (i.e. Group UUID).
         - Returns an error if the group is not found.
-      security:
-        - BASIC_AUTH: []
+      security: []  # Not required
       tags:
         - Group
       parameters:
@@ -409,7 +407,7 @@ paths:
         - Returns an error if:
           - the group is not found
           - the user is not the owner of the network set
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Group
@@ -435,7 +433,7 @@ paths:
         - Returns an error if:
           - the roup is not found
           - the authenticated user does not have authorization to delete the group
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Group
@@ -455,7 +453,8 @@ paths:
       description: |
         - Retrieves members of the group associated with the **groupid** path parameter.
         - The **type** query parameter can filter which membership types are returned.  All membership types are returned if this query param is omitted.
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Group
@@ -511,7 +510,7 @@ paths:
           - any path or query parameter is omitted
           - the authenticated user does not have Admin permissions for the group
           - the change would leave the group without an Admin member
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Group
@@ -536,7 +535,7 @@ paths:
           - the group does not exist
           - the authenticated user is not authorized to edit this group
           - removing the member would leave the group without an Admin member
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Group
@@ -564,7 +563,7 @@ paths:
         - Using **permission=**, **start=** and **size=** query parameters:
           - Returns network permissions for the specified group.
           - The returned JSON object contains key/value pairs,where the key is the network UUID and the value is the corresponding permission.
-      security:
+      security:  # Required : Set to more restrictive authentication rule
         - BASIC_AUTH: []
       tags:
         - Group
@@ -623,7 +622,7 @@ paths:
       description: |
         - Create a network from CX data
         - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -655,7 +654,8 @@ paths:
         - This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.
         ___
         **Note: This operation is backward compatible with the V1.3 API. To use it as such, the Server base path {Version} must be toggled to 'rest'.**
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Network
@@ -683,7 +683,7 @@ paths:
           - the CX data is not provided
           - the UUID does not correspond to an existing network on the NDEx server for which the authenticated user owns or for which has WRITE permission
           - the CX data is larger than the maximum size of a network the current NDEX server allows.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -710,7 +710,7 @@ paths:
         - Deletes the network specified by networkid. 
         - There is no method to undo a deletion, so care should be exercised.  
         - The specified network must be owned by the authenticated user.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -737,7 +737,7 @@ paths:
           - the **networkid** does not correspond to an existing network
           ---
         **Note: The access key function must be enabled in order to return a key.** Refer to *Disable/enable Access Key on Network* operation.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -772,7 +772,7 @@ paths:
         - Errors if:
           - The caller is not the owner of this network.
           - the **networkid** does not correspond to an existing network
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -804,7 +804,8 @@ paths:
       description: |
         - Returns the CX metadata collection of the network specified by **networkid**.
         - Errors if the **networkid** does not correspond to an existing network.
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Network
@@ -837,7 +838,8 @@ paths:
         - Returns a JSON array of CX elements from the aspect specified by the  **aspectName** path parameter from the network specified by networkid.
         - The size parameter is optional, and by default the server will return all elements of this aspect.
         - Errors if the **networkid** does not correspond to an existing network
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Network
@@ -866,7 +868,8 @@ paths:
       description: |
         - Returns the CX metadata for the specified aspect of the network specified by **networkid**.
         - Errors if the **networkid** does not correspond to an existing network
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Network
@@ -908,10 +911,8 @@ paths:
       description: |
         - Updates aspects of the network specified by **networkid**. 
         - Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
-      tags:
-        - Network
       parameters:
         - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
@@ -934,7 +935,7 @@ paths:
       description: |
         - Creates a clone of the network specified by networkid (UUID )into the signed in user's account. 
         - The URL of the cloned network is returned to the client.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -965,7 +966,7 @@ paths:
           - `name`
           - `description`
           - `version`
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1004,10 +1005,8 @@ paths:
         - Errors if:
           - the authenticated user does not have ADMIN permission to the specified network
           - the **networkid** does not correspond to an existing network
-      security:
+      security:  # Required
         - BASIC_AUTH: []
-      tags:
-        - Network
       parameters:
         - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
@@ -1048,7 +1047,8 @@ paths:
           - the **networkid** does not correspond to an existing network
         ___
         **Note: This operation is backward compatible with the V1.3 API. To use it as such, the Server base path {Version} must be toggled to 'rest'.**
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1078,7 +1078,7 @@ paths:
           - the **networkid** does not correspond to an existing network
         ___
         **Note: This operation is backward compatible with the V1.3 API. To use it as such, the Server base path {Version} must be toggled to 'rest'.**
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1112,7 +1112,8 @@ paths:
         - Errors if:
           - the authenticated user making the request does not have WRITE or ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1138,7 +1139,7 @@ paths:
         - Errors if:
           - the authenticated user does not have ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1167,7 +1168,8 @@ paths:
         - A NetworkSummary object is a subset of a network object.  It is used to convey basic information about a network in this API.
         - Error occurs if the network is not found or the authenticated user does not have read permission for the network.
         - Anonymous users can only access networks with PUBLIC visibility.
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1196,7 +1198,7 @@ paths:
           - `version`
           - `visibility` 
           - and `properties`
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1239,7 +1241,7 @@ paths:
           - `readOnly`
           - `visibility`
           - `showcase`
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network
@@ -1281,7 +1283,7 @@ paths:
         - Returns an error if:
           - the `name` property is not specified
           - the user is not authenticated.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network Set
@@ -1314,8 +1316,7 @@ paths:
         - When the access key query parameter is used:
           - the access key function must be enabled in order to return a key. Refer to *Disable/enable Access Key on Network* operation in this document
           - a status code of 204 (no content) is returned if the access key function for this network set is not enabled.
-      security:
-        - BASIC_AUTH: []
+      security: []  # Not required
       tags:
         - Network Set
       parameters:
@@ -1341,7 +1342,7 @@ paths:
         - Returns an error if:
           - the `name` property is not specified
           - the user is not the owner of the network set.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network Set
@@ -1366,7 +1367,7 @@ paths:
         - Deletes the network set specified by **networksetid**.
         - Returns an error if:
           - the user is not the owner of the nework set.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network Set
@@ -1390,7 +1391,7 @@ paths:
           - the network set does not exist
           - the member to add does not exist
           - the user is not the owner of the network set
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network Set
@@ -1418,7 +1419,7 @@ paths:
           - the network set does not exist
           - the network member to delete does not exist
           - the user is not the owner of the network set
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Network Set
@@ -1446,10 +1447,8 @@ paths:
         - An error is returned if:
           - the network set does not exist
           - the user is not the owner of the network set
-      security:
+      security:  # Required
         - BASIC_AUTH: []
-      tags:
-        - Network Set
       parameters:
           - $ref: '#/components/parameters/NetworkSetIdPath'    
       requestBody:
@@ -1525,7 +1524,7 @@ paths:
             - `permission` - filter by READ / WRITE network permission
             - `includeGroups` - filter by user's group permission
             - `accountName` - filter by network owner
-      security:
+      security:  # Optional
         - {}
         - BASIC_AUTH: []
       tags:
@@ -1591,7 +1590,8 @@ paths:
       description: |
         - Returns an array of Network Summary objects, and returns the total number of objects found that meet the search criterion.
         - The `searchString` property contains the search query text. Wildcard characters permitted.
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Search
@@ -1765,7 +1765,8 @@ paths:
         - Returns an array of User objects, and returns the total number of objects found that meet the search criterion.
         - The search criterion is found in the request body's `searchString` property.
         - Wildcard characters are valid in `searchString`.
-      security:
+      security:  # Optional
+        - {}
         - BASIC_AUTH: []
       tags:
         - Search
@@ -1808,7 +1809,7 @@ paths:
         - An error is returned if:
           - the task does not exist
           - the authenticated user does not own the specified task
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Task
@@ -1847,7 +1848,7 @@ paths:
         - An error is returned if:
           - the task does not exist
           - the authenticated user does not own the specified task
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Task
@@ -1874,7 +1875,7 @@ paths:
         - An error is returned if:
           - the task does not exist
           - the authenticated user does not own the specified task
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Task
@@ -1898,7 +1899,7 @@ paths:
         - An error is returned if:
           - the task does not exist
           - the authenticated user does not own the specified task
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - Task
@@ -1936,7 +1937,7 @@ paths:
         Option 2 - Using **type=**, **start=** and **size=** query parameters:
         - Returns those groups for which the authenticated user has the specified membership type.
         - The **type** query parameter contains the membership types upon which to filter.  If it is omitted, all membership types will be returned.
-      security:
+      security:  # Required : Set to more restrictive authentication rule
         - BASIC_AUTH: []
       tags:
         - User
@@ -1988,8 +1989,7 @@ paths:
       summary: Get All Network Sets Owned by a User
       description: |
         - Returns a list of *Network Set* objects owned by the user identified in the **userid** path parameter.
-      security:
-        - BASIC_AUTH: []
+      security: []  # Not required
       tags:
         - User
       parameters:
@@ -2017,7 +2017,7 @@ paths:
           - the user owns
           - the networks are shared with the user directly
         - **Userid** path parameter must be an authenticated user's UUID
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - User
@@ -2047,7 +2047,7 @@ paths:
         - Returns the permissions assigned to the authenticated user for the specified **networkId**.
         - Maps the **networkId** UUID to the highest permission assigned to the authenticated user.
         - If the **directonly=** query parameter is set to true, permissions granted through groups are not included in the result. The default value is false.
-      security:
+      security:  # Required
         - BASIC_AUTH: []
       tags:
         - User
