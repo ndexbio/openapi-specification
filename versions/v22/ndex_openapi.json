@@ -1097,6 +1097,7 @@
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
+        "tags" : [ "Network" ],
         "parameters" : [ {
           "$ref" : "#/components/parameters/NetworkIdPath"
         } ],
@@ -1213,6 +1214,7 @@
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
+        "tags" : [ "Network" ],
         "parameters" : [ {
           "$ref" : "#/components/parameters/NetworkIdPath"
         } ],
@@ -1718,6 +1720,7 @@
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
+        "tags" : [ "Network" ],
         "parameters" : [ {
           "$ref" : "#/components/parameters/NetworkSetIdPath"
         } ],

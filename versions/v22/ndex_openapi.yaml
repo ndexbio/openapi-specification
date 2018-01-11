@@ -913,6 +913,8 @@ paths:
         - Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.
       security:  # Required
         - BASIC_AUTH: []
+      tags:
+        - Network
       parameters:
         - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
@@ -1007,6 +1009,8 @@ paths:
           - the **networkid** does not correspond to an existing network
       security:  # Required
         - BASIC_AUTH: []
+      tags:
+        - Network
       parameters:
         - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
@@ -1449,6 +1453,8 @@ paths:
           - the user is not the owner of the network set
       security:  # Required
         - BASIC_AUTH: []
+      tags:
+        - Network
       parameters:
           - $ref: '#/components/parameters/NetworkSetIdPath'    
       requestBody:
