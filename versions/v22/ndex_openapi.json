@@ -2287,6 +2287,14 @@
                   "format" : "binary"
                 }
               }
+            },
+            "headers" : {
+              "Access-Control-Expose-Headers" : {
+                "schema" : {
+                  "type" : "string",
+                  "default" : "Content-Description"
+                }
+              }
             }
           },
           "401" : {

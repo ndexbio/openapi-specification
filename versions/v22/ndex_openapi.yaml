@@ -1925,6 +1925,11 @@ paths:
               schema:
                 type: string
                 format: binary
+          headers:
+            Access-Control-Expose-Headers: 
+              schema:
+                type: string
+                default: Content-Description
         '401':
           $ref: '#/components/responses/401-response'
         '404':
