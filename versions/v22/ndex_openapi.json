@@ -1528,7 +1528,7 @@
     "/networkset" : {
       "post" : {
         "summary" : "Create a Network Set",
-        "description" : "- Creates a new network set.\n- A URL link associated with the newly created network set is returned in the response body upon successful completion. \n- The network set's UUID is a component of this URL and corresponds to the **networksetid** parameter used in subsequent Get/Put/Delete network set operations.\n- Returns an error if:\n  - the `name` property is not specified\n  - the user is not authenticated.\n",
+        "description" : "- Creates a new network set.\n- A URL link associated with the newly created network set is returned in the response body upon successful completion. \n- The network set's UUID is a component of this URL and corresponds to the **networksetid** parameter used in subsequent Get/Put/Delete network set operations.\n- Returns an error when:\n  - the `name` property is not specified\n  - the user is not authenticated.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1568,7 +1568,7 @@
     "/networkset/{networksetid}" : {
       "get" : {
         "summary" : "Get a Network Set",
-        "description" : "- Retrieves the network set specified by **networksetid** (i.e. UUID of the network set).\n- An optional access key query parameter allows any user to have read access to this network regardless if that user has READ privilege on this network.\n- When the access key query parameter is used:\n  - the access key function must be enabled in order to return a key. Refer to *Disable/enable Access Key on Network* operation in this document\n  - a status code of 204 (no content) is returned if the access key function for this network set is not enabled.\n",
+        "description" : "- Retrieves the network set specified by **networksetid** (i.e. UUID of the network set).\n- An optional access key query parameter allows any user to have read access to this network set regardless if that user has READ privilege on this network.\n- When the access key query parameter is used:\n  - the access key function must be enabled in order to return a key. Refer to *Disable/enable Access Key on Network* operation in this document\n  - a status code of 204 (no content) is returned if the access key function for this network set is not enabled.\n",
         "security" : [ ],
         "tags" : [ "Network Set" ],
         "parameters" : [ {
@@ -1597,7 +1597,7 @@
       },
       "put" : {
         "summary" : "Update a Network Set",
-        "description" : "- Updates the network set specified by **networksetid**.\n- Modifies the specified network set's `name` and `description` properties.\n- Returns an error if:\n  - the `name` property is not specified\n  - the user is not the owner of the network set.\n",
+        "description" : "- Updates the network set specified by **networksetid**.\n- Modifies the specified network set's `name` and `description` properties.\n- Returns an error when:\n  - the `name` property is not specified\n  - the user is not the owner of the network set.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1628,7 +1628,7 @@
       },
       "delete" : {
         "summary" : "Delete a Network Set",
-        "description" : "- Deletes the network set specified by **networksetid**.\n- Returns an error if:\n  - the user is not the owner of the nework set.\n",
+        "description" : "- Deletes the network set specified by **networksetid**.\n- Returns an error when:\n  - the user is not the owner of the nework set.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],

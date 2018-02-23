@@ -1284,7 +1284,7 @@ paths:
         - Creates a new network set.
         - A URL link associated with the newly created network set is returned in the response body upon successful completion. 
         - The network set's UUID is a component of this URL and corresponds to the **networksetid** parameter used in subsequent Get/Put/Delete network set operations.
-        - Returns an error if:
+        - Returns an error when:
           - the `name` property is not specified
           - the user is not authenticated.
       security:  # Required
@@ -1316,7 +1316,7 @@ paths:
       summary: Get a Network Set
       description: |
         - Retrieves the network set specified by **networksetid** (i.e. UUID of the network set).
-        - An optional access key query parameter allows any user to have read access to this network regardless if that user has READ privilege on this network.
+        - An optional access key query parameter allows any user to have read access to this network set regardless if that user has READ privilege on this network.
         - When the access key query parameter is used:
           - the access key function must be enabled in order to return a key. Refer to *Disable/enable Access Key on Network* operation in this document
           - a status code of 204 (no content) is returned if the access key function for this network set is not enabled.
@@ -1343,7 +1343,7 @@ paths:
       description: |
         - Updates the network set specified by **networksetid**.
         - Modifies the specified network set's `name` and `description` properties.
-        - Returns an error if:
+        - Returns an error when:
           - the `name` property is not specified
           - the user is not the owner of the network set.
       security:  # Required
@@ -1369,7 +1369,7 @@ paths:
       summary: Delete a Network Set
       description: |
         - Deletes the network set specified by **networksetid**.
-        - Returns an error if:
+        - Returns an error when:
           - the user is not the owner of the nework set.
       security:  # Required
         - BASIC_AUTH: []
