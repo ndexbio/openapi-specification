@@ -50,7 +50,7 @@ tags:
   - name: User 
   - name: v1.3 API methods
     description: |
-      `Server base path {Version} must be toggled to 'rest' to use these methods.`
+      <p style="color:red;>Server base path {Version} must be toggled to 'rest' to use these methods.</p>
   
 paths:
 
@@ -1315,8 +1315,8 @@ paths:
     get:
       summary: Get a Network Set
       description: |
-        - Retrieves the network set specified by **networksetid** (i.e. UUID of the network set).
-        - An optional access key query parameter allows any user to have read access to this network set regardless if that user has READ privilege on this network.
+        - Retrieves the network set specified by the **networksetid** (i.e. UUID) path parameter.
+        - An optional access key query parameter allows any user to have read access to this network set regardless if that user has the READ privilege on this network.
         - When the access key query parameter is used:
           - the access key function must be enabled in order to return a key. Refer to *Disable/enable Access Key on Network* operation in this document
           - a status code of 204 (no content) is returned if the access key function for this network set is not enabled.
@@ -1341,8 +1341,8 @@ paths:
     put:
       summary: Update a Network Set
       description: |
-        - Updates the network set specified by **networksetid**.
-        - Modifies the specified network set's `name` and `description` properties.
+        - Updates the network set specified by the **networksetid** (i.e. UUID) path parameter.
+        - Modifies the specified network set's `name` and `description` properties only.
         - Returns an error when:
           - the `name` property is not specified
           - the user is not the owner of the network set.
@@ -1368,7 +1368,7 @@ paths:
     delete:
       summary: Delete a Network Set
       description: |
-        - Deletes the network set specified by **networksetid**.
+        - Deletes the network set specified by the **networksetid** (i.e. UUID) path parameter.
         - Returns an error when:
           - the user is not the owner of the nework set.
       security:  # Required
@@ -1390,7 +1390,7 @@ paths:
       summary: Add Networks to Network Set
       description: |
         - Adds networks to a network set.
-        - The HTTP request body holds an array containing **networksetid**'s (UUID's) that denote the network members to add.
+        - The HTTP request body holds an array containing **networksetid**'s (UUID's) that denote the networks to add.
         - An error is returned if:
           - the network set does not exist
           - the member to add does not exist
@@ -1418,7 +1418,7 @@ paths:
       summary: Delete Networks from Network Set
       description: |
         - Deletes one or more networks belonging to a network set.
-        - The HTTP request body holds an array containing **networkSetId**'s (UUID's) that denote the network members to delete.
+        - The HTTP request body holds an array containing **networkSetId**'s (UUID's) that denote the networks to delete.
         - An error is returned if:
           - the network set does not exist
           - the network member to delete does not exist
@@ -2976,7 +2976,7 @@ components:
       description: "NOT FOUND: The object that was requested does not exist."
     ###
     500-response:
-      description: "ERROR: Catch-all bucket for http status codes not defined for this operation. Check for malformed or incorrect parameters or request body objects."
+      description: "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request body objects."
       content:
         application/json:
           schema:
