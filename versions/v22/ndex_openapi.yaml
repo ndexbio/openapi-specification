@@ -60,17 +60,17 @@ paths:
         - Admin
       summary: Get Server Status
       description: |
-        - Get the current status of the server. 
-        - Use this function to check if the server is running and various server properties.
-        - The `format` query parameter determines the response to this operation.
+        - Get the current operational status of an NDEx server. 
+        - Use this function to check if the NDEx server is running or stopped, as well as list important server properties.
+        - The `format` query parameter determines what properties are listed by this operation.
       security: []  # Not required
       parameters: 
         - in: query
           name: format
           description: >
             Determines the server information to be returned.
-              * **standard** - returns properties such as server version and build. The *AdminStatusResponsePayload-Standard* schema Model is used.
-              * **full** - returns standard properties as well as additional properties.  The *AdminStatusResponsePayload-Full* schema Model is used.
+              * **standard** - returns properties such as server version and build. The *AdminStatusStandardSchema* Model is returned.
+              * **full** - returns standard properties as well as additional properties.  The *AdminStatusFullSchema* Model is returned.
           schema:
             type: string
             enum: [standard, full]
