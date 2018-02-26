@@ -48,7 +48,7 @@
     "name" : "User"
   }, {
     "name" : "v1.3 API methods",
-    "description" : "Server base path {Version} must be toggled to 'rest' to use these methods.\n"
+    "description" : "`Server base path {Version} must be toggled to 'rest' to use these methods.`\n"
   } ],
   "paths" : {
     "/admin/status" : {
