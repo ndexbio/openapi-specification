@@ -12,8 +12,15 @@ info:
     
     Except for this OpenAPI document, all references to the API, sources and documentation are copyrighted: *© 2013-2017, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).
     
-    
-    This OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use.  View or download the official NDEx API documentation using the link below.
+  
+    `Due to limitations in Swagger-UI 3.10.0 "Try It Out" feature, the following operations are not included in this document.  They will be added when the multipart/form-data file upload feature is  supported.`
+  
+      - `Post: /network`
+      - `Put: /network/{networkid}`
+      - `Post: /network/asCX`     
+      - `Put: /network/{networkid}/asCX`
+      
+    This OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.
 
 externalDocs:
   description: "Official NDEx API documentation"
@@ -50,7 +57,7 @@ tags:
   - name: User 
   - name: v1.3 API methods
     description: |
-      <p style="color:red;>Server base path {Version} must be toggled to 'rest' to use these methods.</p>
+      Server base path {Version} must be toggled to 'rest' to use these methods.
   
 paths:
 
@@ -616,35 +623,38 @@ paths:
         '500':
           $ref: '#/components/responses/500-response'
 
-  /network:
-    post:
-      summary: Create a CX Network  ***** UNDER DEVELOPMENT
-      description: |
-        - Create a network from CX data
-        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-      security:  # Required
-        - BASIC_AUTH: []
-      tags:
-        - Network
-      requestBody:
-        content:
-          application/json:
-            schema:
-                $ref: '#/components/schemas/CX_NetworkObjectSchema'
-      responses:
-        '201':
-          description: "OK: Operation successful."
-          content:
-            text/plain:
-              schema:
-                description: | 
-                  - URL of newly created network is returned.  
-                  - The network UUID is appended to the returned URL."
-                type: string
-        '401':
-          $ref: '#/components/responses/401-response'
-        '500':
-          $ref: '#/components/responses/500-response'
+###########################################################################
+#    Swagger-UI does not support file uploads at this time; Issue #3641   #
+########################################################################### 
+#  /network:
+#    post:
+#      summary: Create a CX Network
+#      description: |
+#        - Create a network from CX data
+#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
+#      security:  # Required
+#        - BASIC_AUTH: []
+#      tags:
+#        - Network
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#                $ref: '#/components/schemas/CX_NetworkObjectSchema'
+#      responses:
+#        '201':
+#          description: "OK: Operation successful."
+#          content:
+#            text/plain:
+#              schema:
+#                description: | 
+#                 - URL of newly created network is returned.  
+#                  - The network UUID is appended to the returned URL."
+#                type: string
+#        '401':
+#          $ref: '#/components/responses/401-response'
+#        '500':
+#          $ref: '#/components/responses/500-response'
   
   /network/{networkid}:
     get:
@@ -673,36 +683,39 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
-    put:
-      summary: Update a Network  ***** UNDER DEVELOPMENT
-      description: |
-        - Update the specified network with new content, based on CX data.
-        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-        - Errors if:
-          - the CX data is not provided
-          - the UUID does not correspond to an existing network on the NDEx server for which the authenticated user owns or for which has WRITE permission
-          - the CX data is larger than the maximum size of a network the current NDEX server allows.
-      security:  # Required
-        - BASIC_AUTH: []
-      tags:
-        - Network
-      parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CX_NetworkStreamSchema'
-      responses:
-        '200':
-          description: "OK: Operation successful."
-        '204':
-          description: "OK: Access key not returned. Function is disabled."
-        '404':
-          $ref: '#/components/responses/404-response'
-        '500':
-          $ref: '#/components/responses/500-response'
+
+###########################################################################
+#    Swagger-UI does not support file uploads at this time; Issue #3641   #
+###########################################################################               
+#    put:
+#      summary: Update a Network
+#      description: |
+#        - Update the specified network with new content, based on CX data.
+#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
+#        - Errors if:
+#          - the CX data is not provided
+#          - the UUID does not correspond to an existing network on the NDEx server for which the authenticated user owns or for which has WRITE permission
+#          - the CX data is larger than the maximum size of a network the current NDEX server allows.
+#      security:  # Required
+#        - BASIC_AUTH: []
+#      tags:
+#        - Network
+#      parameters:
+#        - $ref: '#/components/parameters/NetworkIdPath'
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/CX_NetworkStreamSchema'
+#      responses:
+#        '200':
+#          description: "OK: Operation successful."
+#        '204':
+#          description: "OK: Access key not returned. Function is disabled."
+#        '404':
+#          $ref: '#/components/responses/404-response'
+#        '500':
+#          $ref: '#/components/responses/500-response'
           
     delete:
       summary: Delete a network
@@ -2090,41 +2103,44 @@ paths:
         '500':
           $ref: '#/components/responses/500-response'
 
-  /network/asCX:
-    post:
-      summary: Create a CX Network  ***** UNDER DEVELOPMENT
-      description: |
-        - Creates a new NDEx network.
-        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-        - An error occurs when:
-          - the CX data does not specify a `name` property
-          - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server
-        - The UUID for the new network is returned.
-        ___
-        **Server base path {Version} must be toggled to 'rest' to use this method.**
-      security:
-        - BASIC_AUTH: []
-      tags:
-        - v1.3 API methods
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CX_NetworkObjectSchema'
-      responses:
-        '201':
-          description: "OK: Operation successful."
-          content:
-            text/plain:
-              schema:
-                description: | 
-                  - URL of newly created network is returned.  
-                  - The network UUID is appended to the returned URL."
-                type: string
-        '401':
-          $ref: '#/components/responses/401-response'
-        '500':
-          $ref: '#/components/responses/500-response'
+###########################################################################
+#    Swagger-UI does not support file uploads at this time; Issue #3641   #
+###########################################################################     
+#  /network/asCX:
+#    post:
+#      summary: Create a CX Network  ***** UNDER DEVELOPMENT
+#      description: |
+#        - Creates a new NDEx network.
+#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
+#        - An error occurs when:
+#          - the CX data does not specify a `name` property
+#          - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server
+#        - The UUID for the new network is returned.
+#        ___
+#        **Server base path {Version} must be toggled to 'rest' to use this method.**
+#      security:
+#        - BASIC_AUTH: []
+#      tags:
+#        - v1.3 API methods
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/CX_NetworkObjectSchema'
+#      responses:
+#        '201':
+#          description: "OK: Operation successful."
+#          content:
+#            text/plain:
+#              schema:
+#                description: | 
+#                  - URL of newly created network is returned.  
+#                   - The network UUID is appended to the returned URL."
+#                type: string
+#        '401':
+#          $ref: '#/components/responses/401-response'
+#        '500':
+#          $ref: '#/components/responses/500-response'
           
   /network/{networkid}/asCX:
     get:
@@ -2153,38 +2169,41 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
-    put:
-      summary: Update an Entire Network as CX  ***** UNDER DEVELOPMENT
-      description: |
-        - Update the specified network with new content.
-        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-        - An error occurs when:
-          - the CX data is not provided
-          - the UUID does not exist
-          - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server
-        - The UUID for the new network is returned.
-        ___
-        **Server base path {Version} must be toggled to 'rest' to use this method.**
-      security:
-        - BASIC_AUTH: []
-      tags:
-        - v1.3 API methods
-      parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CX_NetworkStreamSchema'
-      responses:
-        '204':
-          description: "OK: Operation successful."
-          $ref: '#/components/responses/404-response'
-        '404':
-          $ref: '#/components/responses/404-response'
-        '500':
-          $ref: '#/components/responses/500-response'
+
+###########################################################################
+#    Swagger-UI does not support file uploads at this time; Issue #3641   #
+###########################################################################          
+#    put:
+#      summary: Update an Entire Network as CX
+#      description: |
+#        - Update the specified network with new content.
+#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
+#        - An error occurs when:
+#          - the CX data is not provided
+#          - the UUID does not exist
+#          - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server
+#        - The UUID for the new network is returned.
+#        ___
+#        **Server base path {Version} must be toggled to 'rest' to use this method.**
+#      security:
+#        - BASIC_AUTH: []
+#      tags:
+#        - v1.3 API methods
+#      parameters:
+#      - $ref: '#/components/parameters/NetworkIdPath'
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/CX_NetworkStreamSchema'
+#      responses:
+#        '204':
+#          description: "OK: Operation successful."
+#          $ref: '#/components/responses/404-response'
+#        '404':
+#          $ref: '#/components/responses/404-response'
+#        '500':
+#          $ref: '#/components/responses/500-response'
 
   /network/search/{skipBlocks}/{blockSize}: 
     post:
@@ -2982,6 +3001,9 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponseSchema'
    
+############################################################################################
+#    Swagger-UI does not support Google OAuth (i.e. ConnectID) at this time; Issue #3641   #
+############################################################################################  
   securitySchemes:
     BASIC_AUTH:
       type: http

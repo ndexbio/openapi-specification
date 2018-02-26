@@ -3,7 +3,7 @@
   "info" : {
     "version" : "2.2.0",
     "title" : "NDEx 2.2 REST API",
-    "description" : "This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.\n\nWhen this document used in conjunction with [Swagger-UI](https://github.com/swagger-api/swagger-ui) or [SwaggerHub](https://swaggerhub.com/), developers can interactively \"try out\" NDEx API requests, thus providing them with a low-level API and debugging environment as they create language-specific program libraries. Furthermore, this document is written in an world-standard file format employed by code, testing and document generating [applications and tools](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).\n\nExcept for this OpenAPI document, all references to the API, sources and documentation are copyrighted: *© 2013-2017, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).\n\nThis OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use.  View or download the official NDEx API documentation using the link below.\n"
+    "description" : "This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.\n\nWhen this document used in conjunction with [Swagger-UI](https://github.com/swagger-api/swagger-ui) or [SwaggerHub](https://swaggerhub.com/), developers can interactively \"try out\" NDEx API requests, thus providing them with a low-level API and debugging environment as they create language-specific program libraries. Furthermore, this document is written in an world-standard file format employed by code, testing and document generating [applications and tools](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).\n\nExcept for this OpenAPI document, all references to the API, sources and documentation are copyrighted: *© 2013-2017, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).\n\n`Due to limitations in Swagger-UI 3.10.0 \"Try It Out\" feature, the following operations are not included in this document.  They will be added when the multipart/form-data file upload feature is  supported.`\n\n  - `Post: /network`\n  - `Put: /network/{networkid}`\n  - `Post: /network/asCX`     \n  - `Put: /network/{networkid}/asCX`\n  \nThis OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.\n"
   },
   "externalDocs" : {
     "description" : "Official NDEx API documentation",
@@ -48,7 +48,7 @@
     "name" : "User"
   }, {
     "name" : "v1.3 API methods",
-    "description" : "<p style=\"color:red;>Server base path {Version} must be toggled to 'rest' to use these methods.</p>\n"
+    "description" : "Server base path {Version} must be toggled to 'rest' to use these methods.\n"
   } ],
   "paths" : {
     "/admin/status" : {
@@ -736,44 +736,6 @@
         }
       }
     },
-    "/network" : {
-      "post" : {
-        "summary" : "Create a CX Network  ***** UNDER DEVELOPMENT",
-        "description" : "- Create a network from CX data\n- The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
-        "tags" : [ "Network" ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CX_NetworkObjectSchema"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "201" : {
-            "description" : "OK: Operation successful.",
-            "content" : {
-              "text/plain" : {
-                "schema" : {
-                  "description" : "- URL of newly created network is returned.  \n- The network UUID is appended to the returned URL.\"\n",
-                  "type" : "string"
-                }
-              }
-            }
-          },
-          "401" : {
-            "$ref" : "#/components/responses/401-response"
-          },
-          "500" : {
-            "$ref" : "#/components/responses/500-response"
-          }
-        }
-      }
-    },
     "/network/{networkid}" : {
       "get" : {
         "summary" : "Get Complete Network in CX Format",
@@ -797,40 +759,6 @@
                 }
               }
             }
-          },
-          "404" : {
-            "$ref" : "#/components/responses/404-response"
-          },
-          "500" : {
-            "$ref" : "#/components/responses/500-response"
-          }
-        }
-      },
-      "put" : {
-        "summary" : "Update a Network  ***** UNDER DEVELOPMENT",
-        "description" : "- Update the specified network with new content, based on CX data.\n- The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.\n- Errors if:\n  - the CX data is not provided\n  - the UUID does not correspond to an existing network on the NDEx server for which the authenticated user owns or for which has WRITE permission\n  - the CX data is larger than the maximum size of a network the current NDEX server allows.\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
-        "tags" : [ "Network" ],
-        "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CX_NetworkStreamSchema"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK: Operation successful."
-          },
-          "204" : {
-            "description" : "OK: Access key not returned. Function is disabled."
           },
           "404" : {
             "$ref" : "#/components/responses/404-response"
@@ -2503,44 +2431,6 @@
         }
       }
     },
-    "/network/asCX" : {
-      "post" : {
-        "summary" : "Create a CX Network  ***** UNDER DEVELOPMENT",
-        "description" : "- Creates a new NDEx network.\n- The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.\n- An error occurs when:\n  - the CX data does not specify a `name` property\n  - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server\n- The UUID for the new network is returned.\n___\n**Server base path {Version} must be toggled to 'rest' to use this method.**\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
-        "tags" : [ "v1.3 API methods" ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CX_NetworkObjectSchema"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "201" : {
-            "description" : "OK: Operation successful.",
-            "content" : {
-              "text/plain" : {
-                "schema" : {
-                  "description" : "- URL of newly created network is returned.  \n- The network UUID is appended to the returned URL.\"\n",
-                  "type" : "string"
-                }
-              }
-            }
-          },
-          "401" : {
-            "$ref" : "#/components/responses/401-response"
-          },
-          "500" : {
-            "$ref" : "#/components/responses/500-response"
-          }
-        }
-      }
-    },
     "/network/{networkid}/asCX" : {
       "get" : {
         "summary" : "Get a Network as CX",
@@ -2562,38 +2452,6 @@
                 }
               }
             }
-          },
-          "404" : {
-            "$ref" : "#/components/responses/404-response"
-          },
-          "500" : {
-            "$ref" : "#/components/responses/500-response"
-          }
-        }
-      },
-      "put" : {
-        "summary" : "Update an Entire Network as CX  ***** UNDER DEVELOPMENT",
-        "description" : "- Update the specified network with new content.\n- The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.\n- An error occurs when:\n  - the CX data is not provided\n  - the UUID does not exist\n  - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server\n- The UUID for the new network is returned.\n___\n**Server base path {Version} must be toggled to 'rest' to use this method.**\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
-        "tags" : [ "v1.3 API methods" ],
-        "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CX_NetworkStreamSchema"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "204" : {
-            "description" : "OK: Operation successful.",
-            "$ref" : "#/components/responses/404-response"
           },
           "404" : {
             "$ref" : "#/components/responses/404-response"
