@@ -1296,7 +1296,7 @@ paths:
       description: |
         - Creates a new network set.
         - A URL link associated with the newly created network set is returned in the response body upon successful completion. 
-        - The network set's UUID is a component of this URL and corresponds to the **networksetid** parameter used in subsequent Get/Put/Delete network set operations.
+        - The network set's UUID is a component of this URL and corresponds to the **networksetid** path parameter used in subsequent Get/Put/Delete network set operations.
         - Returns an error when:
           - the `name` property is not specified
           - the user is not authenticated.
@@ -1328,11 +1328,14 @@ paths:
     get:
       summary: Get a Network Set
       description: |
-        - Retrieves the network set specified by the **networksetid** (i.e. UUID) path parameter.
+        - Retrieves the network set specified by the **networksetid** (UUID) path parameter.
         - An optional access key query parameter allows any user to have read access to this network set regardless if that user has the READ privilege on this network.
         - When the access key query parameter is used:
-          - the access key function must be enabled in order to return a key. Refer to *Disable/enable Access Key on Network* operation in this document
+          - the access key function must be enabled in order to return a key. Refer to *Disable/enable Access Key on Network* operation under the Network tag.
           - a status code of 204 (no content) is returned if the access key function for this network set is not enabled.
+        - Returns an error when:
+          - the access key function for this network set is not enabled
+          - the network set does not exist.
       security: []  # Not required
       tags:
         - Network Set
@@ -1348,17 +1351,20 @@ paths:
                 $ref: '#/components/schemas/NetworkSetObjectSchema'
         '204':
           description: "ERROR - Access key not enabled for this network set."
+        '404':
+          $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
   
     put:
       summary: Update a Network Set
       description: |
-        - Updates the network set specified by the **networksetid** (i.e. UUID) path parameter.
+        - Updates the network set specified by the **networksetid** (UUID) path parameter.
         - Modifies the specified network set's `name` and `description` properties only.
         - Returns an error when:
           - the `name` property is not specified
-          - the user is not the owner of the network set.
+          - the user is not the owner of the network set
+          - the network set does not exist.
       security:  # Required
         - BASIC_AUTH: []
       tags:
@@ -1375,15 +1381,18 @@ paths:
           $ref: '#/components/responses/204-response'
         '401':
           $ref: '#/components/responses/401-response'
+        '404':
+          $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
           
     delete:
       summary: Delete a Network Set
       description: |
-        - Deletes the network set specified by the **networksetid** (i.e. UUID) path parameter.
+        - Deletes the network set specified by the **networksetid** (UUID) path parameter.
         - Returns an error when:
-          - the user is not the owner of the nework set.
+          - the user is not the owner of the nework set
+          - the network set does not exist.
       security:  # Required
         - BASIC_AUTH: []
       tags:
@@ -1395,6 +1404,8 @@ paths:
           $ref: '#/components/responses/204-response'
         '401':
           $ref: '#/components/responses/401-response'
+        '404':
+          $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
 
@@ -1403,7 +1414,7 @@ paths:
       summary: Add Networks to Network Set
       description: |
         - Adds networks to a network set.
-        - The HTTP request body holds an array containing **networksetid**'s (UUID's) that denote the networks to add.
+        - The HTTP request body holds an array containing one or more **networksetid**'s (UUID's) that denote the networks to add.
         - An error is returned if:
           - the network set does not exist
           - the member to add does not exist
@@ -1424,6 +1435,8 @@ paths:
           $ref: '#/components/responses/201-response'
         '401':
           $ref: '#/components/responses/401-response'
+        '404':
+          $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
           
@@ -1431,7 +1444,7 @@ paths:
       summary: Delete Networks from Network Set
       description: |
         - Deletes one or more networks belonging to a network set.
-        - The HTTP request body holds an array containing **networkSetId**'s (UUID's) that denote the networks to delete.
+        - The HTTP request body holds an array containing one or more **networkSetId**'s (UUID's) that denote the networks to delete.
         - An error is returned if:
           - the network set does not exist
           - the network member to delete does not exist
@@ -1452,6 +1465,8 @@ paths:
           $ref: '#/components/responses/204-response'
         '401':
           $ref: '#/components/responses/401-response'
+        '404':
+          $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
     
@@ -2611,6 +2626,7 @@ components:
         name:
           type: string
         description:
+          description: "Description field"
           type: string
         ownerId:
           description: "Owner's UUID"
@@ -2632,6 +2648,10 @@ components:
           nullable: true
         properties:
           type: object
+          properties:
+            reference:
+              description: "Reference field"
+              type: string
         externalId:
           description: "This object's UUID"
           type: string
