@@ -2169,8 +2169,7 @@ paths:
         - Networks designated as read-only are cached by NDEX for rapid access.
         ___
         **Server base path {Version} must be toggled to 'rest' to use this method.**
-      security:
-        - BASIC_AUTH: []
+      security: []  # Not required
       tags:
         - v1.3 API methods
       parameters:
@@ -2234,8 +2233,7 @@ paths:
             - `accountName` - filter by network owner
         ___
         **Server base path {Version} must be toggled to 'rest' to use this method.**
-      security:
-        - BASIC_AUTH: []
+      security: []  # Not required
       tags:
         - v1.3 API methods
       parameters:
@@ -2347,6 +2345,37 @@ components:
                     type: string
         message:
           type: string
+    ###
+    AspectFragmentCxAspectsSchema:
+      type: object
+      description: "Contains attributes that describe the state of the network when it was last stored in NDEx. IT IS NOT THE SAME AS THE STATUS ASPECT."
+      properties:
+        externalId:
+          type: string
+          format: uuid
+        creationTime:
+          type: string
+          format: date-time
+        modificationTime:
+          type: string
+          format: date-time
+        visibility:
+          type: string
+          enum:
+          - PUBLIC
+          - PRIVATE
+        published:
+          type: boolean
+        nodeCount:
+          type: number
+        edgeCount:
+          type: number
+        owner:
+          type: string
+        nextServerURI:
+          type: string
+        readOnly:
+          type: boolean
     ###
     AspectFragmentEdgeAttributesSchema:
       type: object
@@ -2462,6 +2491,8 @@ components:
           description: "List of aspect edge attribute objects"
           items:
             $ref: '#/components/schemas/AspectFragmentEdgeAttributesSchema'
+        ndexStatus:
+          $ref: '#/components/schemas/AspectFragmentCxAspectsSchema'
         status:
           type: array
           description: "A complete CX stream ends with a status aspect object."

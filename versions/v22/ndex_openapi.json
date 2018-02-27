@@ -2453,9 +2453,7 @@
       "get" : {
         "summary" : "Get a Network as CX",
         "description" : "- Returns all CX aspects of the entire network specified by **networkid** as a CX stream.  \n- This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.\n- Clients may read incrementally and abort the operation if the in-memory structures become to large.\n- Networks designated as read-only are cached by NDEX for rapid access.\n___\n**Server base path {Version} must be toggled to 'rest' to use this method.**\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
+        "security" : [ ],
         "tags" : [ "v1.3 API methods" ],
         "parameters" : [ {
           "$ref" : "#/components/parameters/NetworkIdPath"
@@ -2484,9 +2482,7 @@
       "post" : {
         "summary" : "Find a Network by Search",
         "description" : "- Returns an array of NetworkSummary objects and the total hit count of the search.\n- The `searchString` property contains the search query text. Wildcard characters permitted.\n- The search can be constrained using these optional properties:\n    - `permission` - filter by READ / WRITE network permission\n    - `includeGroups` - filter by user's group permission\n    - `accountName` - filter by network owner\n___\n**Server base path {Version} must be toggled to 'rest' to use this method.**\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
+        "security" : [ ],
         "tags" : [ "v1.3 API methods" ],
         "parameters" : [ {
           "$ref" : "#/components/parameters/SkipBlocksPath"
@@ -2635,6 +2631,46 @@
           },
           "message" : {
             "type" : "string"
+          }
+        }
+      },
+      "AspectFragmentCxAspectsSchema" : {
+        "type" : "object",
+        "description" : "Contains attributes that describe the state of the network when it was last stored in NDEx. IT IS NOT THE SAME AS THE STATUS ASPECT.",
+        "properties" : {
+          "externalId" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "creationTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "modificationTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "visibility" : {
+            "type" : "string",
+            "enum" : [ "PUBLIC", "PRIVATE" ]
+          },
+          "published" : {
+            "type" : "boolean"
+          },
+          "nodeCount" : {
+            "type" : "number"
+          },
+          "edgeCount" : {
+            "type" : "number"
+          },
+          "owner" : {
+            "type" : "string"
+          },
+          "nextServerURI" : {
+            "type" : "string"
+          },
+          "readOnly" : {
+            "type" : "boolean"
           }
         }
       },
@@ -2787,6 +2823,9 @@
             "items" : {
               "$ref" : "#/components/schemas/AspectFragmentEdgeAttributesSchema"
             }
+          },
+          "ndexStatus" : {
+            "$ref" : "#/components/schemas/AspectFragmentCxAspectsSchema"
           },
           "status" : {
             "type" : "array",
