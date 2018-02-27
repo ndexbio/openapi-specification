@@ -1482,7 +1482,7 @@ paths:
       security:  # Required
         - BASIC_AUTH: []
       tags:
-        - Network
+        - Network Set
       parameters:
           - $ref: '#/components/parameters/NetworkSetIdPath'    
       requestBody:

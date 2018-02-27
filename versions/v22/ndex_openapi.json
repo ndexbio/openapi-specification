@@ -1663,7 +1663,7 @@
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
-        "tags" : [ "Network" ],
+        "tags" : [ "Network Set" ],
         "parameters" : [ {
           "$ref" : "#/components/parameters/NetworkSetIdPath"
         } ],
@@ -3452,4 +3452,3 @@
       "202-response" : {
         "description" : "OK: Operation successful."
       },
-    
