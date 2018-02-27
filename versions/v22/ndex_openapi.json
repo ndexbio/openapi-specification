@@ -3,7 +3,7 @@
   "info" : {
     "version" : "2.2.0",
     "title" : "NDEx 2.2 REST API",
-    "description" : "This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.\n\nWhen this document is used in conjunction with [Swagger-UI](https://github.com/swagger-api/swagger-ui) or [SwaggerHub](https://swaggerhub.com/), developers can interactively \"try out\" NDEx API requests, thus providing them with a low-level API and debugging environment as they create language-specific program libraries. Furthermore, this document is written in an world-standard file format employed by code, testing and document generating [applications and tools](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).\n\nExcept for this OpenAPI document, all references to the API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).\n\n`Google's OAuth2 security is presently not supported. Moreover, the following NDEx API operations are not included in this document. They will be added when Swagger-UI supports their respective feature dependencies.`\n\n  - `Post: /network`\n  - `Put: /network/{networkid}`\n  - `Post: /network/asCX`     \n  - `Put: /network/{networkid}/asCX`\n  \nThis OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.\n"
+    "description" : "This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.\n\nWhen this document is used in conjunction with [Swagger-UI](https://github.com/swagger-api/swagger-ui) or [SwaggerHub](https://swaggerhub.com/), developers can interactively \"try out\" NDEx API requests, thus providing them with a low-level API and debugging environment as they create language-specific program libraries. Furthermore, this document is written in an world-standard file format employed by code, testing and document generating [applications and tools](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).\n\nExcept for this OpenAPI document, all references to the API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).\n\n`Google's OAuth2 security is presently not supported. Moreover, the following NDEx API operations are not included in this document. They will be added as Swagger-UI allows.`\n\n  - `Post: /network`\n  - `Put: /network/{networkid}`\n  - `Post: /network/asCX`     \n  - `Put: /network/{networkid}/asCX`\n  \nThis OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.\n"
   },
   "externalDocs" : {
     "description" : "Official NDEx API documentation",
@@ -11,6 +11,9 @@
   },
   "servers" : [ {
     "url" : "http://test.ndexbio.org/v2",
+    "description" : "NDEx test server"
+  }, {
+    "url" : "http://test.ndexbio.org/rest",
     "description" : "NDEx test server"
   }, {
     "url" : "http://www.ndexbio.org/v2",
@@ -1659,7 +1662,7 @@
     "/networkset/{networksetid}/systemproperty" : {
       "put" : {
         "summary" : "Update Network Set System Properties",
-        "description" : "- Sets the system properties for the network set specified by **networksetid** (i.e. UUID).\n- At this time, the only supported system property is `showcase`.\n- An error is returned if:\n  - the network set does not exist\n  - the user is not the owner of the network set\n",
+        "description" : "- Sets the system properties for the network set specified by **networksetid** (UUID).\n- At this time, the only supported system property is `showcase`.\n- An error is returned if:\n  - the network set does not exist\n  - the user is not the owner of the network set\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -2523,7 +2526,18 @@
         },
         "responses" : {
           "200" : {
-            "$ref" : "#/components/responses/200-response"
+            "description" : "OK: Operation successful.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "description" : "List of Network Summary objects",
+                  "items" : {
+                    "$ref" : "#/components/schemas/NetworkSummaryObjectSchema"
+                  }
+                }
+              }
+            }
           },
           "401" : {
             "$ref" : "#/components/responses/401-response"
@@ -2689,17 +2703,20 @@
         "description" : "Metadata Aspect object",
         "properties" : {
           "consistencyGroup" : {
-            "description" : "An integer identifier shared by aspects to indicate that they are mutually consistent.",
-            "type" : "number"
+            "type" : "number",
+            "description" : "An integer identifier shared by aspects to indicate that they are mutually consistent."
           },
           "elementCount" : {
-            "type" : "number"
+            "type" : "number",
+            "description" : "number of elements in this aspect"
           },
           "idCounter" : {
-            "type" : "number"
+            "type" : "number",
+            "description" : "Required if the aspect exports IDs for its aspect elements. It        denotes the highest ID represented in the aspect or any of the aspect's     previous versions"
           },
           "lastUpdate" : {
-            "type" : "number"
+            "type" : "string",
+            "format" : "date-time"
           },
           "name" : {
             "type" : "string",
@@ -2708,17 +2725,20 @@
           "properties" : {
             "type" : "array",
             "items" : {
-              "type" : "object"
+              "type" : "object",
+              "description" : "An aspect-defined property list of name-value pairs"
             }
           },
           "version" : {
-            "type" : "string"
+            "type" : "string",
+            "description" : "required in pre-metadata"
           }
         },
         "required" : [ "name", "consistencyGroup", "properties" ]
       },
       "CX_NetworkObjectSchema" : {
         "type" : "object",
+        "description" : "CX Aspect object",
         "properties" : {
           "numberVerification" : {
             "type" : "array",
@@ -2770,16 +2790,17 @@
           },
           "status" : {
             "type" : "array",
-            "description" : "List of status aspect object",
+            "description" : "A complete CX stream ends with a status aspect object.",
             "items" : {
               "type" : "object",
-              "description" : "Indicates whether the CX stream was successfully generated by the source.",
               "properties" : {
                 "error" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Holds the error message if an error occured when generating the CX document."
                 },
                 "success" : {
-                  "type" : "string"
+                  "type" : "boolean",
+                  "description" : "Set to true if the CX document is successfully generated by the source."
                 }
               }
             }
@@ -2816,7 +2837,8 @@
             "type" : "string"
           },
           "timeStamp" : {
-            "type" : "string"
+            "type" : "string",
+            "format" : "date-time"
           }
         }
       },
@@ -3452,3 +3474,31 @@
       "202-response" : {
         "description" : "OK: Operation successful."
       },
+      "204-response" : {
+        "description" : "OK: Operation successful.  (no payload content)"
+      },
+      "401-response" : {
+        "description" : "UNAUTHORIZED: Check that you are authenticated (i.e. Signed In) and have the  credentials to access that NDEx object."
+      },
+      "404-response" : {
+        "description" : "NOT FOUND: The object that was requested does not exist."
+      },
+      "500-response" : {
+        "description" : "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request body objects.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/ErrorResponseSchema"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "BASIC_AUTH" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  }
+}
