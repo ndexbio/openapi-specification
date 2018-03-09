@@ -17,4 +17,4 @@ formatted file for its input.
 
 A number of code editors exist to create OpenAPI documents using YAML. Specifically,
 the Open-source [swagger-api/swagger-editor](https://github.com/swagger-api/swagger-editor) 
- was used to develop the OpenAPI documents contained herein.
+ was used to develop these OpenAPI documents.
