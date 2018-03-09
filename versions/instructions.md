@@ -6,9 +6,8 @@ NDEx 2.2 REST API.
 Each folder contains a YAML definition file and its counterpart JSON definition file.
 
 ```
-YAML files are more easily understood by humans, and thus are maintained as 
-a source code representation of the OpenAPI document. JSON files,
-on the other hand, are more easier processed by computers.`
+YAML files are more easily understood by humans, and thus are maintained as a source code representation
+of the OpenAPI document. JSON files, on the other hand, are more easier processed by computers.
 ```
 
 
