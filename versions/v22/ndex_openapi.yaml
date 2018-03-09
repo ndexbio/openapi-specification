@@ -1,7 +1,7 @@
 openapi: 3.0.0
 
 info:
-  version: 2.2.0
+  version: 2.2.1
   title: "NDEx 2.2 REST API"
   description: >
     This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.
