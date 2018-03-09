@@ -12,7 +12,7 @@ Foundation [OpenAPI Initiative (OAI)](https://www.openapis.org/) governing body.
 code generation, testing and document creation tools, many of which are listed 
  [here](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).
  
- The OpenAPI documents contained in this repositoty are specifically used in conjunction with the
+ The OpenAPI documents contained in this repository are specifically used in conjunction with the
  [ndextools/openapi-reader](https://github.com/ndextools/openapi-reader) application, so that NDEx developers
  can interactively view and  "try out" NDEx API requests, thus providing them with a low-level API 
  and debugging environment as they create language-specific software applications and program libraries.
@@ -22,6 +22,6 @@ are copyrighted: *© 2013-2018, The Regents of the University of California, The
 All rights reserved.*  Please abide with their
 [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).
 
-These OpenAPI documents are produced independent of the NDEx Project, and it may not reflect the 
-most current API in use. The currently supported REST API and supportting documentation is found at the
-[NDEx Project website](http://www.home.ndexbio.org/index/).
+The OpenAPI documents contained herein are produced independently of the NDEx Project, and they may not 
+reflect the most current API in use. The currently supported REST API and supportting documentation 
+is found at the [NDEx Project website](http://www.home.ndexbio.org/index/).
