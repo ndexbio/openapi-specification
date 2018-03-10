@@ -1,9 +1,9 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "version" : "2.2.1",
+    "version" : "2.2.0",
     "title" : "NDEx 2.2 REST API",
-    "description" : "This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.\n\nWhen this document is used in conjunction with [Swagger-UI](https://github.com/swagger-api/swagger-ui) or [SwaggerHub](https://swaggerhub.com/), developers can interactively \"try out\" NDEx API requests, thus providing them with a low-level API and debugging environment as they create language-specific program libraries. Furthermore, this document is written in an world-standard file format employed by code, testing and document generating [applications and tools](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).\n\nExcept for this OpenAPI document, all references to the API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).\n\n`Google's OAuth2 security is presently not supported. Moreover, the following NDEx API operations are not included in this document. They will be added as Swagger-UI allows.`\n\n  - `Post: /network`\n  - `Put: /network/{networkid}`\n  - `Post: /network/asCX`     \n  - `Put: /network/{networkid}/asCX`\n  \nThis OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.\n"
+    "description" : "This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.\n\nAll references to the NDEx REST API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, this [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader is copyrighted by *Smartbear Software*, and its Apache version 2.0 Open-source license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).  \n\n  \nThis OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.\n"
   },
   "externalDocs" : {
     "description" : "Official NDEx API documentation",
@@ -334,7 +334,7 @@
     "/batch/task" : {
       "post" : {
         "summary" : "Get Tasks by UUIDs",
-        "description" : "- Returns an array of Task objects selected by the POSTed JSON array if Task UUIDs.\n",
+        "description" : "- Returns an array of Task objects selected by the POSTed JSON array of Task UUIDs.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -427,7 +427,7 @@
     "/group" : {
       "post" : {
         "summary" : "Create a Group",
-        "description" : "- Creates a new group owned by the authenticated user.\n- The following properties can be set for the new group\n  - `groupName`\n  - `image`\n  - `website`\n  - `description`\n- A URL link associated with the newly created group is returned in the response body upon successful completion. \n- The group's UUID is a component of this URL and corresponds to the **groupid** parameter used in subsequent Get/Put/Delete group operations.\n- Returns an error if:\n  - the `groupName` property is not specified or already in use\n  - the user is not authenticated\n",
+        "description" : "- Creates a new group owned by the authenticated user.\n- The following properties can be set for the new group\n  - `groupName`\n  - `image`\n  - `website`\n  - `description`\n- A URL link associated with the newly created group is returned in the response body upon successful completion. \n- The group's UUID is a component of this URL and corresponds to the **groupid** parameter used in subsequent Get/Put/Delete group operations.\n- Returns an error if\n  - the `groupName` property is not specified or already in use\n  - the user is not authenticated\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -436,7 +436,34 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/GroupObjectSchema"
+                "type" : "object",
+                "description" : "Group object",
+                "properties" : {
+                  "properties" : {
+                    "type" : "object"
+                  },
+                  "groupName" : {
+                    "type" : "string"
+                  },
+                  "image" : {
+                    "type" : "string",
+                    "format" : "url",
+                    "nullable" : true,
+                    "default" : null
+                  },
+                  "website" : {
+                    "type" : "string",
+                    "format" : "url",
+                    "nullable" : true,
+                    "default" : null
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "nullable" : true,
+                    "default" : null
+                  }
+                },
+                "required" : [ "groupName" ]
               }
             }
           }
@@ -503,7 +530,34 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/GroupObjectSchema"
+                "type" : "object",
+                "description" : "Group object",
+                "properties" : {
+                  "properties" : {
+                    "type" : "object"
+                  },
+                  "groupName" : {
+                    "type" : "string"
+                  },
+                  "image" : {
+                    "type" : "string",
+                    "format" : "url",
+                    "nullable" : true,
+                    "default" : null
+                  },
+                  "website" : {
+                    "type" : "string",
+                    "format" : "url",
+                    "nullable" : true,
+                    "default" : null
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "nullable" : true,
+                    "default" : null
+                  }
+                },
+                "required" : [ "groupName" ]
               }
             }
           }
@@ -1731,20 +1785,22 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
-                  "description" : "Response payload object",
+                  "description" : "SearchResult object",
                   "properties" : {
                     "resultList" : {
-                      "description" : "List of Group objects",
                       "type" : "array",
+                      "description" : "List of Group objects",
                       "items" : {
                         "$ref" : "#/components/schemas/GroupObjectSchema"
                       }
                     },
                     "numFound" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "number of Group objects meeting search criterion"
                     },
                     "start" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "index to first Group object returned relative to numFound"
                     }
                   }
                 }
@@ -1809,17 +1865,19 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
-                  "description" : "Response payload object",
+                  "description" : "SearchResult object",
                   "properties" : {
                     "numFound" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "number of NetworkSummary objects meeting search criterion"
                     },
                     "start" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "index to first NetworkSummary object returned relative to numFound"
                     },
                     "networks" : {
-                      "description" : "List of Network Summary objects",
                       "type" : "array",
+                      "description" : "List of NetworkSummary objects",
                       "items" : {
                         "$ref" : "#/components/schemas/NetworkSummaryObjectSchema"
                       }
@@ -1864,17 +1922,19 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
-                  "description" : "Response payload object",
+                  "description" : "SearchResult object",
                   "properties" : {
                     "numFound" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "number of NetworkSummary objects meeting search criterion"
                     },
                     "start" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "index to first NetworkSummary object relative to numFound"
                     },
                     "networks" : {
-                      "description" : "List of Network Summary objects",
                       "type" : "array",
+                      "description" : "List of NetworkSummary objects",
                       "items" : {
                         "$ref" : "#/components/schemas/NetworkSummaryObjectSchema"
                       }
@@ -1998,7 +2058,7 @@
                 "properties" : {
                   "searchString" : {
                     "type" : "string",
-                    "description" : "- (Required) A whitespace delimited string of search terms which are matched against:\n  1. the controlled vocabulary terms used in the network\n  2. node names in the network\n- A set of initial nodes is selected based on association with matched terms or simple name match.\n- The query selects edges based on traversal from those initial nodes.\n"
+                    "description" : "- (Required) A whitespace delimited string of search terms which are matched against\n  1. the controlled vocabulary terms used in the network\n  2. node names in the network\n- A set of initial nodes is selected based on association with matched terms or simple name match.\n- The query selects edges based on traversal from those initial nodes.\n"
                   },
                   "searchDepth" : {
                     "type" : "number",
@@ -2030,7 +2090,16 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CX_NetworkStreamSchema"
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "description" : "CX_Network object",
+                      "items" : {
+                        "$ref" : "#/components/schemas/CX_NetworkObjectSchema"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -2070,20 +2139,22 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
-                  "description" : "Response payload object",
+                  "description" : "SearchResult object",
                   "properties" : {
                     "resultList" : {
-                      "description" : "List of User objects",
                       "type" : "array",
+                      "description" : "List of User objects",
                       "items" : {
                         "$ref" : "#/components/schemas/UserObjectSchema"
                       }
                     },
                     "numFound" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "number of User objects meeting search criterion"
                     },
                     "start" : {
-                      "type" : "number"
+                      "type" : "number",
+                      "description" : "index to first User object returned relative to numFound"
                     }
                   }
                 }

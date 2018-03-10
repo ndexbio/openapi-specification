@@ -274,7 +274,7 @@ paths:
     post:
       summary: Get Tasks by UUIDs
       description: |
-        - Returns an array of Task objects selected by the POSTed JSON array if Task UUIDs.
+        - Returns an array of Task objects selected by the POSTed JSON array of Task UUIDs.
       security:  # Required
         - BASIC_AUTH: []
       tags:
@@ -351,7 +351,7 @@ paths:
           - `description`
         - A URL link associated with the newly created group is returned in the response body upon successful completion.
         - The group's UUID is a component of this URL and corresponds to the **groupid** parameter used in subsequent Get/Put/Delete group operations.
-        - Returns an error if:
+        - Returns an error if
           - the `groupName` property is not specified or already in use
           - the user is not authenticated
       security:  # Required
@@ -362,7 +362,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GroupObjectSchema'
+              type: object
+              description: Group object
+              properties:
+                properties:
+                  type: object
+                groupName:
+                  type: string
+                image:
+                  type: string
+                  format: url
+                  nullable: true
+                  default: null
+                website:
+                  type: string
+                  format: url
+                  nullable: true
+                  default: null
+                description:
+                  type: string
+                  nullable: true
+                  default: null
+              required:
+              - groupName
       responses:
         '201':
           description: "OK: Operation successful."
@@ -416,7 +438,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/GroupObjectSchema'
+              type: object
+              description: Group object
+              properties:
+                properties:
+                  type: object
+                groupName:
+                  type: string
+                image:
+                  type: string
+                  format: url
+                  nullable: true
+                  default: null
+                website:
+                  type: string
+                  format: url
+                  nullable: true
+                  default: null
+                description:
+                  type: string
+                  nullable: true
+                  default: null
+              required:
+              - groupName
       responses:
         '204':
           $ref: '#/components/responses/204-response'
