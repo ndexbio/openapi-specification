@@ -1756,7 +1756,7 @@ paths:
                 searchString:
                   type: string
                   description: |
-                    - (Required) A whitespace delimited string of search terms which are matched against:
+                    - (Required) A whitespace delimited string of search terms which are matched against
                       1. the controlled vocabulary terms used in the network
                       2. node names in the network
                     - A set of initial nodes is selected based on association with matched terms or simple name match.
@@ -1786,7 +1786,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CX_NetworkStreamSchema'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: "CX_Network object"
+                    items:
+                      $ref: '#/components/schemas/CX_NetworkObjectSchema'
         '500':
           $ref: '#/components/responses/500-response'
 
