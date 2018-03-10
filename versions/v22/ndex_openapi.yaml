@@ -1525,17 +1525,19 @@ paths:
             application/json:
               schema:
                 type: object
-                description: "Response payload object"
+                description: "SearchResult object"
                 properties:
                   resultList:
-                    description: List of Group objects
                     type: array
+                    description: "List of Group objects"
                     items:
                       $ref: '#/components/schemas/GroupObjectSchema'
                   numFound:
                     type: number
+                    description: "number of Group objects meeting search criterion"
                   start:
                     type: number
+                    description: "index to first Group object returned relative to numFound"
         '500':
           $ref: '#/components/responses/500-response'
 
@@ -1596,15 +1598,17 @@ paths:
             application/json:
               schema:
                 type: object
-                description: "Response payload object"
+                description: "SearchResult object"
                 properties:
                   numFound:
                     type: number
+                    description: "number of NetworkSummary objects meeting search criterion"
                   start:
                     type: number
+                    description: "index to first NetworkSummary object returned relative to numFound"
                   networks:
-                    description: List of Network Summary objects
                     type: array
+                    description: "List of NetworkSummary objects"
                     items:
                       $ref: '#/components/schemas/NetworkSummaryObjectSchema'
         '500':
@@ -1640,13 +1644,13 @@ paths:
                 properties:
                   numFound:
                     type: number
-                    description: "number of NetworkSummary objects meeting search criteria"
+                    description: "number of NetworkSummary objects meeting search criterion"
                   start:
                     type: number
                     description: "index to first NetworkSummary object relative to numFound"
                   networks:
                     type: array
-                    description: List of NetworkSummary objects
+                    description: "List of NetworkSummary objects"
                     items:
                       $ref: '#/components/schemas/NetworkSummaryObjectSchema'
         '500':
@@ -1817,15 +1821,15 @@ paths:
                 properties:
                   resultList:
                     type: array
-                    description: List of User objects
+                    description: "List of User objects"
                     items:
                       $ref: '#/components/schemas/UserObjectSchema'
                   numFound:
                     type: number
-                    description: "number of User objects meeting search criteria"
+                    description: "number of User objects meeting search criterion"
                   start:
                     type: number
-                    description: "index to first user object returned relative to numFound"
+                    description: "index to first User object returned relative to numFound"
         '500':
           $ref: '#/components/responses/500-response'
 
