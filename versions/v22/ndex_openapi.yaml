@@ -1,25 +1,15 @@
 openapi: 3.0.0
 
 info:
-  version: 2.2.1
+  version: "2.2.0"
   title: "NDEx 2.2 REST API"
   description: >
     This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.
-    
-    
-    When this document is used in conjunction with [Swagger-UI](https://github.com/swagger-api/swagger-ui) or [SwaggerHub](https://swaggerhub.com/), developers can interactively "try out" NDEx API requests, thus providing them with a low-level API and debugging environment as they create language-specific program libraries. Furthermore, this document is written in an world-standard file format employed by code, testing and document generating [applications and tools](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).
-    
-    
-    Except for this OpenAPI document, all references to the API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).
-    
-  
-    `Google's OAuth2 security is presently not supported. Moreover, the following NDEx API operations are not included in this document. They will be added as Swagger-UI allows.`
-  
-      - `Post: /network`
-      - `Put: /network/{networkid}`
-      - `Post: /network/asCX`     
-      - `Put: /network/{networkid}/asCX`
-      
+
+
+    All references to the NDEx REST API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, this [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader is copyrighted by *Smartbear Software*, and its Apache version 2.0 Open-source license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).
+
+
     This OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.
 
 externalDocs:
@@ -47,7 +37,7 @@ servers:
           - 'v2'
           - 'rest'
         default: v2
-        
+
 tags:
   - name: Admin
   - name: Batch
@@ -56,11 +46,11 @@ tags:
   - name: Network Set
   - name: Search
   - name: Task
-  - name: User 
+  - name: User
   - name: v1.3 API methods
     description: |
       `Server base path {Version} must be toggled to 'rest' to use these methods.`
-  
+
 paths:
 
   /admin/status:
@@ -69,11 +59,11 @@ paths:
         - Admin
       summary: Get Server Status
       description: |
-        - Get the current operational status of an NDEx server. 
+        - Get the current operational status of an NDEx server.
         - Use this function to check if the NDEx server is running or stopped, as well as list important server properties.
         - The `format` query parameter determines what properties are listed by this operation.
       security: []  # Not required
-      parameters: 
+      parameters:
         - in: query
           name: format
           description: >
@@ -96,12 +86,12 @@ paths:
                   - $ref: '#/components/schemas/AdminStatusFullSchema'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
   /batch/group:
     post:
       summary: Get Groups by UUIDs
       description: |
-        - Returns a JSON array of Group objects. 
+        - Returns a JSON array of Group objects.
         - The HTTP request body contains a JSON array of UUIDs which identify which Group objects to fetch.
       security: []  # Not required
       tags:
@@ -244,7 +234,7 @@ paths:
     post:
       summary: Get Network Summaries of UUIDs
       description: |
-        - Returns a JSON array of Network Summary objects. 
+        - Returns a JSON array of Network Summary objects.
         - The HTTP request body contains a JSON array of UUIDs which identify which Network Summary objects to fetch.
         - This function only returns summaries for public networks if the user is not authenticated, otherwise it returns public and the networks for which the authenticated user has READ permission.
         - The number of POSTed Network UUIDs is limited to 2000.
@@ -318,7 +308,7 @@ paths:
     post:
       summary: Get Users by UUIDs
       description: |
-        - Returns a JSON array of User objects. 
+        - Returns a JSON array of User objects.
         - The HTTP request body contains a JSON array of UUIDs which identify which User objects to fetch.
       security: []  # Not required
       tags:
@@ -359,7 +349,7 @@ paths:
           - `image`
           - `website`
           - `description`
-        - A URL link associated with the newly created group is returned in the response body upon successful completion. 
+        - A URL link associated with the newly created group is returned in the response body upon successful completion.
         - The group's UUID is a component of this URL and corresponds to the **groupid** parameter used in subsequent Get/Put/Delete group operations.
         - Returns an error if:
           - the `groupName` property is not specified or already in use
@@ -387,8 +377,8 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
-  /group/{groupid}:  
+
+  /group/{groupid}:
     get:
       summary: Get a Group
       description: |
@@ -434,7 +424,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-     
+
     delete:
       summary: Delete a Group
       description: |
@@ -476,7 +466,7 @@ paths:
             enum: ["GROUPADMIN", "MEMBER"]
           required: false
         - $ref: '#/components/parameters/StartParam'
-        - $ref: '#/components/parameters/SizeParam'  
+        - $ref: '#/components/parameters/SizeParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -510,7 +500,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-    
+
     put:
       summary: Add or Update a Group Member
       description: |
@@ -535,7 +525,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     delete:
       summary: Remove a Group Member
       description: |
@@ -559,7 +549,7 @@ paths:
         '500':
           $ref: '#/components/responses/500-response'
 
-  /group/{groupid}/permission:  
+  /group/{groupid}/permission:
     get:
       summary: Get Permissions (Two Options)
       description: |
@@ -627,7 +617,7 @@ paths:
 
 ###########################################################################
 #    Swagger-UI does not support file uploads at this time; Issue #3641   #
-########################################################################### 
+###########################################################################
 #  /network:
 #    post:
 #      summary: Create a CX Network
@@ -649,20 +639,20 @@ paths:
 #          content:
 #            text/plain:
 #              schema:
-#                description: | 
-#                 - URL of newly created network is returned.  
+#                description: |
+#                 - URL of newly created network is returned.
 #                  - The network UUID is appended to the returned URL."
 #                type: string
 #        '401':
 #          $ref: '#/components/responses/401-response'
 #        '500':
 #          $ref: '#/components/responses/500-response'
-  
+
   /network/{networkid}:
     get:
       summary: Get Complete Network in CX Format
       description: |
-        - Returns the specified network as CX.  
+        - Returns the specified network as CX.
         - This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.
         ___
         **Note: This operation is backward compatible with the V1.3 API. To use it as such, the Server base path {Version} must be toggled to 'rest'.**
@@ -688,7 +678,7 @@ paths:
 
 ###########################################################################
 #    Swagger-UI does not support file uploads at this time; Issue #3641   #
-###########################################################################               
+###########################################################################
 #    put:
 #      summary: Update a Network
 #      description: |
@@ -718,12 +708,12 @@ paths:
 #          $ref: '#/components/responses/404-response'
 #        '500':
 #          $ref: '#/components/responses/500-response'
-          
+
     delete:
       summary: Delete a network
       description: |
-        - Deletes the network specified by networkid. 
-        - There is no method to undo a deletion, so care should be exercised.  
+        - Deletes the network specified by networkid.
+        - There is no method to undo a deletion, so care should be exercised.
         - The specified network must be owned by the authenticated user.
       security:  # Required
         - BASIC_AUTH: []
@@ -740,7 +730,7 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
- 
+
   /network/{networkid}/accesskey:
     get:
       summary: Get Access Key of Network
@@ -777,7 +767,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     put:
       summary: Disable/Enable Access Key on Network
       description: |
@@ -812,7 +802,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '404':
           $ref: '#/components/responses/404-response'
-        
+
   /network/{networkid}/aspect:
     get:
       summary: Get Network CX Metadata Collection
@@ -876,7 +866,7 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-    
+
   /network/{networkid}/aspect/{aspectName}/metadata:
     get:
       summary: Get Network Aspect Metadata
@@ -919,12 +909,12 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
- 
+
   /network/{networkid}/aspects:
     put:
       summary: Update Network Aspects
       description: |
-        - Updates aspects of the network specified by **networkid**. 
+        - Updates aspects of the network specified by **networkid**.
         - Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.
       security:  # Required
         - BASIC_AUTH: []
@@ -945,12 +935,12 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-  
+
   /network/{networkid}/copy:
     post:
       summary: Clone a Network
       description: |
-        - Creates a clone of the network specified by networkid (UUID )into the signed in user's account. 
+        - Creates a clone of the network specified by networkid (UUID )into the signed in user's account.
         - The URL of the cloned network is returned to the client.
       security:  # Required
         - BASIC_AUTH: []
@@ -1005,7 +995,7 @@ paths:
               example:
                 name: ""
                 description: ""
-                version: "" 
+                version: ""
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -1054,12 +1044,12 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
- 
+
   /network/{networkid}/provenance:
     get:
       summary: Get Network Provenance
       description: |
-        - Returns the Provenance aspect of the network specified by **networkid**.  
+        - Returns the Provenance aspect of the network specified by **networkid**.
         - The returned value is a JSON *ProvenanceEntity* object which in turn contains a tree structure of *ProvenanceEvent* and *ProvenanceEntity* objects that describe the provenance history of the network.
         - Refer to the document [NDEx Provenance History](http://www.home.ndexbio.org/network-provenance-history/) for a detailed desciption of this structure and best practices for its use.
         - Errors if:
@@ -1085,11 +1075,11 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     put:
       summary: Set Network Provenance
       description: |
-        - Updates the Provenance aspect of the network specified by **networkid** to be the *ProvenanceEntity* object of the PUT data.  
+        - Updates the Provenance aspect of the network specified by **networkid** to be the *ProvenanceEntity* object of the PUT data.
         - The *ProvenanceEntity* object is intended to represent the current state and history of the network and to contain a tree structure of *ProvenanceEvent* and *ProvenanceEntity* objects that describe the provenance history.
         - Refer to the document [NDEx Provenance History](http://www.home.ndexbio.org/network-provenance-history/) for a detailed desciption of this structure and best practices for its use.
         - Errors if:
@@ -1121,7 +1111,7 @@ paths:
       summary: Get Network Sample
       description: |
         - Returns a sample subnetwork of the network specified by **networkid**.
-        - The default sample network is created based on an arbitrary selection of 500 edges, created by the NDEx server for networks larger than 500 edges. 
+        - The default sample network is created based on an arbitrary selection of 500 edges, created by the NDEx server for networks larger than 500 edges.
         - Alternatively, if a sample network has been explicitedly stored using **setNetworkSample** request, that sample network will be returned.
         - Returns *ObjectNotFound* exception when:
           - no sample file was found
@@ -1150,11 +1140,11 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     put:
       summary: Set Sample Network
       description: |
-        - Sets the example network for the network specified by **networkid**.  The sample sanple network is specified by the CX data in the request body. 
+        - Sets the example network for the network specified by **networkid**.  The sample sanple network is specified by the CX data in the request body.
         - Errors if:
           - the authenticated user does not have ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
@@ -1183,7 +1173,7 @@ paths:
     get:
       summary: Get a Network Summary
       description: |
-        - Retrieves a NetworkSummary JSON object based on the network specified by **networkId**. 
+        - Retrieves a NetworkSummary JSON object based on the network specified by **networkId**.
         - A NetworkSummary object is a subset of a network object.  It is used to convey basic information about a network in this API.
         - Error occurs if the network is not found or the authenticated user does not have read permission for the network.
         - Anonymous users can only access networks with PUBLIC visibility.
@@ -1206,16 +1196,16 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     put:
       summary: Update Network Profile and Properties
       description: |
         - The JSON request body contains key/value pairs that overwrite the corresponding properties of a given network.
         - at this time, only the following properties of a network can be updated:
-          - `name` 
+          - `name`
           - `description`
           - `version`
-          - `visibility` 
+          - `visibility`
           - and `properties`
       security:  # Required
         - BASIC_AUTH: []
@@ -1249,7 +1239,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-  
+
   /network/{networkid}/systemproperty:
     put:
       summary: Set Network System Properties
@@ -1291,13 +1281,13 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-  
+
   /networkset:
     post:
       summary: Create a Network Set
       description: |
         - Creates a new network set.
-        - A URL link associated with the newly created network set is returned in the response body upon successful completion. 
+        - A URL link associated with the newly created network set is returned in the response body upon successful completion.
         - The network set's UUID is a component of this URL and corresponds to the **networksetid** path parameter used in subsequent Get/Put/Delete network set operations.
         - Returns an error when:
           - the `name` property is not specified
@@ -1325,7 +1315,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-  
+
   /networkset/{networksetid}:
     get:
       summary: Get a Network Set
@@ -1357,7 +1347,7 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-  
+
     put:
       summary: Update a Network Set
       description: |
@@ -1387,7 +1377,7 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     delete:
       summary: Delete a Network Set
       description: |
@@ -1441,7 +1431,7 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     delete:
       summary: Delete Networks from Network Set
       description: |
@@ -1471,7 +1461,7 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-    
+
   /networkset/{networksetid}/systemproperty:
     put:
       summary: "Update Network Set System Properties"
@@ -1486,7 +1476,7 @@ paths:
       tags:
         - Network Set
       parameters:
-          - $ref: '#/components/parameters/NetworkSetIdPath'    
+          - $ref: '#/components/parameters/NetworkSetIdPath'
       requestBody:
         content:
           application/json:
@@ -1508,7 +1498,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-             
+
   /search/group:
     post:
       summary: Search Groups
@@ -1646,15 +1636,17 @@ paths:
             application/json:
               schema:
                 type: object
-                description: "Response payload object"
+                description: "SearchResult object"
                 properties:
                   numFound:
                     type: number
+                    description: "number of NetworkSummary objects meeting search criteria"
                   start:
                     type: number
+                    description: "index to first NetworkSummary object relative to numFound"
                   networks:
-                    description: List of Network Summary objects
                     type: array
+                    description: List of NetworkSummary objects
                     items:
                       $ref: '#/components/schemas/NetworkSummaryObjectSchema'
         '500':
@@ -1821,17 +1813,19 @@ paths:
             application/json:
               schema:
                 type: object
-                description: "Response payload object"
+                description: "SearchResult object"
                 properties:
                   resultList:
-                    description: List of User objects
                     type: array
+                    description: List of User objects
                     items:
                       $ref: '#/components/schemas/UserObjectSchema'
                   numFound:
                     type: number
+                    description: "number of User objects meeting search criteria"
                   start:
                     type: number
+                    description: "index to first user object returned relative to numFound"
         '500':
           $ref: '#/components/responses/500-response'
 
