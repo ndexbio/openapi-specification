@@ -10,12 +10,6 @@
     "url" : "http://www.home.ndexbio.org/using-the-ndex-server-api/"
   },
   "servers" : [ {
-    "url" : "http://test.ndexbio.org/v2",
-    "description" : "NDEx test server"
-  }, {
-    "url" : "http://test.ndexbio.org/rest",
-    "description" : "NDEx test server"
-  }, {
     "url" : "http://www.ndexbio.org/v2",
     "description" : "NDEx public server"
   }, {
