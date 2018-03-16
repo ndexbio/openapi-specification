@@ -4,16 +4,22 @@ info:
   version: "2.2.0"
   title: "NDEx 2.2 REST API"
   description: >
-    This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers. The NDEx Project provides an open-source framework and online database commons where scientists can upload, share, and publicly distribute biological networks *(Pratt et al., 2015, Cell Systems 1, 302-305, October 28, 2015 ©2015 Elsevier Inc. [ScienceDirect](http://www.sciencedirect.com/science/article/pii/S2405471215001477))*.
+    This [OpenAPI Document](https://github.com/OAI/OpenAPI-Specification) defines the **N**etwork **D**ata **Ex**change **REST API** which is used to communicate with [www.ndexbio.org](http://www.home.ndexbio.org/index/) and other NDEx private servers.
 
 
-    All references to the NDEx REST API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with their [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, this [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader is copyrighted by *Smartbear Software*, and its Apache version 2.0 Open-source license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).
+    This OpenAPI Document and all references to the NDEx REST API, sources and documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, this [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader is copyrighted by *Smartbear Software*; its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).
 
 
-    This OpenAPI document was produced independent of the NDEx Project, and it may not reflect the most current API in use. View or download the official NDEx API documentation using the link below.
+    Google's OAuth login and the following API operations are not currently supported.  They will be added when the Swagger-UI document reader permits.
+
+      - `Post: /network`
+      - `Put:  /network/{networkid}`
+
+
+    View or download the full NDEx API using the link below.
 
 externalDocs:
-  description: "Official NDEx API documentation"
+  description: "NDEx API document"
   url: http://www.home.ndexbio.org/using-the-ndex-server-api/
 
 servers:
@@ -47,9 +53,6 @@ tags:
   - name: Search
   - name: Task
   - name: User
-  - name: v1.3 API methods
-    description: |
-      `Server base path {Version} must be toggled to 'rest' to use these methods.`
 
 paths:
 
@@ -659,47 +662,12 @@ paths:
         '500':
           $ref: '#/components/responses/500-response'
 
-###########################################################################
-#    Swagger-UI does not support file uploads at this time; Issue #3641   #
-###########################################################################
-#  /network:
-#    post:
-#      summary: Create a CX Network
-#      description: |
-#        - Create a network from CX data
-#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-#      security:  # Required
-#        - BASIC_AUTH: []
-#      tags:
-#        - Network
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#                $ref: '#/components/schemas/CX_NetworkObjectSchema'
-#      responses:
-#        '201':
-#          description: "OK: Operation successful."
-#          content:
-#            text/plain:
-#              schema:
-#                description: |
-#                 - URL of newly created network is returned.
-#                  - The network UUID is appended to the returned URL."
-#                type: string
-#        '401':
-#          $ref: '#/components/responses/401-response'
-#        '500':
-#          $ref: '#/components/responses/500-response'
-
   /network/{networkid}:
     get:
       summary: Get Complete Network in CX Format
       description: |
         - Returns the specified network as CX.
         - This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.
-        ___
-        **Note: This operation is backward compatible with the V1.3 API. To use it as such, the Server base path {Version} must be toggled to 'rest'.**
       security:  # Optional
         - {}
         - BASIC_AUTH: []
@@ -719,39 +687,6 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-
-###########################################################################
-#    Swagger-UI does not support file uploads at this time; Issue #3641   #
-###########################################################################
-#    put:
-#      summary: Update a Network
-#      description: |
-#        - Update the specified network with new content, based on CX data.
-#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-#        - Errors if:
-#          - the CX data is not provided
-#          - the UUID does not correspond to an existing network on the NDEx server for which the authenticated user owns or for which has WRITE permission
-#          - the CX data is larger than the maximum size of a network the current NDEX server allows.
-#      security:  # Required
-#        - BASIC_AUTH: []
-#      tags:
-#        - Network
-#      parameters:
-#        - $ref: '#/components/parameters/NetworkIdPath'
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: '#/components/schemas/CX_NetworkStreamSchema'
-#      responses:
-#        '200':
-#          description: "OK: Operation successful."
-#        '204':
-#          description: "OK: Access key not returned. Function is disabled."
-#        '404':
-#          $ref: '#/components/responses/404-response'
-#        '500':
-#          $ref: '#/components/responses/500-response'
 
     delete:
       summary: Delete a network
@@ -1098,8 +1033,6 @@ paths:
         - Refer to the document [NDEx Provenance History](http://www.home.ndexbio.org/network-provenance-history/) for a detailed desciption of this structure and best practices for its use.
         - Errors if:
           - the **networkid** does not correspond to an existing network
-        ___
-        **Note: This operation is backward compatible with the V1.3 API. To use it as such, the Server base path {Version} must be toggled to 'rest'.**
       security:  # Optional
         - {}
         - BASIC_AUTH: []
@@ -1129,8 +1062,6 @@ paths:
         - Errors if:
           - the authenticated user does not have ADMIN permission to the specified network
           - the **networkid** does not correspond to an existing network
-        ___
-        **Note: This operation is backward compatible with the V1.3 API. To use it as such, the Server base path {Version} must be toggled to 'rest'.**
       security:  # Required
         - BASIC_AUTH: []
       tags:
@@ -1923,7 +1854,7 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
   /task/{taskid}:
     get:
       summary: Get a Task by Task UUID
@@ -1951,11 +1882,11 @@ paths:
           $ref: '#/components/responses/404-response'
         '500':
           $ref: '#/components/responses/500-response'
-          
+
     delete:
       summary: Delete a Task
       description: |
-        - Deletes the task associated with the **taskid** path parameter. 
+        - Deletes the task associated with the **taskid** path parameter.
         - An error is returned if:
           - the task does not exist
           - the authenticated user does not own the specified task
@@ -2004,7 +1935,7 @@ paths:
                 type: string
                 format: binary
           headers:
-            Access-Control-Expose-Headers: 
+            Access-Control-Expose-Headers:
               schema:
                 type: string
                 default: Content-Description
@@ -2072,7 +2003,7 @@ paths:
           $ref: '#/components/responses/401-response'
         '500':
           $ref: '#/components/responses/500-response'
-        
+
   /user/{userid}/networksets:
     get:
       summary: Get All Network Sets Owned by a User
@@ -2163,170 +2094,6 @@ paths:
                 type: object
                 description: "Object containing key/value pairs representing network UUIDs and their respective permission values."
                 example: {xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx: ADMIN}
-        '401':
-          $ref: '#/components/responses/401-response'
-        '500':
-          $ref: '#/components/responses/500-response'
-
-###########################################################################
-#    Swagger-UI does not support file uploads at this time; Issue #3641   #
-###########################################################################     
-#  /network/asCX:
-#    post:
-#      summary: Create a CX Network  ***** UNDER DEVELOPMENT
-#      description: |
-#        - Creates a new NDEx network.
-#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-#        - An error occurs when:
-#          - the CX data does not specify a `name` property
-#          - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server
-#        - The UUID for the new network is returned.
-#        ___
-#        **Server base path {Version} must be toggled to 'rest' to use this method.**
-#      security:
-#        - BASIC_AUTH: []
-#      tags:
-#        - v1.3 API methods
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: '#/components/schemas/CX_NetworkObjectSchema'
-#      responses:
-#        '201':
-#          description: "OK: Operation successful."
-#          content:
-#            text/plain:
-#              schema:
-#                description: | 
-#                  - URL of newly created network is returned.  
-#                   - The network UUID is appended to the returned URL."
-#                type: string
-#        '401':
-#          $ref: '#/components/responses/401-response'
-#        '500':
-#          $ref: '#/components/responses/500-response'
-          
-  /network/{networkid}/asCX:
-    get:
-      summary: Get a Network as CX
-      description: |
-        - Returns all CX aspects of the entire network specified by **networkid** as a CX stream.  
-        - This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.
-        - Clients may read incrementally and abort the operation if the in-memory structures become to large.
-        - Networks designated as read-only are cached by NDEX for rapid access.
-        ___
-        **Server base path {Version} must be toggled to 'rest' to use this method.**
-      security: []  # Not required
-      tags:
-        - v1.3 API methods
-      parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
-      responses:
-        '200':
-          description: "OK: Operation successful."
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CX_NetworkStreamSchema'
-        '404':
-          $ref: '#/components/responses/404-response'
-        '500':
-          $ref: '#/components/responses/500-response'
-
-###########################################################################
-#    Swagger-UI does not support file uploads at this time; Issue #3641   #
-###########################################################################          
-#    put:
-#      summary: Update an Entire Network as CX
-#      description: |
-#        - Update the specified network with new content.
-#        - The input CX data is expected to be in the `CXNetworkStream` field of the posted multipart/form-data.
-#        - An error occurs when:
-#          - the CX data is not provided
-#          - the UUID does not exist
-#          - the number of elements in the CX stream is larger than the maximum size configured for the NDEx server
-#        - The UUID for the new network is returned.
-#        ___
-#        **Server base path {Version} must be toggled to 'rest' to use this method.**
-#      security:
-#        - BASIC_AUTH: []
-#      tags:
-#        - v1.3 API methods
-#      parameters:
-#      - $ref: '#/components/parameters/NetworkIdPath'
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: '#/components/schemas/CX_NetworkStreamSchema'
-#      responses:
-#        '204':
-#          description: "OK: Operation successful."
-#          $ref: '#/components/responses/404-response'
-#        '404':
-#          $ref: '#/components/responses/404-response'
-#        '500':
-#          $ref: '#/components/responses/500-response'
-
-  /network/search/{skipBlocks}/{blockSize}: 
-    post:
-      summary: Find a Network by Search
-      description: |
-        - Returns an array of NetworkSummary objects and the total hit count of the search.
-        - The `searchString` property contains the search query text. Wildcard characters permitted.
-        - The search can be constrained using these optional properties:
-            - `permission` - filter by READ / WRITE network permission
-            - `includeGroups` - filter by user's group permission
-            - `accountName` - filter by network owner
-        ___
-        **Server base path {Version} must be toggled to 'rest' to use this method.**
-      security: []  # Not required
-      tags:
-        - v1.3 API methods
-      parameters:
-        - $ref: '#/components/parameters/SkipBlocksPath'
-        - $ref: '#/components/parameters/BlockSizePath'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                searchString:
-                  type: string
-                  description: |
-                    - (Required) A whitespace-delimited or comma-delimited string in which each term is a gnne symbol or identified.  The search function will expand each term to its alias, NCBI gene ID, Uniprot IDs, ensembl gene ID using gene query service at [mygene.info](www.mygene.info).
-                permission:
-                  type: string
-                  description: |
-                    - (Optional) Use if there is to be filtering based on permission. When provided, it must be specified as either *READ* or *WRITE* only.
-                    - **WRITE** - the search will only return networks for which the authenticated user has **edit** or **admin** permission.
-                    - **READ** - the search will only return networks for which the authenticated user has edit, admin, or read permission.  Note that this only includes networks that are readable to explicit permission, and NOT networks that are readable because they have been made public. 
-                includeGroups:
-                  type: boolean
-                  description: |
-                    - (Optional) Defaults to false.
-                    - If set to true, the search will also return networks based on permissions from the authenticated user's group memberships.
-                    - This enables the search to return a network where a group has permission to access the network and the user is a member of the group.
-                accountName:
-                  type: string
-                  description: |
-                    - (Optional) If provided, the search will be constrained to networks owned by the specified account.
-              required:
-                - searchString
-              example:
-                searchString: ""
-      responses:
-        '200':
-          description: "OK: Operation successful."
-          content:
-            application/json:
-              schema:
-                type: array
-                description: List of Network Summary objects
-                items:
-                  $ref: '#/components/schemas/NetworkSummaryObjectSchema'
         '401':
           $ref: '#/components/responses/401-response'
         '500':
