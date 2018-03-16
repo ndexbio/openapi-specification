@@ -14,11 +14,10 @@
     "description" : "NDEx public server"
   }, {
     "url" : "http://{Host}/{Version}",
-    "description" : "The host server URL and API version can be overriden.\n",
+    "description" : "The host server URL and API version can be overridden.\n",
     "variables" : {
       "Host" : {
-        "description" : "Permits the user to access a private NDEX server or perform legacy API v1.3 operations.\n",
-        "default" : "test.ndexbio.org"
+        "default" : "www.ndexbio.org"
       },
       "Version" : {
         "description" : "API version",
