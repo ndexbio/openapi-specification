@@ -152,8 +152,8 @@
                     "items" : {
                       "type" : "string",
                       "format" : "uuid",
-                      "description" : "A list of network UUIDs.",
-                      "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                      "description" : "A list of network UUIDs. An example network UUID is entered for demonstration purposes. It can be replaced with one or more  network UUIDs, as needed.",
+                      "example" : "2cda23a9-1e5f-11e8-b939-0ac135e8bacf"
                     }
                   }
                 }
@@ -242,9 +242,9 @@
                 "description" : "Network UUIDs",
                 "items" : {
                   "type" : "string",
-                  "description" : "Network UUID",
                   "format" : "uuid",
-                  "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  "description" : "A list of network UUIDs. An example network UUID is entered for demonstration purposes. It can be replaced with one or more  network UUIDs, as needed.",
+                  "example" : "2cda23a9-1e5f-11e8-b939-0ac135e8bacf"
                 }
               }
             }
@@ -290,8 +290,9 @@
                 "description" : "List of Network Summary UUIDs",
                 "items" : {
                   "type" : "string",
-                  "description" : "Network Summary UUID",
-                  "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                  "format" : "uuid",
+                  "description" : "A list of network UUIDs. An example network UUID is entered for demonstration purposes. It can be replaced with one or more  network UUIDs, as needed.",
+                  "example" : "2cda23a9-1e5f-11e8-b939-0ac135e8bacf"
                 }
               }
             }
@@ -792,7 +793,7 @@
         } ],
         "tags" : [ "Network" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         }, {
           "$ref" : "#/components/parameters/AccessKeyValueParam"
         } ],
@@ -933,7 +934,7 @@
         } ],
         "tags" : [ "Network" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         }, {
           "$ref" : "#/components/parameters/AccessKeyValueParam"
         } ],
@@ -976,9 +977,9 @@
         } ],
         "tags" : [ "Network" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         }, {
-          "$ref" : "#/components/parameters/AspectNamePath"
+          "$ref" : "#/components/parameters/AspectNameDemoPath"
         }, {
           "$ref" : "#/components/parameters/SizeParam"
         } ],
@@ -1107,7 +1108,7 @@
         } ],
         "tags" : [ "Network" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         } ],
         "responses" : {
           "201" : {
@@ -1244,7 +1245,7 @@
         } ],
         "tags" : [ "Network" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         }, {
           "$ref" : "#/components/parameters/AccessKeyValueParam"
         } ],
@@ -1333,7 +1334,7 @@
       },
       "put" : {
         "summary" : "Set Sample Network",
-        "description" : "- Sets the example network for the network specified by **networkid**.  The sample sanple network is specified by the CX data in the request body. \n- Errors if:\n  - the authenticated user does not have ADMIN permissions to the specified network\n  - the **networkid** does not correspond to an existing network\n",
+        "description" : "- Sets the example network for the network specified by **networkid**.  The sample network is specified by the CX data in the request body. \n- Errors if:\n  - the authenticated user does not have ADMIN permissions to the specified network\n  - the **networkid** does not correspond to an existing network\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1375,7 +1376,7 @@
         } ],
         "tags" : [ "Network" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         }, {
           "$ref" : "#/components/parameters/AccessKeyValueParam"
         } ],
@@ -2038,13 +2039,14 @@
         } ],
         "tags" : [ "Search" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         } ],
         "requestBody" : {
           "content" : {
             "application/json" : {
               "schema" : {
                 "type" : "object",
+                "description" : "The example values used are for demonstration purposes. They can be replaced, as needed.",
                 "properties" : {
                   "searchString" : {
                     "type" : "string",
@@ -2066,7 +2068,7 @@
                 },
                 "required" : [ "searchString" ],
                 "example" : {
-                  "searchString" : "",
+                  "searchString" : "erk*",
                   "searchDepth" : 1,
                   "edgeLimit" : 1500
                 }
@@ -3334,6 +3336,16 @@
         },
         "example" : ""
       },
+      "AspectNameDemoPath" : {
+        "in" : "path",
+        "name" : "aspectName",
+        "description" : "An example aspect name is entered below for demonstration purposes.  It can be replaced with another aspect name, as needed. Examples include 'cartesianCoordinates', 'nodes', 'edges', and 'edgeAttributes'.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        },
+        "example" : "cyVisualProperties"
+      },
       "BlockSizePath" : {
         "in" : "path",
         "name" : "blockSize",
@@ -3383,6 +3395,17 @@
         },
         "required" : true,
         "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      },
+      "NetworkIdDemoPath" : {
+        "in" : "path",
+        "name" : "networkid",
+        "description" : "A unique identifier (UUID) given to the network acted upon, in the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is entered below for demonstration purposes. It can be replaced with another network UUID, as needed.",
+        "schema" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "required" : true,
+        "example" : "2cda23a9-1e5f-11e8-b939-0ac135e8bacf"
       },
       "NetworkSetIdPath" : {
         "in" : "path",
