@@ -12,16 +12,18 @@ Foundation [OpenAPI Initiative (OAI)](https://www.openapis.org/) governing body.
 code generation, testing and document creation tools, many of which are listed 
  [here](https://github.com/OAI/OpenAPI-Specification/blob/master/IMPLEMENTATIONS.md).
  
- The OpenAPI documents contained in this repository are specifically used in conjunction with the
- [ndextools/openapi-reader](https://github.com/ndextools/openapi-reader) application, so that NDEx developers
- can interactively view and  "try out" NDEx API requests, thus providing them with a low-level API 
- and debugging environment as they create language-specific software applications and program libraries.
+The OpenAPI documents contained in this repository are specifically used in conjunction with the 
+[ndextools/openapi-reader](https://github.com/ndextools/openapi-reader) application, so that NDEx developers 
+can interactively view and  "try out" NDEx API requests, thus providing them with a low-level API 
+and debugging environment as they create language-specific software applications and program libraries.
 
 Except for these derivative OpenAPI documents, all references to the NDEx API, sources and documentation 
 are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.
 All rights reserved.*  Please abide with their
 [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).
+Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI 
+document is copyrighted by *Smartbear Software*. Its open-source software license is found 
+[here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).
 
-The OpenAPI documents contained herein are produced independently of the NDEx Project, and they may not 
-reflect the most current API in use. The currently supported REST API and supportting documentation 
+The currently supported REST API and supporting documentation 
 is found at the [NDEx Project website](http://www.home.ndexbio.org/index/).
