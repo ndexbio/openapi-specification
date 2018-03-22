@@ -153,7 +153,7 @@
                       "type" : "string",
                       "format" : "uuid",
                       "description" : "A list of network UUIDs. An example network UUID is entered for demonstration purposes. It can be replaced with one or more  network UUIDs, as needed.",
-                      "example" : "2cda23a9-1e5f-11e8-b939-0ac135e8bacf"
+                      "example" : "cac8ec21-2d32-11e8-b939-0ac135e8bacf"
                     }
                   }
                 }
@@ -292,7 +292,7 @@
                   "type" : "string",
                   "format" : "uuid",
                   "description" : "A list of network UUIDs. An example network UUID is entered for demonstration purposes. It can be replaced with one or more  network UUIDs, as needed.",
-                  "example" : "2cda23a9-1e5f-11e8-b939-0ac135e8bacf"
+                  "example" : "cac8ec21-2d32-11e8-b939-0ac135e8bacf"
                 }
               }
             }
@@ -2033,13 +2033,23 @@
     "/search/network/{networkid}/query" : {
       "post" : {
         "summary" : "Query Network",
-        "description" : "- Returns a CX Network that is a neighborhood subnetwork of the network specified by **networkId**.\n- The query finds the subnetwork by a traversal of the network starting with nodes associated with the following properties:\n  - `searchString`\n  - `searchDepth`\n  - `edgeLimit`\n- An error is returned if the number of edges in the result is larger than the `edgeLimit` property.\n",
+        "description" : "- Returns a CX Network that is a neighborhood subnetwork of the network specified by **networkId**.\n- The query finds the subnetwork by a traversal of the network starting with nodes associated with the following properties:\n  - `searchString`\n  - `searchDepth`\n  - `edgeLimit`\n  - `errorWhenLimitIsOver`\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
         "tags" : [ "Search" ],
         "parameters" : [ {
           "$ref" : "#/components/parameters/NetworkIdDemoPath"
+        }, {
+          "in" : "query",
+          "name" : "save",
+          "description" : "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false.",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "false", "true" ],
+            "default" : false
+          },
+          "required" : false
         } ],
         "requestBody" : {
           "content" : {
@@ -2060,17 +2070,21 @@
                   },
                   "edgeLimit" : {
                     "type" : "number",
-                    "description" : "- (Optional) Sets the maximum number of edges that this query can return.\n",
-                    "minimum" : 1,
-                    "maximum" : 1500,
-                    "default" : 1500
+                    "description" : "- (Optional) Sets the maximum number of edges that this query can return.\n  A negative or zero value means no linit in the query.\n",
+                    "default" : 0
+                  },
+                  "errorWhenLimitIsOver" : {
+                    "type" : "boolean",
+                    "description" : "- (Optional) If this value is true the server will stop streaming the network when it hits the edgeLimit, add success: false and \n  error: \"EdgeLimitExceeded\" in the status aspect and close the CX stream. \n- If this value is set to false, and the server will return a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute \"EdgeLimitExceeded\": \"true\" will be added to the returned network only if the server hits the edgeLimit. The default value is true.\n",
+                    "default" : true
                   }
                 },
                 "required" : [ "searchString" ],
                 "example" : {
                   "searchString" : "erk*",
                   "searchDepth" : 1,
-                  "edgeLimit" : 1500
+                  "edgeLimit" : 0,
+                  "errorWhenLimitIsOver" : true
                 }
               }
             }
@@ -3405,7 +3419,7 @@
           "format" : "uuid"
         },
         "required" : true,
-        "example" : "2cda23a9-1e5f-11e8-b939-0ac135e8bacf"
+        "example" : "cac8ec21-2d32-11e8-b939-0ac135e8bacf"
       },
       "NetworkSetIdPath" : {
         "in" : "path",
