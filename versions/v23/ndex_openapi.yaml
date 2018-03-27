@@ -1715,7 +1715,7 @@ paths:
       tags:
         - Search
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
+        - $ref: '#/components/parameters/NetworkIdPath'
         - in: query
           name: save
           description: "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false."

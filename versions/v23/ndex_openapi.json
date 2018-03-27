@@ -2039,7 +2039,7 @@
         } ],
         "tags" : [ "Search" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdDemoPath"
+          "$ref" : "#/components/parameters/NetworkIdPath"
         }, {
           "in" : "query",
           "name" : "save",
