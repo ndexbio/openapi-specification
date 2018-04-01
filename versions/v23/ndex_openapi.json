@@ -181,51 +181,6 @@
         }
       }
     },
-    "/batch/network/{networkid}/aspect" : {
-      "post" : {
-        "summary" : "Get Aspects of a Network",
-        "description" : "- Returns a CX document containing selected aspects of the Network specified by **networkid** path parameter.  The aspects to return are specified in the POSTed JSON array of aspect names.\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
-        "tags" : [ "Batch" ],
-        "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "array",
-                "description" : "List of aspect names",
-                "items" : {
-                  "type" : "string",
-                  "description" : "one or more aspect names"
-                }
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK: Operation successful.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/CX_NetworkObjectSchema"
-                }
-              }
-            }
-          },
-          "401" : {
-            "$ref" : "#/components/responses/401-response"
-          },
-          "500" : {
-            "$ref" : "#/components/responses/500-response"
-          }
-        }
-      }
-    },
     "/batch/network/permission" : {
       "post" : {
         "summary" : "Get Network Permissions by UUIDs",
@@ -308,53 +263,6 @@
                   "description" : "List of Network Summary objects",
                   "items" : {
                     "$ref" : "#/components/schemas/NetworkSummaryObjectSchema"
-                  }
-                }
-              }
-            }
-          },
-          "401" : {
-            "$ref" : "#/components/responses/401-response"
-          },
-          "500" : {
-            "$ref" : "#/components/responses/500-response"
-          }
-        }
-      }
-    },
-    "/batch/task" : {
-      "post" : {
-        "summary" : "Get Tasks by UUIDs",
-        "description" : "- Returns an array of Task objects selected by the POSTed JSON array of Task UUIDs.\n",
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ],
-        "tags" : [ "Batch" ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "array",
-                "description" : "List of Task UUIDs to fetch",
-                "items" : {
-                  "type" : "string",
-                  "description" : "Task UUID",
-                  "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-                }
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK: Operation successful.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "description" : "List of Task objects",
-                  "items" : {
-                    "$ref" : "#/components/schemas/TaskObjectSchema"
                   }
                 }
               }
@@ -2039,7 +1947,7 @@
         } ],
         "tags" : [ "Search" ],
         "parameters" : [ {
-          "$ref" : "#/components/parameters/NetworkIdPath"
+          "$ref" : "#/components/parameters/NetworkIdDemoPath"
         }, {
           "in" : "query",
           "name" : "save",
@@ -2075,7 +1983,7 @@
                 },
                 "required" : [ "searchString" ],
                 "example" : {
-                  "searchString" : "erk*",
+                  "searchString" : "erk* braf",
                   "edgeLimit" : 0,
                   "errorWhenLimitIsOver" : true
                 }
