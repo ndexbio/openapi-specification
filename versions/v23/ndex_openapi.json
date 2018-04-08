@@ -3171,52 +3171,82 @@
       },
       "TaskObjectSchema" : {
         "type" : "object",
-        "description" : "Task object",
+        "description" : "Task payload",
         "properties" : {
-          "externalId" : {
-            "type" : "string",
-            "format" : "uuid"
-          },
-          "creationTime" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "modificationTime" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "attributes" : {
-            "type" : "object"
-          },
-          "format" : {
-            "type" : "string",
-            "description" : "format of the exported file if this is a network export task"
-          },
-          "description" : {
-            "type" : "string"
-          },
-          "taskType" : {
-            "type" : "string"
-          },
-          "status" : {
-            "type" : "string"
-          },
-          "taskOwnerId" : {
-            "type" : "string"
-          },
-          "message" : {
-            "type" : "string"
-          },
-          "resource" : {
-            "type" : "string",
-            "format" : "uuid",
-            "description" : "uuid of the resource which this task operates on"
-          },
           "startTime" : {
             "type" : "string",
             "format" : "date-time"
           },
           "finishTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "ownerProperties" : {
+            "type" : "object",
+            "properties" : {
+              "newTask" : {
+                "type" : "boolean"
+              }
+            }
+          },
+          "taskOwnerId" : {
+            "type" : "string",
+            "format" : "uuid",
+            "description" : "uuid of the user who owns this task"
+          },
+          "taskType" : {
+            "type" : "string"
+          },
+          "progress" : {
+            "type" : "number"
+          },
+          "resource" : {
+            "type" : "string",
+            "format" : "uuid",
+            "description" : "uuid of the network associated with this task"
+          },
+          "attributes" : {
+            "type" : "object",
+            "properties" : {
+              "name" : {
+                "type" : "string"
+              },
+              "downloadFileName" : {
+                "type" : "string"
+              },
+              "downloadFileExtension" : {
+                "type" : "string"
+              }
+            }
+          },
+          "format" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "priority" : {
+            "type" : "string"
+          },
+          "externalId" : {
+            "type" : "string",
+            "format" : "uuid",
+            "description" : "the uuid of this task object"
+          },
+          "isDeleted" : {
+            "type" : "boolean"
+          },
+          "modificationTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "creationTime" : {
             "type" : "string",
             "format" : "date-time"
           }

@@ -1575,7 +1575,7 @@ paths:
         - All matches of node or edge properties vs. propertySpecifications are case insensitive.
         - The query is only valid if at least one of the above mentioned filter properties is not null and non-empty.
         - An error is returned if both the `nodeFilter` and `edgeFilter` properties are nulls or have no property specifications.
-      security:
+      security:  # Optional
         - BASIC_AUTH: []
       tags:
         - Search
@@ -1644,7 +1644,7 @@ paths:
           - `searchString`
           - `edgeLimit`
           - `errorWhenLimitIsOver`
-      security:
+      security:  # Optional
         - BASIC_AUTH: []
       tags:
         - Search
@@ -1718,7 +1718,7 @@ paths:
           - `searchDepth`
           - `edgeLimit`
           - `errorWhenLimitIsOver`
-      security:
+      security:  # Optional
         - BASIC_AUTH: []
       tags:
         - Search
@@ -2618,40 +2618,60 @@ components:
     ###
     TaskObjectSchema:
       type: object
-      description: Task object
+      description: Task payload
       properties:
-        externalId:
-          type: string
-          format: uuid
-        creationTime:
-          type: string
-          format: date-time
-        modificationTime:
-          type: string
-          format: date-time
-        attributes:
-          type: object
-        format:
-          type: string
-          description: "format of the exported file if this is a network export task"
-        description:
-          type: string
-        taskType:
-          type: string
-        status:
-          type: string
-        taskOwnerId:
-          type: string
-        message:
-          type: string
-        resource:
-          type: string
-          format: uuid
-          description: "uuid of the resource which this task operates on"
         startTime:
           type: string
           format: date-time
         finishTime:
+          type: string
+          format: date-time
+        ownerProperties:
+          type: object
+          properties:
+            newTask:
+              type: boolean
+        taskOwnerId:
+          type: string
+          format: uuid
+          description: "uuid of the user who owns this task"
+        taskType:
+          type: string
+        progress:
+          type: number
+        resource:
+          type: string
+          format: uuid
+          description: "uuid of the network associated with this task"
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+            downloadFileName:
+              type: string
+            downloadFileExtension:
+              type: string
+        format:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+        priority:
+          type: string
+        externalId:
+          type: string
+          format: uuid
+          description: "the uuid of this task object"
+        isDeleted:
+          type: boolean
+        modificationTime:
+          type: string
+          format: date-time
+        creationTime:
           type: string
           format: date-time
     ###
