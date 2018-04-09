@@ -2341,11 +2341,11 @@
         }, {
           "in" : "query",
           "name" : "type",
-          "description" : "(Option 2 only) The Group object UUID",
+          "description" : "(Option 2 only) Membership type",
           "schema" : {
-            "type" : "string"
-          },
-          "required" : false
+            "type" : "string",
+            "enum" : [ "MEMBER", "GROUPADMIN" ]
+          }
         }, {
           "in" : "query",
           "name" : "start",

@@ -1990,10 +1990,10 @@ paths:
           required: false
         - in: query
           name: type
-          description: "(Option 2 only) The Group object UUID"
+          description: "(Option 2 only) Membership type"
           schema:
             type: string
-          required: false
+            enum: [MEMBER, GROUPADMIN]
         - in: query
           name: start
           description: "(Option 2 only) Index to first object to return"
