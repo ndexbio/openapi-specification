@@ -89,7 +89,7 @@ paths:
       summary: Get Groups by UUIDs
       description: |
         - Returns a JSON array of Group objects.
-        - The HTTP request body contains a JSON array of UUIDs which identify which Group objects to fetch.
+        - The HTTP request payload contains a JSON array of UUIDs which identify which Group objects to fetch.
       security: []  # Not required
       tags:
         - Batch
@@ -123,8 +123,8 @@ paths:
     post:
       summary: Export Networks
       description: |
-        - Creates network export tasks for the set of networks specified by the `networkids` property in the network export request body.
-        - The format which to export is specified using the `exportFormat` property in the request body.
+        - Creates network export tasks for the set of networks specified by the `networkids` property in the network export request payload.
+        - The format which to export is specified using the `exportFormat` property in the request payload.
         - The /admin/status?format=full function can be used to get a complete list of importers/exporters the server supports."
         - Returns a JSON object which maps Network UUIDs to ExportTaskIDs.  The taskId can then be used to download the exported file.  Refer to the *Download Exported File by Task UUID* operation.
       security:  # Required
@@ -200,7 +200,7 @@ paths:
       summary: Get Network Summaries of UUIDs
       description: |
         - Returns a JSON array of Network Summary objects.
-        - The HTTP request body contains a JSON array of UUIDs which identify which Network Summary objects to fetch.
+        - The HTTP request payload contains a JSON array of UUIDs which identify which Network Summary objects to fetch.
         - This function only returns summaries for public networks if the user is not authenticated, otherwise it returns public and the networks for which the authenticated user has READ permission.
         - The number of POSTed Network UUIDs is limited to 2000.
       security:  # Optional
@@ -241,7 +241,7 @@ paths:
       summary: Get Users by UUIDs
       description: |
         - Returns a JSON array of User objects.
-        - The HTTP request body contains a JSON array of UUIDs which identify which User objects to fetch.
+        - The HTTP request payload contains a JSON array of UUIDs which identify which User objects to fetch.
       security: []  # Not required
       tags:
         - Batch
@@ -281,7 +281,7 @@ paths:
           - `image`
           - `website`
           - `description`
-        - A URL link associated with the newly created group is returned in the response body upon successful completion.
+        - A URL link associated with the newly created group is returned in the response payload upon successful completion.
         - The group's UUID is a component of this URL and corresponds to the **groupid** parameter used in subsequent Get/Put/Delete group operations.
         - Returns an error if
           - the `groupName` property is not specified or already in use
@@ -732,7 +732,7 @@ paths:
             application/json:
               schema:
                 type: object
-                description: "Response payload object"
+                description: "Response payload"
                 properties:
                   metaData:
                     type: array
@@ -835,7 +835,6 @@ paths:
           application/json:
             schema:
               type: object
-              # TODO CX OBJECT SCHEMA
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -1048,7 +1047,7 @@ paths:
     put:
       summary: Set Sample Network
       description: |
-        - Sets the example network for the network specified by **networkid**.  The sample network is specified by the CX data in the request body.
+        - Sets the example network for the network specified by **networkid**.  The sample network is specified by the CX data in the request payload.
         - Errors if:
           - the authenticated user does not have ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
@@ -1104,7 +1103,7 @@ paths:
     put:
       summary: Update Network Profile and Properties
       description: |
-        - The JSON request body contains key/value pairs that overwrite the corresponding properties of a given network.
+        - The JSON request payload contains key/value pairs that overwrite the corresponding properties of a given network.
         - at this time, only the following properties of a network can be updated:
           - `name`
           - `description`
@@ -1191,7 +1190,7 @@ paths:
       summary: Create a Network Set
       description: |
         - Creates a new network set.
-        - A URL link associated with the newly created network set is returned in the response body upon successful completion.
+        - A URL link associated with the newly created network set is returned in the response payload upon successful completion.
         - The network set's UUID is a component of this URL and corresponds to the **networksetid** path parameter used in subsequent Get/Put/Delete network set operations.
         - Returns an error when:
           - the `name` property is not specified
@@ -1310,7 +1309,7 @@ paths:
       summary: Add Networks to Network Set
       description: |
         - Adds networks to a network set.
-        - The HTTP request body holds an array containing one or more **networksetid**'s (UUID's) that denote the networks to add.
+        - The HTTP request payload holds an array containing one or more **networksetid**'s (UUID's) that denote the networks to add.
         - An error is returned if:
           - the network set does not exist
           - the member to add does not exist
@@ -1340,7 +1339,7 @@ paths:
       summary: Delete Networks from Network Set
       description: |
         - Deletes one or more networks belonging to a network set.
-        - The HTTP request body holds an array containing one or more **networkSetId**'s (UUID's) that denote the networks to delete.
+        - The HTTP request payload holds an array containing one or more **networkSetId**'s (UUID's) that denote the networks to delete.
         - An error is returned if:
           - the network set does not exist
           - the network member to delete does not exist
@@ -1408,7 +1407,7 @@ paths:
       summary: Search Groups
       description: |
         - Returns an array of Group objects, and returns the total number of objects found that meet the search criterion.
-        - The search criterion is found in the request body's `searchString` property.
+        - The search criterion is found in the request payload's `searchString` property.
         - Wildcard characters are valid in `searchString`.
       security:
         - BASIC_AUTH: []
@@ -1450,7 +1449,7 @@ paths:
       summary: Search Networks
       description: |
         - Returns an array of NetworkSummary objects, and returns the total number of objects found that meet the search criterion.
-        - The search criterion is found in the request body's `searchString` property.
+        - The search criterion is found in the request payload's `searchString` property.
         - Wildcard characters are valid in `searchString`.
         - The search can be constrained using these optional properties:
             - `permission` - filter by READ / WRITE network permission
@@ -1794,7 +1793,7 @@ paths:
       summary: Search Users
       description: |
         - Returns an array of User objects, and returns the total number of objects found that meet the search criterion.
-        - The search criterion is found in the request body's `searchString` property.
+        - The search criterion is found in the request payload's `searchString` property.
         - Wildcard characters are valid in `searchString`.
       security:  # Optional
         - {}
@@ -2606,7 +2605,7 @@ components:
     ###
     SearchStringPropertySchema:
       type: object
-      description: A JSON object within the HTTP request body which specifies the what is to be searched.
+      description: A JSON object within the HTTP request payload which specifies the what is to be searched.
       properties:
         searchString:
           type: string
@@ -2932,7 +2931,7 @@ components:
       description: "NOT FOUND: The object that was requested does not exist."
     ###
     500-response:
-      description: "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request body objects."
+      description: "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request payloads."
       content:
         application/json:
           schema:

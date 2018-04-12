@@ -3,7 +3,7 @@
   "info" : {
     "version" : "2.3.0",
     "title" : "NDEx 2.3 REST API",
-    "description" : "This [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) document defines the **N**etwork **D**ata **Ex**change (**NDEx**) REST API which is used to communicate with NDEx public and private servers.\n\nThis document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).  \n    \n\nGoogle's OAuth login and the following API endpoints are not currently supported.  They will be added when the Swagger-UI document reader permits.\n\n  - `Post: /network`\n  - `Put:  /network/{networkid}`\n  \n\nBasic Authentication and all other API endpoints are supported.  View or download the full NDEx API using the link below.\n"
+    "description" : "This [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) document defines the **N**etwork **D**ata **Ex**change (**NDEx**) REST API which is used to communicate with NDEx public and private servers.\n\nThis document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).\n\nGoogle's OAuth login and the following API endpoints are not currently supported.  They will be added when the Swagger-UI document reader permits.\n\n  - `Post: /network`\n  - `Put:  /network/{networkid}`\n\n\nBasic Authentication and all other API endpoints are supported.  View or download the full NDEx API using the link below.\n"
   },
   "externalDocs" : {
     "description" : "NDEx API document",
@@ -48,7 +48,7 @@
       "get" : {
         "tags" : [ "Admin" ],
         "summary" : "Get Server Status",
-        "description" : "- Get the current operational status of an NDEx server. \n- Use this function to check if the NDEx server is running or stopped, as well as list important server properties.\n- The `format` query parameter determines what properties are listed by this operation.\n",
+        "description" : "- Get the current operational status of an NDEx server.\n- Use this function to check if the NDEx server is running or stopped, as well as list important server properties.\n- The `format` query parameter determines what properties are listed by this operation.\n",
         "security" : [ ],
         "parameters" : [ {
           "in" : "query",
@@ -85,7 +85,7 @@
     "/batch/group" : {
       "post" : {
         "summary" : "Get Groups by UUIDs",
-        "description" : "- Returns a JSON array of Group objects. \n- The HTTP request body contains a JSON array of UUIDs which identify which Group objects to fetch.\n",
+        "description" : "- Returns a JSON array of Group objects.\n- The HTTP request payload contains a JSON array of UUIDs which identify which Group objects to fetch.\n",
         "security" : [ ],
         "tags" : [ "Batch" ],
         "requestBody" : {
@@ -131,7 +131,7 @@
     "/batch/network/export" : {
       "post" : {
         "summary" : "Export Networks",
-        "description" : "- Creates network export tasks for the set of networks specified by the `networkids` property in the network export request body.\n- The format which to export is specified using the `exportFormat` property in the request body.\n- The /admin/status?format=full function can be used to get a complete list of importers/exporters the server supports.\"\n- Returns a JSON object which maps Network UUIDs to ExportTaskIDs.  The taskId can then be used to download the exported file.  Refer to the *Download Exported File by Task UUID* operation.\n",
+        "description" : "- Creates network export tasks for the set of networks specified by the `networkids` property in the network export request payload.\n- The format which to export is specified using the `exportFormat` property in the request payload.\n- The /admin/status?format=full function can be used to get a complete list of importers/exporters the server supports.\"\n- Returns a JSON object which maps Network UUIDs to ExportTaskIDs.  The taskId can then be used to download the exported file.  Refer to the *Download Exported File by Task UUID* operation.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -229,7 +229,7 @@
     "/batch/network/summary" : {
       "post" : {
         "summary" : "Get Network Summaries of UUIDs",
-        "description" : "- Returns a JSON array of Network Summary objects. \n- The HTTP request body contains a JSON array of UUIDs which identify which Network Summary objects to fetch.\n- This function only returns summaries for public networks if the user is not authenticated, otherwise it returns public and the networks for which the authenticated user has READ permission.\n- The number of POSTed Network UUIDs is limited to 2000.\n",
+        "description" : "- Returns a JSON array of Network Summary objects.\n- The HTTP request payload contains a JSON array of UUIDs which identify which Network Summary objects to fetch.\n- This function only returns summaries for public networks if the user is not authenticated, otherwise it returns public and the networks for which the authenticated user has READ permission.\n- The number of POSTed Network UUIDs is limited to 2000.\n",
         "security" : [ { }, {
           "BASIC_AUTH" : [ ]
         } ],
@@ -280,7 +280,7 @@
     "/batch/user" : {
       "post" : {
         "summary" : "Get Users by UUIDs",
-        "description" : "- Returns a JSON array of User objects. \n- The HTTP request body contains a JSON array of UUIDs which identify which User objects to fetch.\n",
+        "description" : "- Returns a JSON array of User objects.\n- The HTTP request payload contains a JSON array of UUIDs which identify which User objects to fetch.\n",
         "security" : [ ],
         "tags" : [ "Batch" ],
         "requestBody" : {
@@ -326,7 +326,7 @@
     "/group" : {
       "post" : {
         "summary" : "Create a Group",
-        "description" : "- Creates a new group owned by the authenticated user.\n- The following properties can be set for the new group\n  - `groupName`\n  - `image`\n  - `website`\n  - `description`\n- A URL link associated with the newly created group is returned in the response body upon successful completion. \n- The group's UUID is a component of this URL and corresponds to the **groupid** parameter used in subsequent Get/Put/Delete group operations.\n- Returns an error if\n  - the `groupName` property is not specified or already in use\n  - the user is not authenticated\n",
+        "description" : "- Creates a new group owned by the authenticated user.\n- The following properties can be set for the new group\n  - `groupName`\n  - `image`\n  - `website`\n  - `description`\n- A URL link associated with the newly created group is returned in the response payload upon successful completion.\n- The group's UUID is a component of this URL and corresponds to the **groupid** parameter used in subsequent Get/Put/Delete group operations.\n- Returns an error if\n  - the `groupName` property is not specified or already in use\n  - the user is not authenticated\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -695,7 +695,7 @@
     "/network/{networkid}" : {
       "get" : {
         "summary" : "Get Complete Network in CX Format",
-        "description" : "- Returns the specified network as CX.  \n- This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.\n",
+        "description" : "- Returns the specified network as CX.\n- This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.\n",
         "security" : [ { }, {
           "BASIC_AUTH" : [ ]
         } ],
@@ -726,7 +726,7 @@
       },
       "delete" : {
         "summary" : "Delete a network",
-        "description" : "- Deletes the network specified by networkid. \n- There is no method to undo a deletion, so care should be exercised.  \n- The specified network must be owned by the authenticated user.\n",
+        "description" : "- Deletes the network specified by networkid.\n- There is no method to undo a deletion, so care should be exercised.\n- The specified network must be owned by the authenticated user.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -853,7 +853,7 @@
               "application/json" : {
                 "schema" : {
                   "type" : "object",
-                  "description" : "Response payload object",
+                  "description" : "Response payload",
                   "properties" : {
                     "metaData" : {
                       "type" : "array",
@@ -977,7 +977,7 @@
     "/network/{networkid}/aspects" : {
       "put" : {
         "summary" : "Update Network Aspects",
-        "description" : "- Updates aspects of the network specified by **networkid**. \n- Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.\n",
+        "description" : "- Updates aspects of the network specified by **networkid**.\n- Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1010,7 +1010,7 @@
     "/network/{networkid}/copy" : {
       "post" : {
         "summary" : "Clone a Network",
-        "description" : "- Creates a clone of the network specified by networkid (UUID )into the signed in user's account. \n- The URL of the cloned network is returned to the client.\n",
+        "description" : "- Creates a clone of the network specified by networkid (UUID )into the signed in user's account.\n- The URL of the cloned network is returned to the client.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1147,7 +1147,7 @@
     "/network/{networkid}/provenance" : {
       "get" : {
         "summary" : "Get Network Provenance",
-        "description" : "- Returns the Provenance aspect of the network specified by **networkid**.  \n- The returned value is a JSON *ProvenanceEntity* object which in turn contains a tree structure of *ProvenanceEvent* and *ProvenanceEntity* objects that describe the provenance history of the network.\n- Refer to the document [NDEx Provenance History](http://www.home.ndexbio.org/network-provenance-history/) for a detailed desciption of this structure and best practices for its use.\n- Errors if:\n  - the **networkid** does not correspond to an existing network\n",
+        "description" : "- Returns the Provenance aspect of the network specified by **networkid**.\n- The returned value is a JSON *ProvenanceEntity* object which in turn contains a tree structure of *ProvenanceEvent* and *ProvenanceEntity* objects that describe the provenance history of the network.\n- Refer to the document [NDEx Provenance History](http://www.home.ndexbio.org/network-provenance-history/) for a detailed desciption of this structure and best practices for its use.\n- Errors if:\n  - the **networkid** does not correspond to an existing network\n",
         "security" : [ { }, {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1178,7 +1178,7 @@
       },
       "put" : {
         "summary" : "Set Network Provenance",
-        "description" : "- Updates the Provenance aspect of the network specified by **networkid** to be the *ProvenanceEntity* object of the PUT data.  \n- The *ProvenanceEntity* object is intended to represent the current state and history of the network and to contain a tree structure of *ProvenanceEvent* and *ProvenanceEntity* objects that describe the provenance history.\n- Refer to the document [NDEx Provenance History](http://www.home.ndexbio.org/network-provenance-history/) for a detailed desciption of this structure and best practices for its use.\n- Errors if:\n  - the authenticated user does not have ADMIN permission to the specified network\n  - the **networkid** does not correspond to an existing network\n",
+        "description" : "- Updates the Provenance aspect of the network specified by **networkid** to be the *ProvenanceEntity* object of the PUT data.\n- The *ProvenanceEntity* object is intended to represent the current state and history of the network and to contain a tree structure of *ProvenanceEvent* and *ProvenanceEntity* objects that describe the provenance history.\n- Refer to the document [NDEx Provenance History](http://www.home.ndexbio.org/network-provenance-history/) for a detailed desciption of this structure and best practices for its use.\n- Errors if:\n  - the authenticated user does not have ADMIN permission to the specified network\n  - the **networkid** does not correspond to an existing network\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1211,7 +1211,7 @@
     "/network/{networkid}/sample" : {
       "get" : {
         "summary" : "Get Network Sample",
-        "description" : "- Returns a sample subnetwork of the network specified by **networkid**.\n- The default sample network is created based on an arbitrary selection of 500 edges, created by the NDEx server for networks larger than 500 edges. \n- Alternatively, if a sample network has been explicitedly stored using **setNetworkSample** request, that sample network will be returned.\n- Returns *ObjectNotFound* exception when:\n  - no sample file was found\n  - network specified by **networkid** has 500 or fewer edges\n  - the sample network is not yet generated by the server at the time of the request.\n  - the sample network has been set to null by the network owner.\n- Errors if:\n  - the authenticated user making the request does not have WRITE or ADMIN permissions to the specified network\n  - the **networkid** does not correspond to an existing network\n",
+        "description" : "- Returns a sample subnetwork of the network specified by **networkid**.\n- The default sample network is created based on an arbitrary selection of 500 edges, created by the NDEx server for networks larger than 500 edges.\n- Alternatively, if a sample network has been explicitedly stored using **setNetworkSample** request, that sample network will be returned.\n- Returns *ObjectNotFound* exception when:\n  - no sample file was found\n  - network specified by **networkid** has 500 or fewer edges\n  - the sample network is not yet generated by the server at the time of the request.\n  - the sample network has been set to null by the network owner.\n- Errors if:\n  - the authenticated user making the request does not have WRITE or ADMIN permissions to the specified network\n  - the **networkid** does not correspond to an existing network\n",
         "security" : [ { }, {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1242,7 +1242,7 @@
       },
       "put" : {
         "summary" : "Set Sample Network",
-        "description" : "- Sets the example network for the network specified by **networkid**.  The sample network is specified by the CX data in the request body. \n- Errors if:\n  - the authenticated user does not have ADMIN permissions to the specified network\n  - the **networkid** does not correspond to an existing network\n",
+        "description" : "- Sets the example network for the network specified by **networkid**.  The sample network is specified by the CX data in the request payload.\n- Errors if:\n  - the authenticated user does not have ADMIN permissions to the specified network\n  - the **networkid** does not correspond to an existing network\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1278,7 +1278,7 @@
     "/network/{networkid}/summary" : {
       "get" : {
         "summary" : "Get a Network Summary",
-        "description" : "- Retrieves a NetworkSummary JSON object based on the network specified by **networkId**. \n- A NetworkSummary object is a subset of a network object.  It is used to convey basic information about a network in this API.\n- Error occurs if the network is not found or the authenticated user does not have read permission for the network.\n- Anonymous users can only access networks with PUBLIC visibility.\n",
+        "description" : "- Retrieves a NetworkSummary JSON object based on the network specified by **networkId**.\n- A NetworkSummary object is a subset of a network object.  It is used to convey basic information about a network in this API.\n- Error occurs if the network is not found or the authenticated user does not have read permission for the network.\n- Anonymous users can only access networks with PUBLIC visibility.\n",
         "security" : [ { }, {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1309,7 +1309,7 @@
       },
       "put" : {
         "summary" : "Update Network Profile and Properties",
-        "description" : "- The JSON request body contains key/value pairs that overwrite the corresponding properties of a given network.\n- at this time, only the following properties of a network can be updated:\n  - `name` \n  - `description`\n  - `version`\n  - `visibility` \n  - and `properties`\n",
+        "description" : "- The JSON request payload contains key/value pairs that overwrite the corresponding properties of a given network.\n- at this time, only the following properties of a network can be updated:\n  - `name`\n  - `description`\n  - `version`\n  - `visibility`\n  - and `properties`\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1412,7 +1412,7 @@
     "/networkset" : {
       "post" : {
         "summary" : "Create a Network Set",
-        "description" : "- Creates a new network set.\n- A URL link associated with the newly created network set is returned in the response body upon successful completion. \n- The network set's UUID is a component of this URL and corresponds to the **networksetid** path parameter used in subsequent Get/Put/Delete network set operations.\n- Returns an error when:\n  - the `name` property is not specified\n  - the user is not authenticated.\n",
+        "description" : "- Creates a new network set.\n- A URL link associated with the newly created network set is returned in the response payload upon successful completion.\n- The network set's UUID is a component of this URL and corresponds to the **networksetid** path parameter used in subsequent Get/Put/Delete network set operations.\n- Returns an error when:\n  - the `name` property is not specified\n  - the user is not authenticated.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1545,7 +1545,7 @@
     "/networkset/{networksetid}/members" : {
       "post" : {
         "summary" : "Add Networks to Network Set",
-        "description" : "- Adds networks to a network set.\n- The HTTP request body holds an array containing one or more **networksetid**'s (UUID's) that denote the networks to add.\n- An error is returned if:\n  - the network set does not exist\n  - the member to add does not exist\n  - the user is not the owner of the network set\n",
+        "description" : "- Adds networks to a network set.\n- The HTTP request payload holds an array containing one or more **networksetid**'s (UUID's) that denote the networks to add.\n- An error is returned if:\n  - the network set does not exist\n  - the member to add does not exist\n  - the user is not the owner of the network set\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1579,7 +1579,7 @@
       },
       "delete" : {
         "summary" : "Delete Networks from Network Set",
-        "description" : "- Deletes one or more networks belonging to a network set.\n- The HTTP request body holds an array containing one or more **networkSetId**'s (UUID's) that denote the networks to delete.\n- An error is returned if:\n  - the network set does not exist\n  - the network member to delete does not exist\n  - the user is not the owner of the network set\n",
+        "description" : "- Deletes one or more networks belonging to a network set.\n- The HTTP request payload holds an array containing one or more **networkSetId**'s (UUID's) that denote the networks to delete.\n- An error is returned if:\n  - the network set does not exist\n  - the network member to delete does not exist\n  - the user is not the owner of the network set\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1658,7 +1658,7 @@
     "/search/group" : {
       "post" : {
         "summary" : "Search Groups",
-        "description" : "- Returns an array of Group objects, and returns the total number of objects found that meet the search criterion.\n- The search criterion is found in the request body's `searchString` property.\n- Wildcard characters are valid in `searchString`.\n",
+        "description" : "- Returns an array of Group objects, and returns the total number of objects found that meet the search criterion.\n- The search criterion is found in the request payload's `searchString` property.\n- Wildcard characters are valid in `searchString`.\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1715,7 +1715,7 @@
     "/search/network" : {
       "post" : {
         "summary" : "Search Networks",
-        "description" : "- Returns an array of NetworkSummary objects, and returns the total number of objects found that meet the search criterion.\n- The search criterion is found in the request body's `searchString` property.\n- Wildcard characters are valid in `searchString`.\n- The search can be constrained using these optional properties:\n    - `permission` - filter by READ / WRITE network permission\n    - `includeGroups` - filter by user's group permission\n    - `accountName` - filter by network owner\n",
+        "description" : "- Returns an array of NetworkSummary objects, and returns the total number of objects found that meet the search criterion.\n- The search criterion is found in the request payload's `searchString` property.\n- Wildcard characters are valid in `searchString`.\n- The search can be constrained using these optional properties:\n    - `permission` - filter by READ / WRITE network permission\n    - `includeGroups` - filter by user's group permission\n    - `accountName` - filter by network owner\n",
         "security" : [ { }, {
           "BASIC_AUTH" : [ ]
         } ],
@@ -1977,7 +1977,7 @@
                   },
                   "errorWhenLimitIsOver" : {
                     "type" : "boolean",
-                    "description" : "- (Optional) If this value is true the server stops streaming the network when it hits the edgeLimit, and add success: false and \n  error: \"EdgeLimitExceeded\" in the status aspect and close the CX stream. \n- If this value is false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute \"EdgeLimitExceeded\": \"true\" will be added to the returned network only if the server hits the edgeLimit. The default value is true.\n",
+                    "description" : "- (Optional) If this value is true the server stops streaming the network when it hits the edgeLimit, and add success: false and\n  error: \"EdgeLimitExceeded\" in the status aspect and close the CX stream.\n- If this value is false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute \"EdgeLimitExceeded\": \"true\" will be added to the returned network only if the server hits the edgeLimit. The default value is true.\n",
                     "default" : true
                   }
                 },
@@ -2062,7 +2062,7 @@
                   },
                   "errorWhenLimitIsOver" : {
                     "type" : "boolean",
-                    "description" : "- (Optional) If this value is true the server stops streaming the network when it hits the edgeLimit, and add success: false and \n  error: \"EdgeLimitExceeded\" in the status aspect and close the CX stream. \n- If this value is set to false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute \"EdgeLimitExceeded\": \"true\" will be added to the returned network only if the server hits the edgeLimit. The default value is true.\n",
+                    "description" : "- (Optional) If this value is true the server stops streaming the network when it hits the edgeLimit, and add success: false and\n  error: \"EdgeLimitExceeded\" in the status aspect and close the CX stream.\n- If this value is set to false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute \"EdgeLimitExceeded\": \"true\" will be added to the returned network only if the server hits the edgeLimit. The default value is true.\n",
                     "default" : true
                   }
                 },
@@ -2106,7 +2106,7 @@
     "/search/user" : {
       "post" : {
         "summary" : "Search Users",
-        "description" : "- Returns an array of User objects, and returns the total number of objects found that meet the search criterion.\n- The search criterion is found in the request body's `searchString` property.\n- Wildcard characters are valid in `searchString`.\n",
+        "description" : "- Returns an array of User objects, and returns the total number of objects found that meet the search criterion.\n- The search criterion is found in the request payload's `searchString` property.\n- Wildcard characters are valid in `searchString`.\n",
         "security" : [ { }, {
           "BASIC_AUTH" : [ ]
         } ],
@@ -2244,7 +2244,7 @@
       },
       "delete" : {
         "summary" : "Delete a Task",
-        "description" : "- Deletes the task associated with the **taskid** path parameter. \n- An error is returned if:\n  - the task does not exist\n  - the authenticated user does not own the specified task\n",
+        "description" : "- Deletes the task associated with the **taskid** path parameter.\n- An error is returned if:\n  - the task does not exist\n  - the authenticated user does not own the specified task\n",
         "security" : [ {
           "BASIC_AUTH" : [ ]
         } ],
@@ -3157,7 +3157,7 @@
       },
       "SearchStringPropertySchema" : {
         "type" : "object",
-        "description" : "A JSON object within the HTTP request body which specifies the what is to be searched.",
+        "description" : "A JSON object within the HTTP request payload which specifies the what is to be searched.",
         "properties" : {
           "searchString" : {
             "type" : "string",
@@ -3543,7 +3543,7 @@
         "description" : "NOT FOUND: The object that was requested does not exist."
       },
       "500-response" : {
-        "description" : "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request body objects.",
+        "description" : "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request payloads.",
         "content" : {
           "application/json" : {
             "schema" : {
