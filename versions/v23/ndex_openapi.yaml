@@ -16,11 +16,13 @@ info:
       - `Put:  /network/{networkid}`
 
 
-    Basic Authentication and all other API endpoints are supported.  View or download the full NDEx API using the link below.
+    Basic Authentication and all other API endpoints are supported.
+    
+    
+    The full NDEx API specification is found on the [official NDEx API document](http://www.home.ndexbio.org/using-the-ndex-server-api/) webpage.
 
-externalDocs:
-  description: "NDEx API document"
-  url: http://www.home.ndexbio.org/using-the-ndex-server-api/
+
+    This OpenAPI project is developed and maintained by [Mike Fidel](mailto:mikefidel.us@gmail.com).  Please submit bug reports, enhancement requests and questions through the project's [GitHub's Issue Tracking](https://github.com/ndexbio/openapi-specification/issues).
 
 servers:
   - url: http://www.ndexbio.org/v2
