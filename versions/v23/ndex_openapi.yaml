@@ -1,7 +1,7 @@
 openapi: 3.0.0
 
 info:
-  version: "2.3.0"
+  version: "2.3.1"
   title: "NDEx 2.3 REST API"
   description: >
     This [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) document defines the **N**etwork **D**ata **Ex**change (**NDEx**) REST API which is used to communicate with NDEx public and private servers.
@@ -17,45 +17,45 @@ info:
 
 
     Basic Authentication and all other API endpoints are supported.
-    
-    
+
+
     The full NDEx API specification is found on the [official NDEx API document](http://www.home.ndexbio.org/using-the-ndex-server-api/) webpage.
 
 
     This OpenAPI project is developed and maintained by [Mike Fidel](mailto:mikefidel.us@gmail.com).  Please submit bug reports, enhancement requests and questions through the project's [GitHub's Issue Tracking](https://github.com/ndexbio/openapi-specification/issues).
 
 servers:
-  - url: http://www.ndexbio.org/v2
-    description: "NDEx public server"
-  - url: http://{Host}/{Version}
-    description: |
-      The host server URL and API version can be overridden.
-    variables:
-      Host:
-        default: "www.ndexbio.org"
-      Version:
-        description: "API version"
-        enum:
-          - 'v2'
-          - 'rest'
-        default: v2
+- url: http://www.ndexbio.org/v2
+  description: "NDEx public server"
+- url: http://{Host}/{Version}
+  description: |
+    The host server URL and API version can be overridden.
+  variables:
+    Host:
+      default: "www.ndexbio.org"
+    Version:
+      description: "API version"
+      enum:
+      - 'v2'
+      - 'rest'
+      default: v2
 
 tags:
-  - name: Admin
-  - name: Batch
-  - name: Group
-  - name: Network
-  - name: Network Set
-  - name: Search
-  - name: Task
-  - name: User
+- name: Admin
+- name: Batch
+- name: Group
+- name: Network
+- name: Network Set
+- name: Search
+- name: Task
+- name: User
 
 paths:
 
   /admin/status:
     get:
       tags:
-        - Admin
+      - Admin
       summary: Get Server Status
       description: |
         - Get the current operational status of an NDEx server.
@@ -63,17 +63,17 @@ paths:
         - The `format` query parameter determines what properties are listed by this operation.
       security: []  # Not required
       parameters:
-        - in: query
-          name: format
-          description: >
-            Determines the server information to be returned.
-              * **standard** - returns properties such as server version and build. The *AdminStatusStandardSchema* Model is returned.
-              * **full** - returns standard properties as well as additional properties.  The *AdminStatusFullSchema* Model is returned.
-          schema:
-            type: string
-            enum: [standard, full]
-          required: false
-          allowEmptyValue: true
+      - in: query
+        name: format
+        description: >
+          Determines the server information to be returned.
+            * **standard** - returns properties such as server version and build. The *AdminStatusStandardSchema* Model is returned.
+            * **full** - returns standard properties as well as additional properties.  The *AdminStatusFullSchema* Model is returned.
+        schema:
+          type: string
+          enum: [standard, full]
+        required: false
+        allowEmptyValue: true
       responses:
         '200':
           description: "OK: Operation successful."
@@ -81,8 +81,8 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/AdminStatusStandardSchema'
-                  - $ref: '#/components/schemas/AdminStatusFullSchema'
+                - $ref: '#/components/schemas/AdminStatusStandardSchema'
+                - $ref: '#/components/schemas/AdminStatusFullSchema'
         '500':
           $ref: '#/components/responses/500-response'
 
@@ -94,7 +94,7 @@ paths:
         - The HTTP request payload contains a JSON array of UUIDs which identify which Group objects to fetch.
       security: []  # Not required
       tags:
-        - Batch
+      - Batch
       requestBody:
         content:
           application/json:
@@ -130,9 +130,9 @@ paths:
         - The /admin/status?format=full function can be used to get a complete list of importers/exporters the server supports."
         - Returns a JSON object which maps Network UUIDs to ExportTaskIDs.  The taskId can then be used to download the exported file.  Refer to the *Download Exported File by Task UUID* operation.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Batch
+      - Batch
       requestBody:
         content:
           application/json:
@@ -169,9 +169,9 @@ paths:
         - Returns what permissions the authenticated user has on the given network.
         - The response payload is a JSON map in which the keys are network UUIDs and the corresponding values are the highest permission assigned to the authenticated user.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Batch
+      - Batch
       requestBody:
         content:
           application/json:
@@ -206,12 +206,12 @@ paths:
         - This function only returns summaries for public networks if the user is not authenticated, otherwise it returns public and the networks for which the authenticated user has READ permission.
         - The number of POSTed Network UUIDs is limited to 2000.
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Batch
+      - Batch
       parameters:
-        - $ref: '#/components/parameters/AccessKeyValueParam'
+      - $ref: '#/components/parameters/AccessKeyValueParam'
       requestBody:
         content:
           application/json:
@@ -246,7 +246,7 @@ paths:
         - The HTTP request payload contains a JSON array of UUIDs which identify which User objects to fetch.
       security: []  # Not required
       tags:
-        - Batch
+      - Batch
       requestBody:
         content:
           application/json:
@@ -289,9 +289,9 @@ paths:
           - the `groupName` property is not specified or already in use
           - the user is not authenticated
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Group
+      - Group
       requestBody:
         content:
           application/json:
@@ -342,9 +342,9 @@ paths:
         - Returns an error if the group is not found.
       security: []  # Not required
       tags:
-        - Group
+      - Group
       parameters:
-        - $ref: '#/components/parameters/GroupIdPath'
+      - $ref: '#/components/parameters/GroupIdPath'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -363,11 +363,11 @@ paths:
           - the group is not found
           - the user is not the owner of the network set
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Group
+      - Group
       parameters:
-        - $ref: '#/components/parameters/GroupIdPath'
+      - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         content:
           application/json:
@@ -411,11 +411,11 @@ paths:
           - the roup is not found
           - the authenticated user does not have authorization to delete the group
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Group
+      - Group
       parameters:
-        - $ref: '#/components/parameters/GroupIdPath'
+      - $ref: '#/components/parameters/GroupIdPath'
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -431,20 +431,20 @@ paths:
         - Retrieves members of the group associated with the **groupid** path parameter.
         - The **type** query parameter can filter which membership types are returned.  All membership types are returned if this query param is omitted.
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Group
+      - Group
       parameters:
-        - $ref: '#/components/parameters/GroupIdPath'
-        - in: query
-          name: type
-          schema:
-            type: string
-            enum: ["GROUPADMIN", "MEMBER"]
-          required: false
-        - $ref: '#/components/parameters/StartParam'
-        - $ref: '#/components/parameters/SizeParam'
+      - $ref: '#/components/parameters/GroupIdPath'
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum: ["GROUPADMIN", "MEMBER"]
+        required: false
+      - $ref: '#/components/parameters/StartParam'
+      - $ref: '#/components/parameters/SizeParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -488,14 +488,14 @@ paths:
           - the authenticated user does not have Admin permissions for the group
           - the change would leave the group without an Admin member
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Group
+      - Group
       parameters:
-        - $ref: '#/components/parameters/GroupIdPath'
-        - $ref: '#/components/parameters/UserIdParam'
-        - $ref: '#/components/parameters/GroupMembershipTypeParam'
-          required: true
+      - $ref: '#/components/parameters/GroupIdPath'
+      - $ref: '#/components/parameters/UserIdParam'
+      - $ref: '#/components/parameters/GroupMembershipTypeParam'
+        required: true
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -513,12 +513,12 @@ paths:
           - the authenticated user is not authorized to edit this group
           - removing the member would leave the group without an Admin member
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Group
+      - Group
       parameters:
-        - $ref: '#/components/parameters/GroupIdPath'
-        - $ref: '#/components/parameters/UserIdParam'
+      - $ref: '#/components/parameters/GroupIdPath'
+      - $ref: '#/components/parameters/UserIdParam'
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -541,47 +541,47 @@ paths:
           - Returns network permissions for the specified group.
           - The returned JSON object contains key/value pairs,where the key is the network UUID and the value is the corresponding permission.
       security:  # Required : Set to more restrictive authentication rule
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Group
+      - Group
       parameters:
-        - in: path
-          name: groupid
-          description: "(Manditory for Both Options) The Group object UUID"
-          schema:
-            type: string
-            format: uuid
-          required: true
-          example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-        - in: query
-          name: networkid
-          description: "(Option 1 only) network UUID to fetch"
-          schema:
-            type: string
-            format: uuid
-          required: false
-          example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-        - in: query
-          name: permission
-          description: "(Option 2 only) 'READ' or 'WRITE' required"
-          schema:
-            type: string
-            enum: ["READ", "WRITE"]
-          required: false
-        - in: query
-          name: start
-          description: "(Option 2 only) Index to first object to return"
-          schema:
-            type: number
-            default: 100
-          required: false
-        - in: query
-          name: size
-          description: "(Option 2 only) Number of objects to return"
-          schema:
-            type: number
-            default: 100
-          required: false
+      - in: path
+        name: groupid
+        description: "(Manditory for Both Options) The Group object UUID"
+        schema:
+          type: string
+          format: uuid
+        required: true
+        example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      - in: query
+        name: networkid
+        description: "(Option 1 only) network UUID to fetch"
+        schema:
+          type: string
+          format: uuid
+        required: false
+        example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      - in: query
+        name: permission
+        description: "(Option 2 only) 'READ' or 'WRITE' required"
+        schema:
+          type: string
+          enum: ["READ", "WRITE"]
+        required: false
+      - in: query
+        name: start
+        description: "(Option 2 only) Index to first object to return"
+        schema:
+          type: number
+          default: 100
+        required: false
+      - in: query
+        name: size
+        description: "(Option 2 only) Number of objects to return"
+        schema:
+          type: number
+          default: 100
+        required: false
 
       responses:
         '200':
@@ -600,13 +600,13 @@ paths:
         - Returns the specified network as CX.
         - This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
-        - $ref: '#/components/parameters/AccessKeyValueParam'
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - $ref: '#/components/parameters/AccessKeyValueParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -626,11 +626,11 @@ paths:
         - There is no method to undo a deletion, so care should be exercised.
         - The specified network must be owned by the authenticated user.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -653,11 +653,11 @@ paths:
           ---
         **Note: The access key function must be enabled in order to return a key.** Refer to *Disable/enable Access Key on Network* operation.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -688,12 +688,12 @@ paths:
           - The caller is not the owner of this network.
           - the **networkid** does not correspond to an existing network
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
-        - $ref: '#/components/parameters/AccessKeyParam'
+      - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/AccessKeyParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -720,13 +720,13 @@ paths:
         - Returns the CX metadata collection of the network specified by **networkid**.
         - Errors if the **networkid** does not correspond to an existing network.
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
-        - $ref: '#/components/parameters/AccessKeyValueParam'
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - $ref: '#/components/parameters/AccessKeyValueParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -754,14 +754,14 @@ paths:
         - The size parameter is optional, and by default the server will return all elements of this aspect.
         - Errors if the **networkid** does not correspond to an existing network
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
-        - $ref: '#/components/parameters/AspectNameDemoPath'
-        - $ref: '#/components/parameters/SizeParam'
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - $ref: '#/components/parameters/AspectNameDemoPath'
+      - $ref: '#/components/parameters/SizeParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -784,13 +784,13 @@ paths:
         - Returns the CX metadata for the specified aspect of the network specified by **networkid**.
         - Errors if the **networkid** does not correspond to an existing network
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
-        - $ref: '#/components/parameters/AspectNamePath'
+      - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/AspectNamePath'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -827,11 +827,11 @@ paths:
         - Updates aspects of the network specified by **networkid**.
         - Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
@@ -852,11 +852,11 @@ paths:
         - Creates a clone of the network specified by networkid (UUID )into the signed in user's account.
         - The URL of the cloned network is returned to the client.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
       responses:
         '201':
           description: "OK: Operation successful."
@@ -883,11 +883,11 @@ paths:
           - `description`
           - `version`
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
@@ -922,11 +922,11 @@ paths:
           - the authenticated user does not have ADMIN permission to the specified network
           - the **networkid** does not correspond to an existing network
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
@@ -964,13 +964,13 @@ paths:
         - Errors if:
           - the **networkid** does not correspond to an existing network
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
-        - $ref: '#/components/parameters/AccessKeyValueParam'
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - $ref: '#/components/parameters/AccessKeyValueParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -993,16 +993,16 @@ paths:
           - the authenticated user does not have ADMIN permission to the specified network
           - the **networkid** does not correspond to an existing network
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
             schema:
-                $ref: '#/components/schemas/ProvenanceEntityObjectSchema'
+              $ref: '#/components/schemas/ProvenanceEntityObjectSchema'
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -1027,13 +1027,13 @@ paths:
           - the authenticated user making the request does not have WRITE or ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
-        - $ref: '#/components/parameters/AccessKeyValueParam'
+      - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/AccessKeyValueParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -1054,11 +1054,11 @@ paths:
           - the authenticated user does not have ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
@@ -1083,13 +1083,13 @@ paths:
         - Error occurs if the network is not found or the authenticated user does not have read permission for the network.
         - Anonymous users can only access networks with PUBLIC visibility.
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
-        - $ref: '#/components/parameters/AccessKeyValueParam'
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - $ref: '#/components/parameters/AccessKeyValueParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -1113,11 +1113,11 @@ paths:
           - `visibility`
           - and `properties`
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
@@ -1156,11 +1156,11 @@ paths:
           - `visibility`
           - `showcase`
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network
+      - Network
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
@@ -1171,8 +1171,8 @@ paths:
                   type: boolean
                 visibility:
                   enum:
-                    - PUBLIC
-                    - PRIVATE
+                  - PUBLIC
+                  - PRIVATE
                 showcase:
                   type: boolean
               example:
@@ -1198,9 +1198,9 @@ paths:
           - the `name` property is not specified
           - the user is not authenticated.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network Set
+      - Network Set
       requestBody:
         content:
           application/json:
@@ -1235,10 +1235,10 @@ paths:
           - the network set does not exist.
       security: []  # Not required
       tags:
-        - Network Set
+      - Network Set
       parameters:
-        - $ref: '#/components/parameters/NetworkSetIdPath'
-        - $ref: '#/components/parameters/AccessKeyValueParam'
+      - $ref: '#/components/parameters/NetworkSetIdPath'
+      - $ref: '#/components/parameters/AccessKeyValueParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -1263,11 +1263,11 @@ paths:
           - the user is not the owner of the network set
           - the network set does not exist.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network Set
+      - Network Set
       parameters:
-        - $ref: '#/components/parameters/NetworkSetIdPath'
+      - $ref: '#/components/parameters/NetworkSetIdPath'
       requestBody:
         content:
           application/json:
@@ -1291,11 +1291,11 @@ paths:
           - the user is not the owner of the nework set
           - the network set does not exist.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network Set
+      - Network Set
       parameters:
-        - $ref: '#/components/parameters/NetworkSetIdPath'
+      - $ref: '#/components/parameters/NetworkSetIdPath'
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -1317,11 +1317,11 @@ paths:
           - the member to add does not exist
           - the user is not the owner of the network set
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network Set
+      - Network Set
       parameters:
-        - $ref: '#/components/parameters/NetworkSetIdPath'
+      - $ref: '#/components/parameters/NetworkSetIdPath'
       requestBody:
         content:
           application/json:
@@ -1347,11 +1347,11 @@ paths:
           - the network member to delete does not exist
           - the user is not the owner of the network set
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network Set
+      - Network Set
       parameters:
-        - $ref: '#/components/parameters/NetworkSetIdPath'
+      - $ref: '#/components/parameters/NetworkSetIdPath'
       requestBody:
         content:
           application/json:
@@ -1377,11 +1377,11 @@ paths:
           - the network set does not exist
           - the user is not the owner of the network set
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Network Set
+      - Network Set
       parameters:
-          - $ref: '#/components/parameters/NetworkSetIdPath'
+      - $ref: '#/components/parameters/NetworkSetIdPath'
       requestBody:
         content:
           application/json:
@@ -1393,7 +1393,7 @@ paths:
                   description: |
                     - (Required) Controls the visibility of the network set on the owner's homepage.
               required:
-                - showcase
+              - showcase
               example:
                 showcase: true
       responses:
@@ -1412,12 +1412,12 @@ paths:
         - The search criterion is found in the request payload's `searchString` property.
         - Wildcard characters are valid in `searchString`.
       security:
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Search
+      - Search
       parameters:
-        - $ref: '#/components/parameters/StartParam'
-        - $ref: '#/components/parameters/SizeParam'
+      - $ref: '#/components/parameters/StartParam'
+      - $ref: '#/components/parameters/SizeParam'
       requestBody:
         content:
           application/json:
@@ -1458,13 +1458,13 @@ paths:
             - `includeGroups` - filter by user's group permission
             - `accountName` - filter by network owner
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Search
+      - Search
       parameters:
-        - $ref: '#/components/parameters/StartParam'
-        - $ref: '#/components/parameters/SizeParam'
+      - $ref: '#/components/parameters/StartParam'
+      - $ref: '#/components/parameters/SizeParam'
       requestBody:
         content:
           application/json:
@@ -1493,7 +1493,7 @@ paths:
                   description: |
                     - (Optional) If provided, the search will be constrained to networks owned by the specified account.
               required:
-                - searchString
+              - searchString
               example:
                 searchString: ""
       responses:
@@ -1526,13 +1526,13 @@ paths:
         - Returns an array of Network Summary objects, and returns the total number of objects found that meet the search criterion.
         - The `searchString` property contains the search query text. Wildcard characters permitted.
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Search
+      - Search
       parameters:
-        - $ref: '#/components/parameters/StartParam'
-        - $ref: '#/components/parameters/SizeParam'
+      - $ref: '#/components/parameters/StartParam'
+      - $ref: '#/components/parameters/SizeParam'
       requestBody:
         content:
           application/json:
@@ -1577,11 +1577,11 @@ paths:
         - The query is only valid if at least one of the above mentioned filter properties is not null and non-empty.
         - An error is returned if both the `nodeFilter` and `edgeFilter` properties are nulls or have no property specifications.
       security:  # Optional
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Search
+      - Search
       parameters:
-        - $ref: '#/components/parameters/NetworkIdPath'
+      - $ref: '#/components/parameters/NetworkIdPath'
       requestBody:
         content:
           application/json:
@@ -1624,8 +1624,8 @@ paths:
                   description: |
                     - Identifies the query by name.
               required:
-                - edgeFilter
-                  nodeFilter
+              - edgeFilter
+                nodeFilter
       responses:
         '200':
           description: "OK: Operation successful."
@@ -1646,19 +1646,19 @@ paths:
           - `edgeLimit`
           - `errorWhenLimitIsOver`
       security:  # Optional
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Search
+      - Search
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
-        - in: query
-          name: save
-          description: "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false."
-          schema:
-            type: string
-            enum: ["false", "true"]
-            default: false
-          required: false
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - in: query
+        name: save
+        description: "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false."
+        schema:
+          type: string
+          enum: ["false", "true"]
+          default: false
+        required: false
       requestBody:
         content:
           application/json:
@@ -1688,7 +1688,7 @@ paths:
                     - If this value is false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute "EdgeLimitExceeded": "true" will be added to the returned network only if the server hits the edgeLimit. The default value is true.
                   default: true
               required:
-                - searchString
+              - searchString
               example:
                 searchString: "erk* braf"
                 edgeLimit: 0
@@ -1720,19 +1720,19 @@ paths:
           - `edgeLimit`
           - `errorWhenLimitIsOver`
       security:  # Optional
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Search
+      - Search
       parameters:
-        - $ref: '#/components/parameters/NetworkIdDemoPath'
-        - in: query
-          name: save
-          description: "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false."
-          schema:
-            type: string
-            enum: ["false", "true"]
-            default: false
-          required: false
+      - $ref: '#/components/parameters/NetworkIdDemoPath'
+      - in: query
+        name: save
+        description: "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false."
+        schema:
+          type: string
+          enum: ["false", "true"]
+          default: false
+        required: false
       requestBody:
         content:
           application/json:
@@ -1768,7 +1768,7 @@ paths:
                     - If this value is set to false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute "EdgeLimitExceeded": "true" will be added to the returned network only if the server hits the edgeLimit. The default value is true.
                   default: true
               required:
-                - searchString
+              - searchString
               example:
                 searchString: "erk*"
                 searchDepth: 1
@@ -1798,13 +1798,13 @@ paths:
         - The search criterion is found in the request payload's `searchString` property.
         - Wildcard characters are valid in `searchString`.
       security:  # Optional
-        - {}
-        - BASIC_AUTH: []
+      - {}
+      - BASIC_AUTH: []
       tags:
-        - Search
+      - Search
       parameters:
-        - $ref: '#/components/parameters/StartParam'
-        - $ref: '#/components/parameters/SizeParam'
+      - $ref: '#/components/parameters/StartParam'
+      - $ref: '#/components/parameters/SizeParam'
       requestBody:
         content:
           application/json:
@@ -1844,20 +1844,20 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Task
+      - Task
       parameters:
-        - in: query
-          name: status
-          description: "Current state of the task workflow."
-          schema:
-            type: string
-            enum: [COMPLETED, PROCESSING, QUEUED, FAILED]
-          required: false
-          allowEmptyValue: false
-        - $ref: '#/components/parameters/StartParam'
-        - $ref: '#/components/parameters/SizeParam'
+      - in: query
+        name: status
+        description: "Current state of the task workflow."
+        schema:
+          type: string
+          enum: [COMPLETED, PROCESSING, QUEUED, FAILED]
+        required: false
+        allowEmptyValue: false
+      - $ref: '#/components/parameters/StartParam'
+      - $ref: '#/components/parameters/SizeParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -1883,11 +1883,11 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Task
+      - Task
       parameters:
-        - $ref: '#/components/parameters/TaskIdPath'
+      - $ref: '#/components/parameters/TaskIdPath'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -1910,11 +1910,11 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Task
+      - Task
       parameters:
-        - $ref: '#/components/parameters/TaskIdPath'
+      - $ref: '#/components/parameters/TaskIdPath'
       responses:
         '204':
           $ref: '#/components/responses/204-response'
@@ -1934,17 +1934,17 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - Task
+      - Task
       parameters:
-        - $ref: '#/components/parameters/TaskIdPath'
-        - in: query
-          name: download
-          schema:
-            type: string
-            enum: ["true"]
-          required: true
+      - $ref: '#/components/parameters/TaskIdPath'
+      - in: query
+        name: download
+        schema:
+          type: string
+          enum: ["true"]
+        required: true
       responses:
         '200':
           description: "OK: Operation successful."
@@ -1977,38 +1977,38 @@ paths:
         - Returns those groups for which the authenticated user has the specified membership type.
         - The **type** query parameter contains the membership types upon which to filter.  If it is omitted, all membership types will be returned.
       security:  # Required : Set to more restrictive authentication rule
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - User
+      - User
       parameters:
-        - $ref: '#/components/parameters/UserIdPath'
-        - in: query
-          name: groupid
-          description: "(Option 1 only) The Group object UUID"
-          schema:
-            type: string
-            format: uuid
-          required: false
-        - in: query
-          name: type
-          description: "(Option 2 only) Membership type"
-          schema:
-            type: string
-            enum: [MEMBER, GROUPADMIN]
-        - in: query
-          name: start
-          description: "(Option 2 only) Index to first object to return"
-          schema:
-            type: number
-            default: 100
-          required: false
-        - in: query
-          name: size
-          description: "(Option 2 only) Number of objects to return"
-          schema:
-            type: number
-            default: 100
-          required: false
+      - $ref: '#/components/parameters/UserIdPath'
+      - in: query
+        name: groupid
+        description: "(Option 1 only) The Group object UUID"
+        schema:
+          type: string
+          format: uuid
+        required: false
+      - in: query
+        name: type
+        description: "(Option 2 only) Membership type"
+        schema:
+          type: string
+          enum: [MEMBER, GROUPADMIN]
+      - in: query
+        name: start
+        description: "(Option 2 only) Index to first object to return"
+        schema:
+          type: number
+          default: 100
+        required: false
+      - in: query
+        name: size
+        description: "(Option 2 only) Number of objects to return"
+        schema:
+          type: number
+          default: 100
+        required: false
       responses:
         '200':
           description: "OK: Operation successful."
@@ -2030,11 +2030,11 @@ paths:
         - Returns a list of *Network Set* objects owned by the user identified in the **userid** path parameter.
       security: []  # Not required
       tags:
-        - User
+      - User
       parameters:
-        - $ref: '#/components/parameters/UserIdPath'
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
+      - $ref: '#/components/parameters/UserIdPath'
+      - $ref: '#/components/parameters/OffsetParam'
+      - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -2057,13 +2057,13 @@ paths:
           - the networks are shared with the user directly
         - **Userid** path parameter must be an authenticated user's UUID
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - User
+      - User
       parameters:
-        - $ref: '#/components/parameters/UserIdPath'
-        - $ref: '#/components/parameters/OffsetParam'
-        - $ref: '#/components/parameters/LimitParam'
+      - $ref: '#/components/parameters/UserIdPath'
+      - $ref: '#/components/parameters/OffsetParam'
+      - $ref: '#/components/parameters/LimitParam'
       responses:
         '200':
           description: "OK: Operation successful."
@@ -2087,23 +2087,23 @@ paths:
         - Maps the **networkId** UUID to the highest permission assigned to the authenticated user.
         - If the **directonly=** query parameter is set to true, permissions granted through groups are not included in the result. The default value is false.
       security:  # Required
-        - BASIC_AUTH: []
+      - BASIC_AUTH: []
       tags:
-        - User
+      - User
       parameters:
-        - $ref: '#/components/parameters/UserIdPath'
-        - in: query
-          name: networkId
-          schema:
-            type: string
-          example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-          required: true
-        - in: query
-          name: directonly
-          schema:
-            type: string
-            enum: ["false", "true"]
-          required: false
+      - $ref: '#/components/parameters/UserIdPath'
+      - in: query
+        name: networkId
+        schema:
+          type: string
+        example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        required: true
+      - in: query
+        name: directonly
+        schema:
+          type: string
+          enum: ["false", "true"]
+        required: false
       responses:
         '200':
           description: "OK: Operation successful."
@@ -2283,9 +2283,9 @@ components:
           type: string
           description: "required in pre-metadata"
       required:
-        - name
-        - consistencyGroup
-        - properties
+      - name
+      - consistencyGroup
+      - properties
     ###
     CX_NetworkObjectSchema:
       type: object
@@ -2340,8 +2340,8 @@ components:
                 type: boolean
                 description: "Set to true if the CX document is successfully generated by the source."
       required:
-        - numberVerification
-        - status
+      - numberVerification
+      - status
     ###
     CX_NetworkStreamSchema:
       type: array
@@ -2435,11 +2435,11 @@ components:
             type: string
             format: uuid
         errorMessage:
-            type: string
-            nullable: true
-            default: null
+          type: string
+          nullable: true
+          default: null
         isValid:
-            type: boolean
+          type: boolean
         warnings:
           type: array
           description: List of warnings.
@@ -2459,8 +2459,8 @@ components:
         visibility:
           type: string
           enum:
-            - PUBLIC
-            - PRIVATE
+          - PUBLIC
+          - PRIVATE
         indexed:
           type: boolean
         completed:
@@ -2567,7 +2567,7 @@ components:
           description: |
             - (Optional) An abstract or summary about this network set.
       required:
-        - name
+      - name
       example:
         name: "Name of this network set"
         description: "A summary of what this network set is about."
@@ -2613,7 +2613,7 @@ components:
           type: string
           description: "Text used for the search. It can include wildcards."
       required:
-        - searchString
+      - searchString
       example:
         searchString: ""
     ###
@@ -2750,8 +2750,8 @@ components:
       schema:
         type: string
         enum:
-          - enable
-          - disable
+        - enable
+        - disable
         default: enable
     ###
     AccessKeyValueParam:  # Used to hold value of access key
@@ -2911,7 +2911,7 @@ components:
         format: uuid
       required: true
       example: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-  
+
   responses:
     ###
     200-response:
@@ -2938,10 +2938,10 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponseSchema'
-   
-############################################################################################
-#    Swagger-UI does not support Google OAuth (i.e. ConnectID) at this time; Issue #3641   #
-############################################################################################  
+
+  ############################################################################################
+  #    Swagger-UI does not support Google OAuth (i.e. ConnectID) at this time; Issue #3641   #
+  ############################################################################################
   securitySchemes:
     BASIC_AUTH:
       type: http
