@@ -2963,11 +2963,11 @@
           "in" : "query",
           "description" : "When true, the server will not return the list of network IDs in this network set\n",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "form",
           "explode" : true,
           "schema" : {
             "type" : "string",
-            "default" : "false",
             "enum" : [ "true", "false" ]
           }
         }, {
@@ -2975,11 +2975,11 @@
           "in" : "query",
           "description" : "When true, only showcased networksets are returned\n",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "form",
           "explode" : true,
           "schema" : {
             "type" : "string",
-            "default" : "false",
             "enum" : [ "true", "false" ]
           }
         } ],
@@ -4710,11 +4710,11 @@
         "in" : "query",
         "description" : "When true, only showcased networksets are returned\n",
         "required" : false,
+        "allowEmptyValue" : true,
         "style" : "form",
         "explode" : true,
         "schema" : {
           "type" : "string",
-          "default" : "false",
           "enum" : [ "true", "false" ]
         }
       },
@@ -4723,11 +4723,11 @@
         "in" : "query",
         "description" : "When true, the server will not return the list of network IDs in this network set\n",
         "required" : false,
+        "allowEmptyValue" : true,
         "style" : "form",
         "explode" : true,
         "schema" : {
           "type" : "string",
-          "default" : "false",
           "enum" : [ "true", "false" ]
         }
       },
@@ -4773,13 +4773,13 @@
       "Visibility" : {
         "name" : "visibility",
         "in" : "query",
-        "description" : "Indicates the visibility setting of the network when it is uploaded. (Optional)\n",
+        "description" : "Indicates the visibility setting of the network when it is uploaded.\n",
         "required" : false,
+        "allowEmptyValue" : true,
         "style" : "form",
         "explode" : true,
         "schema" : {
           "type" : "string",
-          "default" : "PRIVATE",
           "enum" : [ "PRIVATE", "PUBLIC" ]
         }
       }

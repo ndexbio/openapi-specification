@@ -2570,11 +2570,11 @@ paths:
         description: |
           When true, the server will not return the list of network IDs in this network set
         required: false
+        allowEmptyValue: true
         style: FORM
         explode: true
         schema:
           type: string
-          default: "false"
           enum:
           - "true"
           - "false"
@@ -2583,11 +2583,11 @@ paths:
         description: |
           When true, only showcased networksets are returned
         required: false
+        allowEmptyValue: true
         style: FORM
         explode: true
         schema:
           type: string
-          default: "false"
           enum:
           - "true"
           - "false"
@@ -3919,11 +3919,11 @@ components:
       description: |
         When true, only showcased networksets are returned
       required: false
+      allowEmptyValue: true
       style: FORM
       explode: true
       schema:
         type: string
-        default: "false"
         enum:
         - "true"
         - "false"
@@ -3933,11 +3933,11 @@ components:
       description: |
         When true, the server will not return the list of network IDs in this network set
       required: false
+      allowEmptyValue: true
       style: FORM
       explode: true
       schema:
         type: string
-        default: "false"
         enum:
         - "true"
         - "false"
@@ -3978,13 +3978,13 @@ components:
       name: visibility
       in: query
       description: |
-        Indicates the visibility setting of the network when it is uploaded. (Optional)
+        Indicates the visibility setting of the network when it is uploaded.
       required: false
+      allowEmptyValue: true
       style: FORM
       explode: true
       schema:
         type: string
-        default: PRIVATE
         enum:
         - PRIVATE
         - PUBLIC
