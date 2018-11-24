@@ -1,5 +1,5 @@
 ---
-openapi: 3.0.0
+openapi: 3.0.2
 info:
   title: NDEx 2.4 REST API
   description: |
@@ -1059,6 +1059,9 @@ paths:
       description: |
         - Updates aspects of the network specified by **networkid**.
         - Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.
+        - The networkAttributes aspect should not be updated using this function because it needs
+          special handling. Please use the Update Network Profile or Set Network Properties function
+          to change values in networkAttributes.
       parameters:
       - name: networkid
         in: path
@@ -2562,6 +2565,32 @@ paths:
         explode: true
         schema:
           type: number
+      - name: summary
+        in: query
+        description: |
+          When true, the server will not return the list of network IDs in this network set
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          default: "false"
+          enum:
+          - "true"
+          - "false"
+      - name: showcase
+        in: query
+        description: |
+          When true, only showcased networksets are returned
+        required: false
+        style: FORM
+        explode: true
+        schema:
+          type: string
+          default: "false"
+          enum:
+          - "true"
+          - "false"
       responses:
         200:
           description: 'OK: Operation successful.'
@@ -3884,6 +3913,34 @@ components:
       schema:
         type: number
         default: 0
+    Showcase:
+      name: showcase
+      in: query
+      description: |
+        When true, only showcased networksets are returned
+      required: false
+      style: FORM
+      explode: true
+      schema:
+        type: string
+        default: "false"
+        enum:
+        - "true"
+        - "false"
+    Summary:
+      name: summary
+      in: query
+      description: |
+        When true, the server will not return the list of network IDs in this network set
+      required: false
+      style: FORM
+      explode: true
+      schema:
+        type: string
+        default: "false"
+        enum:
+        - "true"
+        - "false"
     TaskIdPath:
       name: taskid
       in: path
@@ -3917,6 +3974,20 @@ components:
         type: string
         format: uuid
       example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    Visibility:
+      name: visibility
+      in: query
+      description: |
+        Indicates the visibility setting of the network when it is uploaded. (Optional)
+      required: false
+      style: FORM
+      explode: true
+      schema:
+        type: string
+        default: PRIVATE
+        enum:
+        - PRIVATE
+        - PUBLIC
   securitySchemes:
     BASIC_AUTH:
       type: HTTP
