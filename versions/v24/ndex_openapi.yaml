@@ -95,6 +95,7 @@ paths:
       description: |
         - Returns a JSON array of Group objects.
         - The HTTP request payload contains a JSON array of UUIDs which identify which Group objects to fetch.
+        - No more than 2000 UUIDs are returned.
       requestBody:
         content:
           application/json:
@@ -137,6 +138,7 @@ paths:
         - The format which to export is specified using the `exportFormat` property in the request payload.
         - The /admin/status?format=full function can be used to get a complete list of importers/exporters the server supports."
         - Returns a JSON object which maps Network UUIDs to ExportTaskIDs.  The taskId can then be used to download the exported file.  Refer to the *Download Exported File by Task UUID* operation.
+        - No more than 1000 UUIDs are returned.
       requestBody:
         content:
           application/json:
@@ -170,6 +172,7 @@ paths:
       description: |
         - Returns what permissions the authenticated user has on the given network.
         - The response payload is a JSON map in which the keys are network UUIDs and the corresponding values are the highest permission assigned to the authenticated user.
+        - No more than 500 UUIDs are returned.
       requestBody:
         content:
           application/json:
@@ -212,7 +215,8 @@ paths:
         - Returns a JSON array of Network Summary objects.
         - The HTTP request payload contains a JSON array of UUIDs which identify which Network Summary objects to fetch.
         - This function only returns summaries for public networks if the user is not authenticated, otherwise it returns public and the networks for which the authenticated user has READ permission.
-        - The number of POSTed Network UUIDs is limited to 2000.
+        - The optional `accesskey` parameter is supposed to be the accesskey of the network set.  If the given UUIDin the POSTed list is a member of that network set, the server will bypass its permission checking on that network and include the network in the result.
+        - No more than 2000 UUIDs are returned.
       parameters:
       - name: accesskey
         in: query
@@ -267,6 +271,7 @@ paths:
       description: |
         - Returns a JSON array of User objects.
         - The HTTP request payload contains a JSON array of UUIDs which identify which User objects to fetch.
+        - No more than 2000 UUIDs are returned.
       requestBody:
         content:
           application/json:
@@ -1060,8 +1065,7 @@ paths:
         - Updates aspects of the network specified by **networkid**.
         - Put data contains a CX object which includes the specified aspects that will be used to overwrite or insert into the network.
         - The networkAttributes aspect should not be updated using this function because it needs
-          special handling. Please use the Update Network Profile or Set Network Properties function
-          to change values in networkAttributes.
+          special handling. Instead, please use the `Update Network Profile` or `Set Network Properties` functions to change values in networkAttributes.
       parameters:
       - name: networkid
         in: path
@@ -2080,6 +2084,7 @@ paths:
         - Returns a CX Network that is a neighborhood subnetwork where all the paths must start or end at one of the query nodes in the network specified by **networkid**.
         - The query finds the subnetwork by a traversal of the network starting with nodes associated with the following properties:
           - `searchString`
+          - `searchDepth`
           - `edgeLimit`
           - `errorWhenLimitIsOver`
       parameters:
@@ -2139,6 +2144,7 @@ paths:
           - `searchDepth`
           - `edgeLimit`
           - `errorWhenLimitIsOver`
+          - `directOnly`
       parameters:
       - name: networkid
         in: path
@@ -2152,7 +2158,7 @@ paths:
         example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
       - name: save
         in: query
-        description: Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false.
+        description: Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process.
         required: false
         style: FORM
         explode: true
@@ -3584,6 +3590,10 @@ components:
               2. node names in the network
             - A set of initial nodes is selected based on association with matched terms or simple name match.
             - The query selects edges based on traversal from those initial nodes.
+        searchDepth:
+          type: number
+          description: |
+            - An integer value between 1 and 2.  It sets the maximum number of traversal steps from the initial nodes.
         edgeLimit:
           type: number
           description: |
@@ -3595,7 +3605,7 @@ components:
           description: |
             - (Optional) If this value is true the server stops streaming the network when it hits the edgeLimit, and add success: false and
               error: "EdgeLimitExceeded" in the status aspect and close the CX stream.
-            - If this value is false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute "EdgeLimitExceeded": "true" will be added to the returned network only if the server hits the edgeLimit. The default value is true.
+            - If this value is false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute "EdgeLimitExceeded": "true" will be added to the returned network only if the server hits the edgeLimit.
           default: true
       description: The example values used are for demonstration purposes. They can be replaced, as needed.
       example:
@@ -3640,8 +3650,14 @@ components:
           description: |
             - (Optional) If this value is true the server stops streaming the network when it hits the edgeLimit, and add success: false and
               error: "EdgeLimitExceeded" in the status aspect and close the CX stream.
-            - If this value is set to false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute "EdgeLimitExceeded": "true" will be added to the returned network only if the server hits the edgeLimit. The default value is true.
+            - If this value is set to false, the server returns a subnetwork with edge count up to edgeLimit. The status aspect will be a success, and a network attribute "EdgeLimitExceeded": "true" will be added to the returned network only if the server hits the edgeLimit.
           default: true
+        directOnly:
+          type: boolean
+          description: |
+            - (Optional) If this value is false a full neighberhood will be returned.
+            - If this value is set to true, the edges between the n-th step neighbor vertex will be excluded from the result.
+          default: false
       description: The example values used are for demonstration purposes. They can be replaced, as needed.
       example:
         searchString: erk*
