@@ -2,7 +2,7 @@
   "openapi" : "3.0.2",
   "info" : {
     "title" : "NDEx 2.4 REST API",
-    "description" : "This [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) document defines the **N**etwork **D**ata **Ex**change (**NDEx**) REST API which is used to communicate with NDEx public and private servers.\n\nThis document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2019, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).\n\nGoogle's OAuth login and the following API endpoints are not currently supported.  They will be added when the Swagger-UI document reader permits.\n\n  - `Post: /network`\n  - `Put:  /network/{networkid}`\n\n\nBasic Authentication and all other API endpoints are supported.\n\nThe full NDEx API specification is found on the [official NDEx API document](http://www.home.ndexbio.org/using-the-ndex-server-api/) webpage.\n\nThis OpenAPI project is developed and maintained by [Mike Fidel](mailto:mikefidel.us@gmail.com).  Please submit bug reports, enhancement requests and questions through the project's [GitHub's Issue Tracking](https://github.com/ndexbio/openapi-specification/issues).\n",
+    "description" : "This [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) document defines the **N**etwork **D**ata **Ex**change (**NDEx**) REST API which is used to communicate with NDEx public and private servers.\n\nThis document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2019, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).\n\nGoogle's OAuth login is not currently supported.  It will be added when the Swagger-UI document reader permits. Basic Authentication and all other API endpoints are supported.\nThe full NDEx API specification is found on the [official NDEx API document](http://www.home.ndexbio.org/using-the-ndex-server-api/) webpage.\n\nThis OpenAPI project is developed and maintained by [Mike Fidel](mailto:mikefidel.us@gmail.com).  Please submit bug reports, enhancement requests and questions through the project's [GitHub's Issue Tracking](https://github.com/ndexbio/openapi-specification/issues).\n",
     "version" : "2.4.0"
   },
   "servers" : [ {
@@ -187,7 +187,7 @@
       "post" : {
         "tags" : [ "Batch" ],
         "summary" : "Get Network Permissions by UUIDs",
-        "description" : "- Returns what permissions the authenticated user has on the given network.\n- The response payload is a JSON map in which the keys are network UUIDs and the corresponding values are the highest permission assigned to the authenticated user.\n- No more than 500 UUIDs are returned.\n",
+        "description" : "- Returns what permissions the authenticated user has on the given list of network UUIDs.\n- The response payload is a JSON map in which the keys are network UUIDs and the corresponding values are the highest permission assigned to the authenticated user.\n- No more than 500 UUIDs are returned.\n",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -816,6 +816,67 @@
         } ]
       }
     },
+    "/network" : {
+      "post" : {
+        "tags" : [ "Network" ],
+        "summary" : "Create a CX Network",
+        "description" : "- Creates a CX Network.\n- If the POSTed content-type is multipart/form-data, the input CX data is expected to be in the CXNetworkStream field.\n- If the POSTed content-type is application/json, the user can post CX data directly in the payload.\n- TThe user can use the optional `visibility` parameter ti set the visibility of a network when uploading it.\n- Returns an error if\n  - the user is not authenticated\n",
+        "parameters" : [ {
+          "name" : "visibility",
+          "in" : "query",
+          "description" : "(Optional) Indicates the visibility setting of the network when it is uploaded.\n",
+          "required" : false,
+          "allowEmptyValue" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "PRIVATE",
+            "enum" : [ "PRIVATE", "PUBLIC" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_3"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "OK: Operation successful.",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "description" : "URL of newly created network",
+                  "format" : "url",
+                  "example" : "http://test.ndexbio.org/v2/network/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "UNAUTHORIZED: Check that you are authenticated (i.e. Signed In) and have the  credentials to access that NDEx object."
+          },
+          "500" : {
+            "description" : "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request payloads.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BASIC_AUTH" : [ ]
+        } ]
+      }
+    },
     "/network/{networkid}" : {
       "get" : {
         "tags" : [ "Network" ],
@@ -871,6 +932,64 @@
           }
         },
         "security" : [ { }, {
+          "BASIC_AUTH" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "Network" ],
+        "summary" : "Update a CX Network",
+        "description" : "- Updates the specified network with new content, based on CX data.\n- If the POSTed content-type is multipart/form-data, the input CX data is expected to be in the CXNetworkStream field.\n- If the POSTed content-type is application/json, the user can post CX data directly in the payload.\n- Returns an error if:\n  - CX data is not provided\n  - the UUID does not correspond to an existing network for which the authenticated user owns or for which they have WRITE permission\n  - the CX data is larger than the maximum size of a newwork the current NDEx server allows.\n  - the user is not authenticated\n",
+        "parameters" : [ {
+          "name" : "networkid",
+          "in" : "path",
+          "description" : "A unique identifier (UUID) given to the network element when it is created.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body_4"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "OK: Operation successful.",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "description" : "URL of newly created network",
+                  "format" : "url",
+                  "example" : "http://test.ndexbio.org/v2/network/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "UNAUTHORIZED: Check that you are authenticated (i.e. Signed In) and have the  credentials to access that NDEx object."
+          },
+          "500" : {
+            "description" : "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request payloads.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
           "BASIC_AUTH" : [ ]
         } ]
       },
@@ -1335,7 +1454,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_3"
+                "$ref" : "#/components/schemas/body_5"
               }
             }
           }
@@ -1385,7 +1504,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_4"
+                "$ref" : "#/components/schemas/body_6"
               }
             }
           }
@@ -1709,7 +1828,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_5"
+                "$ref" : "#/components/schemas/body_7"
               }
             }
           }
@@ -1759,7 +1878,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_6"
+                "$ref" : "#/components/schemas/body_8"
               }
             }
           }
@@ -2113,7 +2232,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_7"
+                "$ref" : "#/components/schemas/body_9"
               }
             }
           }
@@ -2237,7 +2356,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_8"
+                "$ref" : "#/components/schemas/body_10"
               }
             }
           }
@@ -2355,7 +2474,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_9"
+                "$ref" : "#/components/schemas/body_11"
               }
             }
           }
@@ -2391,7 +2510,7 @@
       "post" : {
         "tags" : [ "Search" ],
         "summary" : "Interconnect Query",
-        "description" : "- Returns a CX Network that is a neighborhood subnetwork where all the paths must start or end at one of the query nodes in the network specified by **networkid**.\n- The query finds the subnetwork by a traversal of the network starting with nodes associated with the following properties:\n  - `searchString`\n  - `searchDepth`\n  - `edgeLimit`\n  - `errorWhenLimitIsOver`\n",
+        "description" : "- Returns a CX Network that is a neighborhood subnetwork where all the paths must start and end at one of the query nodes in the network specified by **networkid**.\n- The query finds the subnetwork by a traversal of the network starting with nodes associated with the following properties:\n  - `searchString`\n  - `searchDepth`\n  - `edgeLimit`\n  - `errorWhenLimitIsOver`\n",
         "parameters" : [ {
           "name" : "networkid",
           "in" : "path",
@@ -2421,7 +2540,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_10"
+                "$ref" : "#/components/schemas/body_12"
               }
             }
           }
@@ -2487,7 +2606,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_11"
+                "$ref" : "#/components/schemas/body_13"
               }
             }
           }
@@ -2968,6 +3087,7 @@
           "explode" : true,
           "schema" : {
             "type" : "string",
+            "default" : "false",
             "enum" : [ "true", "false" ]
           }
         }, {
@@ -2980,6 +3100,7 @@
           "explode" : true,
           "schema" : {
             "type" : "string",
+            "default" : "false",
             "enum" : [ "true", "false" ]
           }
         } ],
@@ -3316,7 +3437,7 @@
           },
           "idCounter" : {
             "type" : "number",
-            "description" : "Required if the aspect exports IDs for its aspect elements. It        denotes the highest ID represented in the aspect or any of the aspect's     previous versions"
+            "description" : "Required if the aspect exports IDs for its aspect elements. It denotes the highest ID represented in the aspect or any of the aspect's previous versions"
           },
           "lastUpdate" : {
             "type" : "string",
@@ -3983,6 +4104,60 @@
           }
         }
       },
+      "body_3" : {
+        "required" : [ "groupName" ],
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "type" : "object"
+          },
+          "groupName" : {
+            "type" : "string"
+          },
+          "image" : {
+            "type" : "string",
+            "format" : "url",
+            "nullable" : true
+          },
+          "website" : {
+            "type" : "string",
+            "format" : "url",
+            "nullable" : true
+          },
+          "description" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "description" : "Group object"
+      },
+      "body_4" : {
+        "required" : [ "groupName" ],
+        "type" : "object",
+        "properties" : {
+          "properties" : {
+            "type" : "object"
+          },
+          "groupName" : {
+            "type" : "string"
+          },
+          "image" : {
+            "type" : "string",
+            "format" : "url",
+            "nullable" : true
+          },
+          "website" : {
+            "type" : "string",
+            "format" : "url",
+            "nullable" : true
+          },
+          "description" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "description" : "Group object"
+      },
       "inline_response_200_1" : {
         "type" : "object",
         "properties" : {
@@ -4046,7 +4221,7 @@
           }
         }
       },
-      "body_3" : {
+      "body_5" : {
         "type" : "object",
         "properties" : {
           "name" : {
@@ -4066,7 +4241,7 @@
           "version" : ""
         }
       },
-      "body_4" : {
+      "body_6" : {
         "type" : "object",
         "properties" : {
           "subNetworkId" : {
@@ -4089,7 +4264,7 @@
           "value" : ""
         }
       },
-      "body_5" : {
+      "body_7" : {
         "type" : "object",
         "properties" : {
           "name" : {
@@ -4113,7 +4288,7 @@
         },
         "description" : "Network properties to update"
       },
-      "body_6" : {
+      "body_8" : {
         "type" : "object",
         "properties" : {
           "readOnly" : {
@@ -4133,7 +4308,7 @@
           "showcase" : true
         }
       },
-      "body_7" : {
+      "body_9" : {
         "required" : [ "showcase" ],
         "type" : "object",
         "properties" : {
@@ -4167,7 +4342,7 @@
         },
         "description" : "SearchResult object"
       },
-      "body_8" : {
+      "body_10" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
@@ -4271,7 +4446,7 @@
           }
         }
       },
-      "body_9" : {
+      "body_11" : {
         "required" : [ "edgeFilter nodeFilter" ],
         "type" : "object",
         "properties" : {
@@ -4292,7 +4467,7 @@
           }
         }
       },
-      "body_10" : {
+      "body_12" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
@@ -4302,7 +4477,7 @@
           },
           "searchDepth" : {
             "type" : "number",
-            "description" : "- An integer value between 1 and 2.  It sets the maximum number of traversal steps from the initial nodes.\n"
+            "description" : "- An integer value between 1 and 2.  It sets the maximum number of traversal steps from the initial nodes.\n- If the search depth is less than 1, the server will do a 1-step search.\ndefault: 1\n"
           },
           "edgeLimit" : {
             "type" : "number",
@@ -4334,7 +4509,7 @@
           }
         }
       },
-      "body_11" : {
+      "body_13" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
@@ -4346,7 +4521,8 @@
             "maximum" : 3,
             "minimum" : 1,
             "type" : "number",
-            "description" : "- (Optional) Sets the maximum number of traversal steps from the initial node.\n"
+            "description" : "- (Optional) Sets the maximum number of traversal steps from the initial node.\n- If the search depth is less than 1, the server will do a 1-step search.\n",
+            "default" : 1
           },
           "edgeLimit" : {
             "type" : "number",
@@ -4360,7 +4536,7 @@
           },
           "directOnly" : {
             "type" : "boolean",
-            "description" : "- (Optional) If this value is false a full neighberhood will be returned.\n- If this value is set to true, the edges between the n-th step neighbor vertex will be excluded from the result.\n",
+            "description" : "- (Optional) If this value is false a full neighborhood will be returned.\n- If this value is set to true, the edges between the n-th step neighbor vertex will be excluded from the result.\n",
             "default" : false
           }
         },
@@ -4724,6 +4900,7 @@
         "explode" : true,
         "schema" : {
           "type" : "string",
+          "default" : "false",
           "enum" : [ "true", "false" ]
         }
       },
@@ -4737,6 +4914,7 @@
         "explode" : true,
         "schema" : {
           "type" : "string",
+          "default" : "false",
           "enum" : [ "true", "false" ]
         }
       },
@@ -4782,13 +4960,14 @@
       "Visibility" : {
         "name" : "visibility",
         "in" : "query",
-        "description" : "Indicates the visibility setting of the network when it is uploaded.\n",
+        "description" : "(Optional) Indicates the visibility setting of the network when it is uploaded.\n",
         "required" : false,
         "allowEmptyValue" : true,
         "style" : "form",
         "explode" : true,
         "schema" : {
           "type" : "string",
+          "default" : "PRIVATE",
           "enum" : [ "PRIVATE", "PUBLIC" ]
         }
       }
