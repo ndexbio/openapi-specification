@@ -18,7 +18,7 @@ can interactively view and  "try out" NDEx API requests, thus providing them wit
 and debugging environment as they create language-specific software applications and program libraries.
 
 Except for these derivative OpenAPI documents, all references to the NDEx API, sources and documentation 
-are copyrighted: *© 2013-2018, The Regents of the University of California, The Cytoscape Consortium.
+are copyrighted: *© 2013-2019, The Regents of the University of California, The Cytoscape Consortium.
 All rights reserved.*  Please abide with their
 [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/).
 Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI 
