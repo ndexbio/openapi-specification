@@ -739,9 +739,12 @@ paths:
           - PUBLIC
       requestBody:
         content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CX_NetworkStreamSchema'
           application/json:
             schema:
-              $ref: '#/components/schemas/body_3'
+              $ref: '#/components/schemas/CX_NetworkObjectSchema'
       responses:
         201:
           description: 'OK: Operation successful.'
@@ -840,9 +843,12 @@ paths:
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CX_NetworkStreamSchema'
           application/json:
             schema:
-              $ref: '#/components/schemas/body_4'
+              $ref: '#/components/schemas/CX_NetworkObjectSchema'
       responses:
         201:
           description: 'OK: Operation successful.'
@@ -1265,7 +1271,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_5'
+              $ref: '#/components/schemas/body_3'
       responses:
         204:
           description: 'OK: Operation successful.  (no payload content)'
@@ -1307,7 +1313,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_6'
+              $ref: '#/components/schemas/body_4'
       responses:
         204:
           description: 'OK: Operation successful.  (no payload content)'
@@ -1597,7 +1603,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_7'
+              $ref: '#/components/schemas/body_5'
       responses:
         204:
           description: 'OK: Operation successful.  (no payload content)'
@@ -1641,7 +1647,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_8'
+              $ref: '#/components/schemas/body_6'
       responses:
         204:
           description: 'OK: Operation successful.  (no payload content)'
@@ -1953,7 +1959,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_9'
+              $ref: '#/components/schemas/body_7'
       responses:
         204:
           description: 'OK: Operation successful.  (no payload content)'
@@ -2056,7 +2062,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_10'
+              $ref: '#/components/schemas/body_8'
       responses:
         200:
           description: 'OK: Operation successful.'
@@ -2157,7 +2163,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_11'
+              $ref: '#/components/schemas/body_9'
       responses:
         200:
           description: 'OK: Operation successful.'
@@ -2214,7 +2220,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_12'
+              $ref: '#/components/schemas/body_10'
       responses:
         200:
           description: 'OK: Operation successful.'
@@ -2272,7 +2278,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/body_13'
+              $ref: '#/components/schemas/body_11'
       responses:
         200:
           description: 'OK: Operation successful.'
@@ -3448,48 +3454,6 @@ components:
         resourceName:
           type: string
           description: the group's name
-    body_3:
-      required:
-      - groupName
-      type: object
-      properties:
-        properties:
-          type: object
-        groupName:
-          type: string
-        image:
-          type: string
-          format: url
-          nullable: true
-        website:
-          type: string
-          format: url
-          nullable: true
-        description:
-          type: string
-          nullable: true
-      description: Group object
-    body_4:
-      required:
-      - groupName
-      type: object
-      properties:
-        properties:
-          type: object
-        groupName:
-          type: string
-        image:
-          type: string
-          format: url
-          nullable: true
-        website:
-          type: string
-          format: url
-          nullable: true
-        description:
-          type: string
-          nullable: true
-      description: Group object
     inline_response_200_1:
       type: object
       properties:
@@ -3533,7 +3497,7 @@ components:
           type: string
         properties:
           type: object
-    body_5:
+    body_3:
       type: object
       properties:
         name:
@@ -3547,7 +3511,7 @@ components:
         name: ""
         description: ""
         version: ""
-    body_6:
+    body_4:
       type: object
       properties:
         subNetworkId:
@@ -3563,7 +3527,7 @@ components:
         predicateString: ""
         dataType: ""
         value: ""
-    body_7:
+    body_5:
       type: object
       properties:
         name:
@@ -3579,7 +3543,7 @@ components:
           items:
             $ref: '#/components/schemas/NetworkPropertiesObjectSchema'
       description: Network properties to update
-    body_8:
+    body_6:
       type: object
       properties:
         readOnly:
@@ -3595,7 +3559,7 @@ components:
         readOnly: true
         visibility: PUBLIC
         showcase: true
-    body_9:
+    body_7:
       required:
       - showcase
       type: object
@@ -3621,7 +3585,7 @@ components:
           type: number
           description: index to first Group object returned relative to numFound
       description: SearchResult object
-    body_10:
+    body_8:
       required:
       - searchString
       type: object
@@ -3702,7 +3666,7 @@ components:
             $ref: '#/components/schemas/searchnetworknetworkidadvancedquery_edgeFilter_propertySpecifications'
         mode:
           type: string
-    body_11:
+    body_9:
       required:
       - edgeFilter nodeFilter
       type: object
@@ -3721,7 +3685,7 @@ components:
           type: string
           description: |
             - Identifies the query by name.
-    body_12:
+    body_10:
       required:
       - searchString
       type: object
@@ -3766,7 +3730,7 @@ components:
           description: CX_Network object
           items:
             $ref: '#/components/schemas/CX_NetworkObjectSchema'
-    body_13:
+    body_11:
       required:
       - searchString
       type: object

@@ -837,9 +837,14 @@
         } ],
         "requestBody" : {
           "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CX_NetworkStreamSchema"
+              }
+            },
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_3"
+                "$ref" : "#/components/schemas/CX_NetworkObjectSchema"
               }
             }
           }
@@ -954,9 +959,14 @@
         } ],
         "requestBody" : {
           "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CX_NetworkStreamSchema"
+              }
+            },
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_4"
+                "$ref" : "#/components/schemas/CX_NetworkObjectSchema"
               }
             }
           }
@@ -1454,7 +1464,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_5"
+                "$ref" : "#/components/schemas/body_3"
               }
             }
           }
@@ -1504,7 +1514,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_6"
+                "$ref" : "#/components/schemas/body_4"
               }
             }
           }
@@ -1828,7 +1838,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_7"
+                "$ref" : "#/components/schemas/body_5"
               }
             }
           }
@@ -1878,7 +1888,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_8"
+                "$ref" : "#/components/schemas/body_6"
               }
             }
           }
@@ -2232,7 +2242,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_9"
+                "$ref" : "#/components/schemas/body_7"
               }
             }
           }
@@ -2356,7 +2366,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_10"
+                "$ref" : "#/components/schemas/body_8"
               }
             }
           }
@@ -2474,7 +2484,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_11"
+                "$ref" : "#/components/schemas/body_9"
               }
             }
           }
@@ -2540,7 +2550,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_12"
+                "$ref" : "#/components/schemas/body_10"
               }
             }
           }
@@ -2606,7 +2616,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_13"
+                "$ref" : "#/components/schemas/body_11"
               }
             }
           }
@@ -4104,60 +4114,6 @@
           }
         }
       },
-      "body_3" : {
-        "required" : [ "groupName" ],
-        "type" : "object",
-        "properties" : {
-          "properties" : {
-            "type" : "object"
-          },
-          "groupName" : {
-            "type" : "string"
-          },
-          "image" : {
-            "type" : "string",
-            "format" : "url",
-            "nullable" : true
-          },
-          "website" : {
-            "type" : "string",
-            "format" : "url",
-            "nullable" : true
-          },
-          "description" : {
-            "type" : "string",
-            "nullable" : true
-          }
-        },
-        "description" : "Group object"
-      },
-      "body_4" : {
-        "required" : [ "groupName" ],
-        "type" : "object",
-        "properties" : {
-          "properties" : {
-            "type" : "object"
-          },
-          "groupName" : {
-            "type" : "string"
-          },
-          "image" : {
-            "type" : "string",
-            "format" : "url",
-            "nullable" : true
-          },
-          "website" : {
-            "type" : "string",
-            "format" : "url",
-            "nullable" : true
-          },
-          "description" : {
-            "type" : "string",
-            "nullable" : true
-          }
-        },
-        "description" : "Group object"
-      },
       "inline_response_200_1" : {
         "type" : "object",
         "properties" : {
@@ -4221,7 +4177,7 @@
           }
         }
       },
-      "body_5" : {
+      "body_3" : {
         "type" : "object",
         "properties" : {
           "name" : {
@@ -4241,7 +4197,7 @@
           "version" : ""
         }
       },
-      "body_6" : {
+      "body_4" : {
         "type" : "object",
         "properties" : {
           "subNetworkId" : {
@@ -4264,7 +4220,7 @@
           "value" : ""
         }
       },
-      "body_7" : {
+      "body_5" : {
         "type" : "object",
         "properties" : {
           "name" : {
@@ -4288,7 +4244,7 @@
         },
         "description" : "Network properties to update"
       },
-      "body_8" : {
+      "body_6" : {
         "type" : "object",
         "properties" : {
           "readOnly" : {
@@ -4308,7 +4264,7 @@
           "showcase" : true
         }
       },
-      "body_9" : {
+      "body_7" : {
         "required" : [ "showcase" ],
         "type" : "object",
         "properties" : {
@@ -4342,7 +4298,7 @@
         },
         "description" : "SearchResult object"
       },
-      "body_10" : {
+      "body_8" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
@@ -4446,7 +4402,7 @@
           }
         }
       },
-      "body_11" : {
+      "body_9" : {
         "required" : [ "edgeFilter nodeFilter" ],
         "type" : "object",
         "properties" : {
@@ -4467,7 +4423,7 @@
           }
         }
       },
-      "body_12" : {
+      "body_10" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
@@ -4509,7 +4465,7 @@
           }
         }
       },
-      "body_13" : {
+      "body_11" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
