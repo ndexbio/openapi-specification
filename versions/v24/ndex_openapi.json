@@ -3371,7 +3371,8 @@
             "type" : "boolean"
           }
         },
-        "description" : "Contains attributes that describe the state of the network when it was last stored in NDEx. IT IS NOT THE SAME AS THE STATUS ASPECT."
+        "description" : "Contains attributes that describe the state of the network when it was last stored in NDEx. IT IS NOT THE SAME AS THE STATUS ASPECT.",
+        "deprecated" : true
       },
       "AspectFragmentEdgeAttributesSchema" : {
         "type" : "object",
@@ -4414,8 +4415,7 @@
           },
           "edgeLimit" : {
             "type" : "integer",
-            "description" : "- (Optional) Sets the maximum number of edges that this query can return.\n- When set to 0 or a negative integer there is no limit, i.e. all edges that satisfy the query criteria are returned.\n",
-            "format" : "int32"
+            "description" : "- (Optional) Sets the maximum number of edges that this query can return.\n- When set to 0 or a negative integer there is no limit, i.e. all edges that satisfy the query criteria are returned.\n"
           },
           "queryName" : {
             "type" : "string",
@@ -4829,8 +4829,7 @@
         "style" : "simple",
         "explode" : false,
         "schema" : {
-          "type" : "integer",
-          "format" : "int32"
+          "type" : "integer"
         },
         "example" : 0
       },
