@@ -1,9 +1,9 @@
 {
   "openapi" : "3.0.2",
   "info" : {
-    "title" : "NDEx 2.4 REST API",
+    "title" : "NDEx 2.4.1 REST API",
     "description" : "This [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) document defines the **N**etwork **D**ata **Ex**change (**NDEx**) REST API which is used to communicate with NDEx public and private servers.\n\nThis document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2019, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).\n\nGoogle's OAuth login is not currently supported.  It will be added when the Swagger-UI document reader permits. Basic Authentication and all other API endpoints are supported.\nThe full NDEx API specification is found on the [official NDEx API document](http://www.home.ndexbio.org/using-the-ndex-server-api/) webpage.\n\nThis OpenAPI project is developed and maintained by [Mike Fidel](mailto:mikefidel.us@gmail.com).  Please submit bug reports, enhancement requests and questions through the project's [GitHub's Issue Tracking](https://github.com/ndexbio/openapi-specification/issues).\n",
-    "version" : "2.4.0"
+    "version" : "2.4.1"
   },
   "servers" : [ {
     "url" : "http://www.ndexbio.org/v2",
@@ -2462,60 +2462,6 @@
         } ]
       }
     },
-    "/search/network/{networkid}/advancedquery" : {
-      "post" : {
-        "tags" : [ "Search" ],
-        "summary" : "Advanced Query",
-        "description" : "- Description:\n  - A filtered subnetwork of the network specified by **networkId** is returned.\n  - The returned subnetwork contains edges which satisfy both the edgeFilter and nodeFilter properties up to a specified limit.\n  - The subnetwork is returned as a Network object containing the selected edges plus all other network elements relevant to the edges.\n- The returned subnetwork is found by a traversal of the network starting with nodes associated with the following properties:\n  - `edgeFilter`\n  - `nodeFilter`\n  - `edgeLimit`\n- All matches of node or edge properties vs. propertySpecifications are case insensitive.\n- The query is only valid if at least one of the above mentioned filter properties is not null and non-empty.\n- An error is returned if both the `nodeFilter` and `edgeFilter` properties are nulls or have no property specifications.\n",
-        "parameters" : [ {
-          "name" : "networkid",
-          "in" : "path",
-          "description" : "A unique identifier (UUID) given to the network element when it is created.",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "string",
-            "format" : "uuid"
-          },
-          "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/body_9"
-              }
-            }
-          }
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK: Operation successful.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/CX_NetworkStreamSchema"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "ERROR: Catch-all bucket for http status codes that denote an error occurred. Check for malformed or incorrect parameters or request payloads.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponseSchema"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "BASIC_AUTH" : [ ]
-        } ]
-      }
-    },
     "/search/network/{networkid}/interconnectquery" : {
       "post" : {
         "tags" : [ "Search" ],
@@ -2550,7 +2496,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_10"
+                "$ref" : "#/components/schemas/body_9"
               }
             }
           }
@@ -2616,7 +2562,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/body_11"
+                "$ref" : "#/components/schemas/body_10"
               }
             }
           }
@@ -3096,7 +3042,7 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string",
+            "type" : "boolean",
             "default" : "false",
             "enum" : [ "true", "false" ]
           }
@@ -3109,7 +3055,7 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string",
+            "type" : "boolean",
             "default" : "false",
             "enum" : [ "true", "false" ]
           }
@@ -4367,63 +4313,7 @@
         },
         "description" : "SearchResult object"
       },
-      "searchnetworknetworkidadvancedquery_edgeFilter_propertySpecifications" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "value" : {
-            "type" : "string"
-          }
-        }
-      },
-      "searchnetworknetworkidadvancedquery_edgeFilter" : {
-        "type" : "object",
-        "properties" : {
-          "propertySpecifications" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/searchnetworknetworkidadvancedquery_edgeFilter_propertySpecifications"
-            }
-          }
-        }
-      },
-      "searchnetworknetworkidadvancedquery_nodeFilter" : {
-        "type" : "object",
-        "properties" : {
-          "propertySpecifications" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/searchnetworknetworkidadvancedquery_edgeFilter_propertySpecifications"
-            }
-          },
-          "mode" : {
-            "type" : "string"
-          }
-        }
-      },
       "body_9" : {
-        "required" : [ "edgeFilter nodeFilter" ],
-        "type" : "object",
-        "properties" : {
-          "edgeFilter" : {
-            "$ref" : "#/components/schemas/searchnetworknetworkidadvancedquery_edgeFilter"
-          },
-          "nodeFilter" : {
-            "$ref" : "#/components/schemas/searchnetworknetworkidadvancedquery_nodeFilter"
-          },
-          "edgeLimit" : {
-            "type" : "integer",
-            "description" : "- (Optional) Sets the maximum number of edges that this query can return.\n- When set to 0 or a negative integer there is no limit, i.e. all edges that satisfy the query criteria are returned.\n"
-          },
-          "queryName" : {
-            "type" : "string",
-            "description" : "- Identifies the query by name.\n"
-          }
-        }
-      },
-      "body_10" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
@@ -4465,7 +4355,7 @@
           }
         }
       },
-      "body_11" : {
+      "body_10" : {
         "required" : [ "searchString" ],
         "type" : "object",
         "properties" : {
@@ -4854,7 +4744,7 @@
         "style" : "form",
         "explode" : true,
         "schema" : {
-          "type" : "string",
+          "type" : "boolean",
           "default" : "false",
           "enum" : [ "true", "false" ]
         }
@@ -4868,7 +4758,7 @@
         "style" : "form",
         "explode" : true,
         "schema" : {
-          "type" : "string",
+          "type" : "boolean",
           "default" : "false",
           "enum" : [ "true", "false" ]
         }
