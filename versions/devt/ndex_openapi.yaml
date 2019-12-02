@@ -1,16 +1,16 @@
 openapi: 3.0.2
 info:
-  title: NDEx 2.4.3 REST API
+  title: NDEx 2.5.0 REST API
   description: |
     This [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification) document defines the **N**etwork **D**ata **Ex**change (**NDEx**) REST API which is used to communicate with NDEx public and private servers.
 
-    This document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2019, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).
+    This document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2020, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).
 
     Google's OAuth login is not currently supported.  It will be added when the Swagger-UI document reader permits. Basic Authentication and all other API endpoints are supported.
     The full NDEx API specification is found on the [official NDEx API document](http://www.home.ndexbio.org/using-the-ndex-server-api/) webpage.
 
     This OpenAPI project is developed and maintained by [Mike Fidel](mailto:mikefidel.us@gmail.com).  Please submit bug reports, enhancement requests and questions through the project's [GitHub's Issue Tracking](https://github.com/ndexbio/openapi-specification/issues).
-  version: 2.4.3
+  version: 2.5.0
 servers:
 - url: http://www.ndexbio.org/v2
   description: NDEx public server
@@ -62,15 +62,13 @@ paths:
           - standard
           - full
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                oneOf:
-                - $ref: '#/components/schemas/AdminStatusStandardSchema'
-                - $ref: '#/components/schemas/AdminStatusFullSchema'
-        500:
+                $ref: '#/components/schemas/inline_response_200'
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -99,7 +97,7 @@ paths:
                 description: Group UUID
                 format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -108,10 +106,10 @@ paths:
                 description: List of Group objects
                 items:
                   $ref: '#/components/schemas/GroupObjectSchema'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -137,16 +135,16 @@ paths:
             schema:
               $ref: '#/components/schemas/body'
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 type: object
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -179,7 +177,7 @@ paths:
                 format: uuid
                 example: 2cda23a9-1e5f-11e8-b939-0ac135e8bacf
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -187,10 +185,10 @@ paths:
                 type: object
                 description: |
                   The keys are network UUIDs and the their values are the highest permission assigned to the authenticated user.
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -236,7 +234,7 @@ paths:
                 format: uuid
                 example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -245,10 +243,10 @@ paths:
                 description: List of Network Summary objects
                 items:
                   $ref: '#/components/schemas/NetworkSummaryObjectSchema'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -279,7 +277,7 @@ paths:
                 description: User UUID
                 format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -288,10 +286,10 @@ paths:
                 description: List of User objects
                 items:
                   $ref: '#/components/schemas/UserObjectSchema'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -323,7 +321,7 @@ paths:
             schema:
               $ref: '#/components/schemas/body_1'
       responses:
-        201:
+        "201":
           description: 'OK: Operation successful.'
           content:
             text/plain:
@@ -332,10 +330,10 @@ paths:
                 description: URL of newly created group
                 format: url
                 example: http://test.ndexbio.org/v2/group/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -365,13 +363,13 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupObjectSchema'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -406,12 +404,12 @@ paths:
             schema:
               $ref: '#/components/schemas/body_2'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -442,12 +440,12 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -505,18 +503,18 @@ paths:
           type: integer
           default: 100
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/inline_response_200'
-        401:
+                  $ref: '#/components/schemas/inline_response_200_1'
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -569,12 +567,12 @@ paths:
           - GROUPADMIN
           - MEMBER
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -616,12 +614,12 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -697,13 +695,13 @@ paths:
           type: number
           default: 100
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 type: object
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -749,7 +747,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CX_NetworkObjectSchema'
       responses:
-        201:
+        "201":
           description: 'OK: Operation successful.'
           content:
             text/plain:
@@ -758,10 +756,10 @@ paths:
                 description: URL of newly created network
                 format: url
                 example: http://test.ndexbio.org/v2/network/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -804,15 +802,15 @@ paths:
           type: string
           format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CX_NetworkStreamSchema'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -857,7 +855,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CX_NetworkObjectSchema'
       responses:
-        201:
+        "201":
           description: 'OK: Operation successful.'
           content:
             text/plain:
@@ -866,10 +864,10 @@ paths:
                 description: URL of newly created network
                 format: url
                 example: http://test.ndexbio.org/v2/network/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -900,14 +898,14 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -943,18 +941,18 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_1'
-        204:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1001,18 +999,18 @@ paths:
           - enable
           - disable
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_2'
-        204:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
       security:
       - BASIC_AUTH: []
@@ -1049,15 +1047,15 @@ paths:
           type: string
           format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_3'
-        404:
+                $ref: '#/components/schemas/inline_response_200_4'
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1112,7 +1110,7 @@ paths:
           type: integer
           default: 100
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -1121,9 +1119,9 @@ paths:
                 description: List of CX element objects
                 items:
                   type: object
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1162,15 +1160,15 @@ paths:
         schema:
           type: string
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_4'
-        404:
+                $ref: '#/components/schemas/inline_response_200_5'
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1209,11 +1207,11 @@ paths:
             schema:
               type: object
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1246,7 +1244,7 @@ paths:
           format: uuid
         example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
       responses:
-        201:
+        "201":
           description: 'OK: Operation successful.'
           content:
             text/plain:
@@ -1255,9 +1253,9 @@ paths:
                 description: URL of newly created network set.
                 format: url
                 example: http://test.ndexbio.org/v2/network/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1297,12 +1295,12 @@ paths:
             schema:
               $ref: '#/components/schemas/body_3'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1340,12 +1338,12 @@ paths:
             schema:
               $ref: '#/components/schemas/body_4'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1391,15 +1389,15 @@ paths:
           type: string
           format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProvenanceEntityObjectSchema'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1439,11 +1437,11 @@ paths:
             schema:
               $ref: '#/components/schemas/ProvenanceEntityObjectSchema'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1493,15 +1491,15 @@ paths:
           type: string
           format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CX_NetworkStreamSchema'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1539,14 +1537,14 @@ paths:
             schema:
               $ref: '#/components/schemas/CX_NetworkStreamSchema'
       responses:
-        204:
+        "204":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1591,15 +1589,15 @@ paths:
           type: string
           format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NetworkSummaryObjectSchema'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1640,12 +1638,12 @@ paths:
             schema:
               $ref: '#/components/schemas/body_5'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1685,12 +1683,12 @@ paths:
             schema:
               $ref: '#/components/schemas/body_6'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1718,7 +1716,7 @@ paths:
             schema:
               $ref: '#/components/schemas/NetworkSetRequestBodySchema'
       responses:
-        201:
+        "201":
           description: 'OK: Operation successful.'
           content:
             text/plain:
@@ -1727,10 +1725,10 @@ paths:
                 description: URL of newly created network set.
                 format: url
                 example: http://test.ndexbio.org/v2/networkset/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1776,17 +1774,17 @@ paths:
           type: string
           format: uuid
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NetworkSetObjectSchema'
-        204:
+        "204":
           description: ERROR - Access key not enabled for this network set.
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1823,14 +1821,14 @@ paths:
             schema:
               $ref: '#/components/schemas/NetworkSetRequestBodySchema'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1861,14 +1859,14 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1907,14 +1905,14 @@ paths:
             schema:
               $ref: '#/components/schemas/NetworkSetMembersSchema'
       responses:
-        201:
+        "201":
           description: 'OK: Operation successful.'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1952,14 +1950,14 @@ paths:
             schema:
               $ref: '#/components/schemas/NetworkSetMembersSchema'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -1997,12 +1995,12 @@ paths:
             schema:
               $ref: '#/components/schemas/body_7'
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2047,13 +2045,13 @@ paths:
             schema:
               $ref: '#/components/schemas/SearchStringRequestPayloadSchema'
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchResultForGroupsSchema'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2101,13 +2099,13 @@ paths:
             schema:
               $ref: '#/components/schemas/body_8'
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_5'
-        500:
+                $ref: '#/components/schemas/inline_response_200_6'
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2151,13 +2149,13 @@ paths:
             schema:
               $ref: '#/components/schemas/SearchStringRequestPayloadSchema'
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_6'
-        500:
+                $ref: '#/components/schemas/inline_response_200_7'
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2219,13 +2217,13 @@ paths:
             schema:
               $ref: '#/components/schemas/body_9'
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_7'
-        500:
+                $ref: '#/components/schemas/inline_response_200_8'
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2286,13 +2284,13 @@ paths:
             schema:
               $ref: '#/components/schemas/body_10'
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200_7'
-        500:
+                $ref: '#/components/schemas/inline_response_200_8'
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2337,13 +2335,13 @@ paths:
             schema:
               $ref: '#/components/schemas/SearchStringRequestPayloadSchema'
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchResultForUsersSchema'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2400,7 +2398,7 @@ paths:
           type: integer
           default: 100
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -2408,12 +2406,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TaskObjectSchema'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2445,18 +2443,18 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskObjectSchema'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2487,14 +2485,14 @@ paths:
           format: uuid
         example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
-        204:
+        "204":
           description: 'OK: Operation successful.  (no payload content)'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2535,7 +2533,7 @@ paths:
           enum:
           - "true"
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           headers:
             Access-Control-Expose-Headers:
@@ -2549,12 +2547,12 @@ paths:
               schema:
                 type: string
                 format: binary
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        404:
+        "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2627,7 +2625,7 @@ paths:
           type: number
           default: 100
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -2637,10 +2635,10 @@ paths:
                   UUIDs and their corresponding membership type value of the user.
                 example:
                   xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx: MEMBER
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2714,7 +2712,7 @@ paths:
           - "true"
           - "false"
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -2723,7 +2721,7 @@ paths:
                 description: List of Network Set objects
                 items:
                   $ref: '#/components/schemas/NetworkSetObjectSchema'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2771,7 +2769,7 @@ paths:
         schema:
           type: integer
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -2780,10 +2778,10 @@ paths:
                 description: List of NetworkSummary objects
                 items:
                   $ref: '#/components/schemas/NetworkSummaryObjectSchema'
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -2832,7 +2830,7 @@ paths:
           - "false"
           - "true"
       responses:
-        200:
+        "200":
           description: 'OK: Operation successful.'
           content:
             application/json:
@@ -2842,10 +2840,10 @@ paths:
                   UUIDs and their respective permission values.
                 example:
                   xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx: ADMIN
-        401:
+        "401":
           description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed
             In) and have the  credentials to access that NDEx object.'
-        500:
+        "500":
           description: 'ERROR: Catch-all bucket for http status codes that denote
             an error occurred. Check for malformed or incorrect parameters or request
             payloads.'
@@ -3403,6 +3401,10 @@ components:
           type: string
           format: date-time
       description: User object
+    inline_response_200:
+      oneOf:
+      - $ref: '#/components/schemas/AdminStatusStandardSchema'
+      - $ref: '#/components/schemas/AdminStatusFullSchema'
     body:
       type: object
       properties:
@@ -3463,7 +3465,7 @@ components:
           type: string
           nullable: true
       description: Group object
-    inline_response_200:
+    inline_response_200_1:
       type: object
       properties:
         permissions:
@@ -3485,7 +3487,7 @@ components:
         resourceName:
           type: string
           description: the group's name
-    inline_response_200_1:
+    inline_response_200_2:
       type: object
       properties:
         accesskey:
@@ -3493,14 +3495,14 @@ components:
           description: access key value
           format: uuid
       description: Returned access key
-    inline_response_200_2:
+    inline_response_200_3:
       type: object
       properties:
         accessKey:
           type: string
           format: uuid
       description: Returned access key
-    inline_response_200_3:
+    inline_response_200_4:
       type: object
       properties:
         metaData:
@@ -3509,7 +3511,7 @@ components:
           items:
             $ref: '#/components/schemas/AspectMetadataSchema'
       description: Response payload
-    inline_response_200_4:
+    inline_response_200_5:
       type: object
       properties:
         elementCount:
@@ -3629,7 +3631,7 @@ components:
             - (Optional) If provided, the search will be constrained to networks owned by the specified account.
       example:
         searchString: ""
-    inline_response_200_5:
+    inline_response_200_6:
       type: object
       properties:
         numFound:
@@ -3644,7 +3646,7 @@ components:
           items:
             $ref: '#/components/schemas/NetworkSummaryObjectSchema'
       description: SearchResult object
-    inline_response_200_6:
+    inline_response_200_7:
       type: object
       properties:
         numFound:
@@ -3697,7 +3699,7 @@ components:
         searchString: erk* braf
         edgeLimit: 0
         errorWhenLimitIsOver: true
-    inline_response_200_7:
+    inline_response_200_8:
       type: object
       properties:
         data:
@@ -3825,20 +3827,20 @@ components:
         downloadFileExtension:
           type: string
   responses:
-    200-response:
+    "200-response":
       description: 'OK: Operation successful.'
-    201-response:
+    "201-response":
       description: 'OK: Operation successful.'
-    202-response:
+    "202-response":
       description: 'OK: Operation successful.'
-    204-response:
+    "204-response":
       description: 'OK: Operation successful.  (no payload content)'
-    401-response:
+    "401-response":
       description: 'UNAUTHORIZED: Check that you are authenticated (i.e. Signed In)
         and have the  credentials to access that NDEx object.'
-    404-response:
+    "404-response":
       description: 'NOT FOUND: The object that was requested does not exist.'
-    500-response:
+    "500-response":
       description: 'ERROR: Catch-all bucket for http status codes that denote an error
         occurred. Check for malformed or incorrect parameters or request payloads.'
       content:
