@@ -563,6 +563,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -574,6 +575,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 100
           }
         } ],
@@ -1243,6 +1245,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 100
           }
         } ],
@@ -2280,6 +2283,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -2291,6 +2295,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 100
           }
         } ],
@@ -2344,6 +2349,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -2355,6 +2361,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 100
           }
         } ],
@@ -2408,6 +2415,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -2419,6 +2427,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 100
           }
         } ],
@@ -2544,7 +2553,7 @@
         }, {
           "name" : "save",
           "in" : "query",
-          "description" : "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process.",
+          "description" : "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false.",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -2604,6 +2613,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -2615,6 +2625,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 100
           }
         } ],
@@ -2680,6 +2691,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -2691,6 +2703,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 100
           }
         } ],
@@ -3017,6 +3030,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -3027,7 +3041,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int32"
           }
         }, {
           "name" : "summary",
@@ -3111,6 +3126,7 @@
           "explode" : true,
           "schema" : {
             "type" : "integer",
+            "format" : "int32",
             "default" : 0
           }
         }, {
@@ -3121,7 +3137,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int32"
           }
         } ],
         "responses" : {
@@ -3182,12 +3199,14 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "format" : "uuid"
           },
           "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
         }, {
           "name" : "directonly",
           "in" : "query",
+          "description" : "Grant permissions are to be included in the result.",
           "required" : false,
           "style" : "form",
           "explode" : true,
@@ -4561,6 +4580,19 @@
           "format" : "uuid"
         }
       },
+      "AdminStatusParam" : {
+        "name" : "format",
+        "in" : "query",
+        "description" : "Determines the server information to be returned.\n  * **standard** - returns properties such as server version and build. The *AdminStatusStandardSchema* Model is returned.\n  * **full** - returns standard properties as well as additional properties.  The *AdminStatusFullSchema* Model is returned.\n",
+        "required" : false,
+        "allowEmptyValue" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "standard", "full" ]
+        }
+      },
       "AspectNamePath" : {
         "name" : "aspectName",
         "in" : "path",
@@ -4591,9 +4623,33 @@
         "style" : "simple",
         "explode" : false,
         "schema" : {
-          "type" : "integer"
+          "type" : "integer",
+          "format" : "int32"
         },
         "example" : 100
+      },
+      "DirectOnlyParam" : {
+        "name" : "directonly",
+        "in" : "query",
+        "description" : "Grant permissions are to be included in the result.",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "false", "true" ]
+        }
+      },
+      "DownloadParam" : {
+        "name" : "download",
+        "in" : "query",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "true" ]
+        }
       },
       "GroupIdPath" : {
         "name" : "groupid",
@@ -4627,8 +4683,21 @@
         "style" : "form",
         "explode" : true,
         "schema" : {
-          "type" : "integer"
+          "type" : "integer",
+          "format" : "int32"
         }
+      },
+      "NetworkIdParam" : {
+        "name" : "networkId",
+        "in" : "query",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       },
       "NetworkIdPath" : {
         "name" : "networkid",
@@ -4678,7 +4747,21 @@
         "explode" : true,
         "schema" : {
           "type" : "integer",
+          "format" : "int32",
           "default" : 0
+        }
+      },
+      "SaveParam" : {
+        "name" : "save",
+        "in" : "query",
+        "description" : "Only an authenticated user can call this function with this parameter set to true. When save=true, the server will save the query result as a network in the caller’s account and return the URL of the network resource to the user. Saving query result as a network is a asynchronous call, which means the server will return the URL of the network resource (with HTTP return code 201) while the server is still running the query. User can use the returned UUID to check the status of the network creation process. The default value is false.",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "default" : "false",
+          "enum" : [ "false", "true" ]
         }
       },
       "SizeParam" : {
@@ -4690,20 +4773,9 @@
         "explode" : true,
         "schema" : {
           "type" : "integer",
+          "format" : "int32",
           "default" : 100
         }
-      },
-      "SkipBlocksPath" : {
-        "name" : "skipBlocks",
-        "in" : "path",
-        "description" : "number of blocks that have already been read.",
-        "required" : true,
-        "style" : "simple",
-        "explode" : false,
-        "schema" : {
-          "type" : "integer"
-        },
-        "example" : 0
       },
       "StartParam" : {
         "name" : "start",
@@ -4714,10 +4786,11 @@
         "explode" : true,
         "schema" : {
           "type" : "integer",
+          "format" : "int32",
           "default" : 0
         }
       },
-      "Showcase" : {
+      "ShowcaseParam" : {
         "name" : "showcase",
         "in" : "query",
         "description" : "When true, only showcased networksets are returned\n",
@@ -4731,7 +4804,7 @@
           "enum" : [ "true", "false" ]
         }
       },
-      "Summary" : {
+      "SummaryParam" : {
         "name" : "summary",
         "in" : "query",
         "description" : "When true, the server will not return the list of network IDs in this network set\n",
@@ -4757,6 +4830,19 @@
           "format" : "uuid"
         },
         "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      },
+      "TaskStatusParam" : {
+        "name" : "status",
+        "in" : "query",
+        "description" : "Current state of the task workflow.",
+        "required" : false,
+        "allowEmptyValue" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "enum" : [ "COMPLETED", "PROCESSING", "QUEUED", "FAILED" ]
+        }
       },
       "UserIdParam" : {
         "name" : "userid",
@@ -4784,7 +4870,7 @@
         },
         "example" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       },
-      "Visibility" : {
+      "VisibilityParam" : {
         "name" : "visibility",
         "in" : "query",
         "description" : "(Optional) Indicates the visibility setting of the network when it is uploaded.\n",
