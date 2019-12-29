@@ -6,61 +6,61 @@ info:
 
     This document and all references to the NDEx REST API, source code and ancillary documentation are copyrighted: *© 2013-2020, The Regents of the University of California, The Cytoscape Consortium.  All rights reserved.*  Please abide with the [Terms of Use, Licensing and Sources](http://www.home.ndexbio.org/disclaimer-license/). Likewise, the [Swagger-UI](https://github.com/swagger-api/swagger-ui) document reader that displays this OpenAPI document is copyrighted by *Smartbear Software*. Its open-source software license is found [here](https://github.com/swagger-api/swagger-ui/blob/master/LICENSE).
 
-    Google's OAuth login is not currently supported.  It will be added when the Swagger-UI document reader permits. Basic Authentication and all other API endpoints are supported.
+    Google's OAuth2 (OpenID Connect) login is not currently supported.  It will be added when the Swagger-UI document reader permits. Basic Authentication and all other API endpoints are supported.
     The full NDEx API specification is found on the [official NDEx API document](http://www.home.ndexbio.org/using-the-ndex-server-api/) webpage.
 
     This OpenAPI project is developed and maintained by [Mike Fidel](mailto:mikefidel.us@gmail.com).  Please submit bug reports, enhancement requests and questions through the project's [GitHub's Issue Tracking](https://github.com/ndexbio/openapi-specification/issues).
   version: 2.5.0
 servers:
-- url: http://www.ndexbio.org/v2
-  description: NDEx public server
-- url: http://{Host}/{Version}
-  description: |
-    The host server URL and API version can be overridden.
-  variables:
-    Host:
-      default: www.ndexbio.org
-    Version:
-      description: API version
-      default: v2
-      enum:
-      - v2
-      - rest
+  - url: http://www.ndexbio.org/v2
+    description: NDEx public server
+  - url: http://{Host}/{Version}
+    description: |
+      The host server URL and API version can be overridden.
+    variables:
+      Host:
+        default: www.ndexbio.org
+      Version:
+        description: API version
+        default: v2
+        enum:
+          - v2
+          - rest
 tags:
-- name: Admin
-- name: Batch
-- name: Group
-- name: Network
-- name: Network Set
-- name: Search
-- name: Task
-- name: User
+  - name: Admin
+  - name: Batch
+  - name: Group
+  - name: Network
+  - name: Network Set
+  - name: Search
+  - name: Task
+  - name: User
 paths:
   /admin/status:
     get:
       tags:
-      - Admin
+        - Admin
       summary: Get Server Status
       description: |
         - Get the current operational status of an NDEx server.
         - Use this function to check if the NDEx server is running or stopped, as well as list important server properties.
         - The `format` query parameter determines what properties are listed by this operation.
       parameters:
-      - name: format
-        in: query
-        description: |
-          Determines the server information to be returned.
-            * **standard** - returns properties such as server version and build. The *AdminStatusStandardSchema* Model is returned.
-            * **full** - returns standard properties as well as additional properties.  The *AdminStatusFullSchema* Model is returned.
-        required: false
-        allowEmptyValue: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - standard
-          - full
+        - name: format
+          in: query
+          description: |
+            Determines the server information to be returned.
+              * **standard** - returns properties such as server version and build. The *AdminStatusStandardSchema* Model is returned.
+              * **full** - returns standard properties as well as additional properties.  The *AdminStatusFullSchema* Model is returned.
+          required: false
+          allowEmptyValue: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - standard
+              - full
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -80,7 +80,7 @@ paths:
   /batch/group:
     post:
       tags:
-      - Batch
+        - Batch
       summary: Get Groups by UUIDs
       description: |
         - Returns a JSON array of Group objects.
@@ -121,7 +121,7 @@ paths:
   /batch/network/export:
     post:
       tags:
-      - Batch
+        - Batch
       summary: Export Networks
       description: |
         - Creates network export tasks for the set of networks specified by the `networkids` property in the network export request payload.
@@ -153,11 +153,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /batch/network/permission:
     post:
       tags:
-      - Batch
+        - Batch
       summary: Get Network Permissions by UUIDs
       description: |
         - Returns what permissions the authenticated user has on the given list of network UUIDs.
@@ -197,11 +197,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /batch/network/summary:
     post:
       tags:
-      - Batch
+        - Batch
       summary: Get Network Summaries of UUIDs
       description: |
         - Returns a JSON array of Network Summary objects.
@@ -210,16 +210,16 @@ paths:
         - The optional `accesskey` parameter is supposed to be the accesskey of the network set.  If the given UUIDin the POSTed list is a member of that network set, the server will bypass its permission checking on that network and include the network in the result.
         - No more than 2000 UUIDs are returned.
       parameters:
-      - name: accesskey
-        in: query
-        description: |
-          (Optional) The access key UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
+        - name: accesskey
+          in: query
+          description: |
+            (Optional) The access key UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         content:
           application/json:
@@ -255,12 +255,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
   /batch/user:
     post:
       tags:
-      - Batch
+        - Batch
       summary: Get Users by UUIDs
       description: |
         - Returns a JSON array of User objects.
@@ -301,7 +301,7 @@ paths:
   /group:
     post:
       tags:
-      - Group
+        - Group
       summary: Create a Group
       description: |
         - Creates a new group owned by the authenticated user.
@@ -342,26 +342,26 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /group/{groupid}:
     get:
       tags:
-      - Group
+        - Group
       summary: Get a Group
       description: |
         - Retrieves the group specified by **groupid** (i.e. Group UUID).
         - Returns an error if the group is not found.
       parameters:
-      - name: groupid
-        in: path
-        description: The Group object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: groupid
+          in: path
+          description: The Group object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -380,7 +380,7 @@ paths:
       security: []
     put:
       tags:
-      - Group
+        - Group
       summary: Update a Group
       description: |
         - Updates the group metadata associated with the **groupid** path parameter.
@@ -388,16 +388,16 @@ paths:
           - the group is not found
           - the user is not the owner of the network set
       parameters:
-      - name: groupid
-        in: path
-        description: The Group object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: groupid
+          in: path
+          description: The Group object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -418,10 +418,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
     delete:
       tags:
-      - Group
+        - Group
       summary: Delete a Group
       description: |
         - Deletes the group specified by the **groupid** path parameter.
@@ -429,16 +429,16 @@ paths:
           - the roup is not found
           - the authenticated user does not have authorization to delete the group
       parameters:
-      - name: groupid
-        in: path
-        description: The Group object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: groupid
+          in: path
+          description: The Group object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "204":
           description: 'OK: Operation successful.  (no payload content)'
@@ -454,56 +454,56 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /group/{groupid}/membership:
     get:
       tags:
-      - Group
+        - Group
       summary: Get Members of a Group
       description: |
         - Retrieves members of the group associated with the **groupid** path parameter.
         - The **type** query parameter can filter which membership types are returned.  All membership types are returned if this query param is omitted.
       parameters:
-      - name: groupid
-        in: path
-        description: The Group object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: type
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - GROUPADMIN
-          - MEMBER
-      - name: start
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        description: Number of objects to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 100
+        - name: groupid
+          in: path
+          description: The Group object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: type
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - GROUPADMIN
+              - MEMBER
+        - name: start
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          description: Number of objects to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 100
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -525,11 +525,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
     put:
       tags:
-      - Group
+        - Group
       summary: Add or Update a Group Member
       description: |
         - Updates the group membership associated with the **groupid** path parameter.
@@ -538,36 +538,36 @@ paths:
           - the authenticated user does not have Admin permissions for the group
           - the change would leave the group without an Admin member
       parameters:
-      - name: groupid
-        in: path
-        description: The Group object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: userid
-        in: query
-        description: The User object UUID
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: type
-        in: query
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - GROUPADMIN
-          - MEMBER
+        - name: groupid
+          in: path
+          description: The Group object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: userid
+          in: query
+          description: The User object UUID
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: type
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - GROUPADMIN
+              - MEMBER
       responses:
         "204":
           description: 'OK: Operation successful.  (no payload content)'
@@ -583,10 +583,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
     delete:
       tags:
-      - Group
+        - Group
       summary: Remove a Group Member
       description: |
         - Removes the group member associated with the **userid** query parameter.
@@ -595,26 +595,26 @@ paths:
           - the authenticated user is not authorized to edit this group
           - removing the member would leave the group without an Admin member
       parameters:
-      - name: groupid
-        in: path
-        description: The Group object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: userid
-        in: query
-        description: The User object UUID
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: groupid
+          in: path
+          description: The Group object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: userid
+          in: query
+          description: The User object UUID
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "204":
           description: 'OK: Operation successful.  (no payload content)'
@@ -630,11 +630,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /group/{groupid}/permission:
     get:
       tags:
-      - Group
+        - Group
       summary: Get Permissions (Two Options)
       description: |
         Option 1 - Get Group Permission for a Specific Network
@@ -647,55 +647,55 @@ paths:
           - Returns network permissions for the specified group.
           - The returned JSON object contains key/value pairs,where the key is the network UUID and the value is the corresponding permission.
       parameters:
-      - name: groupid
-        in: path
-        description: (Manditory for Both Options) The Group object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: networkid
-        in: query
-        description: (Option 1 only) network UUID to fetch
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: permission
-        in: query
-        description: (Option 2 only) 'READ' or 'WRITE' required
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - READ
-          - WRITE
-      - name: start
-        in: query
-        description: (Option 2 only) Index to first object to return
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          default: 100
-      - name: size
-        in: query
-        description: (Option 2 only) Number of objects to return
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          default: 100
+        - name: groupid
+          in: path
+          description: (Manditory for Both Options) The Group object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: query
+          description: (Option 1 only) network UUID to fetch
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: permission
+          in: query
+          description: (Option 2 only) 'READ' or 'WRITE' required
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - READ
+              - WRITE
+        - name: start
+          in: query
+          description: (Option 2 only) Index to first object to return
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: number
+            default: 100
+        - name: size
+          in: query
+          description: (Option 2 only) Number of objects to return
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: number
+            default: 100
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -712,11 +712,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network:
     post:
       tags:
-      - Network
+        - Network
       summary: Create a CX Network
       description: |
         - Creates a CX Network.
@@ -726,20 +726,20 @@ paths:
         - Returns an error if
           - the user is not authenticated
       parameters:
-      - name: visibility
-        in: query
-        description: |
-          (Optional) Indicates the visibility setting of the network when it is uploaded.
-        required: false
-        allowEmptyValue: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          default: PRIVATE
-          enum:
-          - PRIVATE
-          - PUBLIC
+        - name: visibility
+          in: query
+          description: |
+            (Optional) Indicates the visibility setting of the network when it is uploaded.
+          required: false
+          allowEmptyValue: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            default: PRIVATE
+            enum:
+              - PRIVATE
+              - PUBLIC
       requestBody:
         content:
           multipart/form-data:
@@ -770,39 +770,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}:
     get:
       tags:
-      - Network
+        - Network
       summary: Get Complete Network in CX Format
       description: |
         - Returns the specified network as CX.
         - This is performed as a monolithic operation, so it is advisable for applications to first use the **getNetworkSummary** method to check the node and edge counts for a network before retrieving the network.
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
-      - name: accesskey
-        in: query
-        description: |
-          (Optional) The access key UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: accesskey
+          in: query
+          description: |
+            (Optional) The access key UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -821,11 +821,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
     put:
       tags:
-      - Network
+        - Network
       summary: Update a CX Network
       description: |
         - Updates the specified network with new content, based on CX data.
@@ -837,17 +837,17 @@ paths:
           - the CX data is larger than the maximum size of a newwork the current NDEx server allows.
           - the user is not authenticated
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           multipart/form-data:
@@ -878,27 +878,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
     delete:
       tags:
-      - Network
+        - Network
       summary: Delete a network
       description: |
         - Deletes the network specified by networkid.
         - There is no method to undo a deletion, so care should be exercised.
         - The specified network must be owned by the authenticated user.
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "204":
           description: 'OK: Operation successful.  (no payload content)'
@@ -916,11 +916,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/accesskey:
     get:
       tags:
-      - Network
+        - Network
       summary: Get Access Key of Network
       description: |
         - Returns an access key to the user.  This access key will allow any user to have read access to this network regardless if that user has READ permissions on this network.
@@ -931,17 +931,17 @@ paths:
           ---
         **Note: The access key function must be enabled in order to return a key.** Refer to *Disable/enable Access Key on Network* operation.
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -963,10 +963,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
     put:
       tags:
-      - Network
+        - Network
       summary: Disable/Enable Access Key on Network
       description: |
         - This operations turns the access key on and off.
@@ -976,30 +976,30 @@ paths:
           - The caller is not the owner of this network.
           - the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: action
-        in: query
-        description: |
-          Used to denote whether to disable or enable the access key function.
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          default: enable
-          enum:
-          - enable
-          - disable
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: action
+          in: query
+          description: |
+            Used to denote whether to disable or enable the access key function.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            default: enable
+            enum:
+              - enable
+              - disable
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1015,39 +1015,39 @@ paths:
         "404":
           description: 'NOT FOUND: The object that was requested does not exist.'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/aspect:
     get:
       tags:
-      - Network
+        - Network
       summary: Get Network CX Metadata Collection
       description: |
         - Returns the CX metadata collection of the network specified by **networkid**.
         - Errors if the **networkid** does not correspond to an existing network.
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
-      - name: accesskey
-        in: query
-        description: |
-          (Optional) The access key UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: accesskey
+          in: query
+          description: |
+            (Optional) The access key UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1066,52 +1066,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
   /network/{networkid}/aspect/{aspectName}:
     get:
       tags:
-      - Network
+        - Network
       summary: Get Network Aspect as CX
       description: |
         - Returns a JSON array of CX elements from the aspect specified by the  **aspectName** path parameter from the network specified by networkid.
         - The size parameter is optional, and by default the server will return all elements of this aspect.
         - Errors if the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
-      - name: aspectName
-        in: path
-        description: An example aspect name is entered below for demonstration purposes.  It
-          can be replaced with another aspect name, as needed. Examples include 'cartesianCoordinates',
-          'nodes', 'edges', and 'edgeAttributes'.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-        example: cyVisualProperties
-      - name: size
-        in: query
-        description: Number of objects to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 100
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: aspectName
+          in: path
+          description: An example aspect name is entered below for demonstration purposes.  It
+            can be replaced with another aspect name, as needed. Examples include 'cartesianCoordinates',
+            'nodes', 'edges', and 'edgeAttributes'.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+          example: cyVisualProperties
+        - name: size
+          in: query
+          description: Number of objects to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 100
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1133,35 +1133,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
   /network/{networkid}/aspect/{aspectName}/metadata:
     get:
       tags:
-      - Network
+        - Network
       summary: Get Network Aspect Metadata
       description: |
         - Returns the CX metadata for the specified aspect of the network specified by **networkid**.
         - Errors if the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: aspectName
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: aspectName
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1180,12 +1180,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
   /network/{networkid}/aspects:
     put:
       tags:
-      - Network
+        - Network
       summary: Update Network Aspects
       description: |
         - Updates aspects of the network specified by **networkid**.
@@ -1193,17 +1193,17 @@ paths:
         - The networkAttributes aspect should not be updated using this function because it needs
           special handling. Instead, please use the `Update Network Profile` or `Set Network Properties` functions to change values in networkAttributes.
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1223,29 +1223,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/copy:
     post:
       tags:
-      - Network
+        - Network
       summary: Clone a Network
       description: |
         - Creates a clone of the network specified by networkid (UUID )into the signed in user's account.
         - The URL of the cloned network is returned to the client.
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
       responses:
         "201":
           description: 'OK: Operation successful.'
@@ -1267,11 +1267,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/profile:
     put:
       tags:
-      - Network
+        - Network
       summary: Update Network Profile
       description: |
         - Updates the profile information of the network specified by **networkid** based on a POSTed JSON object specifying the attributes to update.
@@ -1281,17 +1281,17 @@ paths:
           - `description`
           - `version`
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1312,11 +1312,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/properties:
     put:
       tags:
-      - Network
+        - Network
       summary: Set Network Properties
       description: |
         - Updates the **NetworkAttributes** aspect of the network specified by **networkid** based on the list of **NdexPropertyValuePair** objects in the PUT data.
@@ -1324,17 +1324,17 @@ paths:
           - the authenticated user does not have ADMIN permission to the specified network
           - the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1355,11 +1355,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/provenance:
     get:
       tags:
-      - Network
+        - Network
       summary: Get Network Provenance
       description: |
         - Returns the Provenance aspect of the network specified by **networkid**.
@@ -1368,29 +1368,29 @@ paths:
         - Errors if:
           - the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
-      - name: accesskey
-        in: query
-        description: |
-          (Optional) The access key UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: accesskey
+          in: query
+          description: |
+            (Optional) The access key UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1409,11 +1409,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
     put:
       tags:
-      - Network
+        - Network
       summary: Set Network Provenance
       description: |
         - Updates the Provenance aspect of the network specified by **networkid** to be the *ProvenanceEntity* object of the PUT data.
@@ -1423,17 +1423,17 @@ paths:
           - the authenticated user does not have ADMIN permission to the specified network
           - the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1453,11 +1453,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/sample:
     get:
       tags:
-      - Network
+        - Network
       summary: Get Network Sample
       description: |
         - Returns a sample subnetwork of the network specified by **networkid**.
@@ -1472,27 +1472,27 @@ paths:
           - the authenticated user making the request does not have WRITE or ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: accesskey
-        in: query
-        description: |
-          (Optional) The access key UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: accesskey
+          in: query
+          description: |
+            (Optional) The access key UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1511,11 +1511,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
     put:
       tags:
-      - Network
+        - Network
       summary: Set Sample Network
       description: |
         - Sets the example network for the network specified by **networkid**.  The sample network is specified by the CX data in the request payload.
@@ -1523,17 +1523,17 @@ paths:
           - the authenticated user does not have ADMIN permissions to the specified network
           - the **networkid** does not correspond to an existing network
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1556,11 +1556,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/summary:
     get:
       tags:
-      - Network
+        - Network
       summary: Get a Network Summary
       description: |
         - Retrieves a NetworkSummary JSON object based on the network specified by **networkId**.
@@ -1568,29 +1568,29 @@ paths:
         - Error occurs if the network is not found or the authenticated user does not have read permission for the network.
         - Anonymous users can only access networks with PUBLIC visibility.
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
-      - name: accesskey
-        in: query
-        description: |
-          (Optional) The access key UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: accesskey
+          in: query
+          description: |
+            (Optional) The access key UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1609,11 +1609,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
     put:
       tags:
-      - Network
+        - Network
       summary: Update Network Profile and Properties
       description: |
         - The JSON request payload contains key/value pairs that overwrite the corresponding properties of a given network.
@@ -1624,17 +1624,17 @@ paths:
           - `visibility`
           - and `properties`
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1655,11 +1655,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /network/{networkid}/systemproperty:
     put:
       tags:
-      - Network
+        - Network
       summary: Set Network System Properties
       description: |
         - Sets the network system properties which describe the network's status in a particular NDEx server.
@@ -1669,17 +1669,17 @@ paths:
           - `visibility`
           - `showcase`
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network element when
-          it is created.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network element when
+            it is created.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1700,11 +1700,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /networkset:
     post:
       tags:
-      - Network Set
+        - Network Set
       summary: Create a Network Set
       description: |
         - Creates a new network set.
@@ -1740,11 +1740,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /networkset/{networksetid}:
     get:
       tags:
-      - Network Set
+        - Network Set
       summary: Get a Network Set
       description: |
         - Retrieves the network set specified by the **networksetid** (UUID) path parameter.
@@ -1756,26 +1756,26 @@ paths:
           - the access key function for this network set is not enabled
           - the network set does not exist.
       parameters:
-      - name: networksetid
-        in: path
-        description: The network set UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: accesskey
-        in: query
-        description: |
-          (Optional) The access key UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
+        - name: networksetid
+          in: path
+          description: The network set UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: accesskey
+          in: query
+          description: |
+            (Optional) The access key UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -1798,7 +1798,7 @@ paths:
       security: []
     put:
       tags:
-      - Network Set
+        - Network Set
       summary: Update a Network Set
       description: |
         - Updates the network set specified by the **networksetid** (UUID) path parameter.
@@ -1808,16 +1808,16 @@ paths:
           - the user is not the owner of the network set
           - the network set does not exist.
       parameters:
-      - name: networksetid
-        in: path
-        description: The network set UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networksetid
+          in: path
+          description: The network set UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1840,10 +1840,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
     delete:
       tags:
-      - Network Set
+        - Network Set
       summary: Delete a Network Set
       description: |
         - Deletes the network set specified by the **networksetid** (UUID) path parameter.
@@ -1851,16 +1851,16 @@ paths:
           - the user is not the owner of the nework set
           - the network set does not exist.
       parameters:
-      - name: networksetid
-        in: path
-        description: The network set UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networksetid
+          in: path
+          description: The network set UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "204":
           description: 'OK: Operation successful.  (no payload content)'
@@ -1878,11 +1878,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /networkset/{networksetid}/members:
     post:
       tags:
-      - Network Set
+        - Network Set
       summary: Add Networks to Network Set
       description: |
         - Adds networks to a network set.
@@ -1892,16 +1892,16 @@ paths:
           - the member to add does not exist
           - the user is not the owner of the network set
       parameters:
-      - name: networksetid
-        in: path
-        description: The network set UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networksetid
+          in: path
+          description: The network set UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1924,10 +1924,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
     delete:
       tags:
-      - Network Set
+        - Network Set
       summary: Delete Networks from Network Set
       description: |
         - Deletes one or more networks belonging to a network set.
@@ -1937,16 +1937,16 @@ paths:
           - the network member to delete does not exist
           - the user is not the owner of the network set
       parameters:
-      - name: networksetid
-        in: path
-        description: The network set UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networksetid
+          in: path
+          description: The network set UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -1969,11 +1969,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /networkset/{networksetid}/systemproperty:
     put:
       tags:
-      - Network Set
+        - Network Set
       summary: Update Network Set System Properties
       description: |
         - Sets the system properties for the network set specified by **networksetid** (UUID).
@@ -1982,16 +1982,16 @@ paths:
           - the network set does not exist
           - the user is not the owner of the network set
       parameters:
-      - name: networksetid
-        in: path
-        description: The network set UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networksetid
+          in: path
+          description: The network set UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       requestBody:
         content:
           application/json:
@@ -2012,11 +2012,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /search/group:
     post:
       tags:
-      - Search
+        - Search
       summary: Search Groups
       description: |
         - Returns a SearchResult object containing an array of Group objects that have text matching
@@ -2024,26 +2024,26 @@ paths:
         - The POSTed request payload object must contain a property key named `searchString` whose value is the text to find.
         - Wildcard characters are valid in `searchString`.  All Group objects will be returned when this property's value is an empty string.
       parameters:
-      - name: start
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        description: Number of objects to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 100
+        - name: start
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          description: Number of objects to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 100
       requestBody:
         content:
           application/json:
@@ -2065,11 +2065,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /search/network:
     post:
       tags:
-      - Search
+        - Search
       summary: Search Networks
       description: |
         - Returns an array of NetworkSummary objects, and returns the total number of objects found that meet the search criterion.
@@ -2080,26 +2080,26 @@ paths:
             - `includeGroups` - filter by user's group permission
             - `accountName` - filter by network owner
       parameters:
-      - name: start
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        description: Number of objects to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 100
+        - name: start
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          description: Number of objects to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 100
       requestBody:
         content:
           application/json:
@@ -2121,37 +2121,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
   /search/network/genes:
     post:
       tags:
-      - Search
+        - Search
       summary: Search Networks by Gene/Protein
       description: |
         - Returns an array of Network Summary objects, and returns the total number of objects found that meet the search criterion.
         - The `searchString` property contains the search query text. Wildcard characters permitted.
       parameters:
-      - name: start
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        description: Number of objects to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 100
+        - name: start
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          description: Number of objects to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 100
       requestBody:
         content:
           application/json:
@@ -2173,12 +2173,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
   /search/network/{networkid}/interconnectquery:
     post:
       tags:
-      - Search
+        - Search
       summary: Interconnect Query
       description: |
         - Returns a CX Network that is a neighborhood subnetwork where all the paths must start and end at one of the query nodes in the network specified by **networkid**.
@@ -2188,38 +2188,38 @@ paths:
           - `edgeLimit`
           - `errorWhenLimitIsOver`
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
-      - name: save
-        in: query
-        description: Only an authenticated user can call this function with this parameter
-          set to true. When save=true, the server will save the query result as a
-          network in the caller’s account and return the URL of the network resource
-          to the user. Saving query result as a network is a asynchronous call, which
-          means the server will return the URL of the network resource (with HTTP
-          return code 201) while the server is still running the query. User can use
-          the returned UUID to check the status of the network creation process. The
-          default value is false.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          default: "false"
-          enum:
-          - "false"
-          - "true"
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: save
+          in: query
+          description: Only an authenticated user can call this function with this parameter
+            set to true. When save=true, the server will save the query result as a
+            network in the caller’s account and return the URL of the network resource
+            to the user. Saving query result as a network is a asynchronous call, which
+            means the server will return the URL of the network resource (with HTTP
+            return code 201) while the server is still running the query. User can use
+            the returned UUID to check the status of the network creation process. The
+            default value is false.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            default: "false"
+            enum:
+              - "false"
+              - "true"
       requestBody:
         content:
           application/json:
@@ -2241,11 +2241,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /search/network/{networkid}/query:
     post:
       tags:
-      - Search
+        - Search
       summary: Query Network
       description: |
         - Returns a CX Network that is a neighborhood subnetwork of the network specified by **networkid**.
@@ -2256,38 +2256,38 @@ paths:
           - `errorWhenLimitIsOver`
           - `directOnly`
       parameters:
-      - name: networkid
-        in: path
-        description: A unique identifier (UUID) given to the network acted upon, in
-          the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
-          entered below for demonstration purposes. It can be replaced with another
-          network UUID, as needed.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
-      - name: save
-        in: query
-        description: Only an authenticated user can call this function with this parameter
-          set to true. When save=true, the server will save the query result as a
-          network in the caller’s account and return the URL of the network resource
-          to the user. Saving query result as a network is a asynchronous call, which
-          means the server will return the URL of the network resource (with HTTP
-          return code 201) while the server is still running the query. User can use
-          the returned UUID to check the status of the network creation process. The
-          default value is false.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          default: "false"
-          enum:
-          - "false"
-          - "true"
+        - name: networkid
+          in: path
+          description: A unique identifier (UUID) given to the network acted upon, in
+            the form xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. An example network UUID is
+            entered below for demonstration purposes. It can be replaced with another
+            network UUID, as needed.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
+        - name: save
+          in: query
+          description: Only an authenticated user can call this function with this parameter
+            set to true. When save=true, the server will save the query result as a
+            network in the caller’s account and return the URL of the network resource
+            to the user. Saving query result as a network is a asynchronous call, which
+            means the server will return the URL of the network resource (with HTTP
+            return code 201) while the server is still running the query. User can use
+            the returned UUID to check the status of the network creation process. The
+            default value is false.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            default: "false"
+            enum:
+              - "false"
+              - "true"
       requestBody:
         content:
           application/json:
@@ -2309,11 +2309,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /search/user:
     post:
       tags:
-      - Search
+        - Search
       summary: Search Users
       description: |
         - Returns a SearchResult object containing an array of User objects that have text matching
@@ -2321,26 +2321,26 @@ paths:
         - The POSTed request payload object must contain a property key named `searchString` whose value is the text to find.
         - Wildcard characters are valid in `searchString`.  All User objects will be returned when this property's value is an empty string.
       parameters:
-      - name: start
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        description: Number of objects to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 100
+        - name: start
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          description: Number of objects to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 100
       requestBody:
         content:
           application/json:
@@ -2362,12 +2362,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - {}
-      - BASIC_AUTH: []
+        - {}
+        - BASIC_AUTH: []
   /task:
     get:
       tags:
-      - Task
+        - Task
       summary: Get User's Tasks
       description: |
         - Returns a JSON array of *Task* objects owned by the authenticated user with the specified status.
@@ -2377,40 +2377,40 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       parameters:
-      - name: status
-        in: query
-        description: Current state of the task workflow.
-        required: false
-        allowEmptyValue: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - COMPLETED
-          - PROCESSING
-          - QUEUED
-          - FAILED
-      - name: start
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: size
-        in: query
-        description: Number of objects to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 100
+        - name: status
+          in: query
+          description: Current state of the task workflow.
+          required: false
+          allowEmptyValue: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - COMPLETED
+              - PROCESSING
+              - QUEUED
+              - FAILED
+        - name: start
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: size
+          in: query
+          description: Number of objects to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 100
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -2434,11 +2434,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /task/{taskid}:
     get:
       tags:
-      - Task
+        - Task
       summary: Get a Task by Task UUID
       description: |
         - Returns the *Task* object associated with the **taskid** path parameter.
@@ -2446,16 +2446,16 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       parameters:
-      - name: taskid
-        in: path
-        description: The Task object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: taskid
+          in: path
+          description: The Task object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -2477,10 +2477,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
     delete:
       tags:
-      - Task
+        - Task
       summary: Delete a Task
       description: |
         - Deletes the task associated with the **taskid** path parameter.
@@ -2488,16 +2488,16 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       parameters:
-      - name: taskid
-        in: path
-        description: The Task object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: taskid
+          in: path
+          description: The Task object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
       responses:
         "204":
           description: 'OK: Operation successful.  (no payload content)'
@@ -2515,11 +2515,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /task/{taskid}/file:
     get:
       tags:
-      - Task
+        - Task
       summary: Download Exported File by Task UUID
       description: |
         - Returns the file exported by the task specified in the **taskid** path parameter.
@@ -2527,25 +2527,25 @@ paths:
           - the task does not exist
           - the authenticated user does not own the specified task
       parameters:
-      - name: taskid
-        in: path
-        description: The Task object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: download
-        in: query
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - "true"
+        - name: taskid
+          in: path
+          description: The Task object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: download
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - "true"
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -2575,11 +2575,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /user/{userid}/membership:
     get:
       tags:
-      - User
+        - User
       summary: Get User's Group Memberships
       description: |
         Option 1 - Using the **groupId=** query parameter:
@@ -2590,54 +2590,54 @@ paths:
         - Returns those groups for which the authenticated user has the specified membership type.
         - The **type** query parameter contains the membership types upon which to filter.  If it is omitted, all membership types will be returned.
       parameters:
-      - name: userid
-        in: path
-        description: The User object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: groupid
-        in: query
-        description: (Option 1 only) The Group object UUID
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
-      - name: type
-        in: query
-        description: (Option 2 only) Membership type
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - MEMBER
-          - GROUPADMIN
-      - name: start
-        in: query
-        description: (Option 2 only) Index to first object to return
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          default: 100
-      - name: size
-        in: query
-        description: (Option 2 only) Number of objects to return
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-          default: 100
+        - name: userid
+          in: path
+          description: The User object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: groupid
+          in: query
+          description: (Option 1 only) The Group object UUID
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+        - name: type
+          in: query
+          description: (Option 2 only) Membership type
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - MEMBER
+              - GROUPADMIN
+        - name: start
+          in: query
+          description: (Option 2 only) Index to first object to return
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: number
+            default: 100
+        - name: size
+          in: query
+          description: (Option 2 only) Number of objects to return
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: number
+            default: 100
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -2661,72 +2661,72 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /user/{userid}/networksets:
     get:
       tags:
-      - User
+        - User
       summary: Get All Network Sets Owned by a User
       description: |
         - Returns a list of *Network Set* objects owned by the user identified in the **userid** path parameter.
       parameters:
-      - name: userid
-        in: path
-        description: The User object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: offset
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Number of elements to retrieve in the query.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-      - name: summary
-        in: query
-        description: |
-          When true, the server will not return the list of network IDs in this network set
-        required: false
-        allowEmptyValue: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          default: "false"
-          enum:
-          - "true"
-          - "false"
-      - name: showcase
-        in: query
-        description: |
-          When true, only showcased networksets are returned
-        required: false
-        allowEmptyValue: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          default: "false"
-          enum:
-          - "true"
-          - "false"
+        - name: userid
+          in: path
+          description: The User object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: offset
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: limit
+          in: query
+          description: Number of elements to retrieve in the query.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+        - name: summary
+          in: query
+          description: |
+            When true, the server will not return the list of network IDs in this network set
+          required: false
+          allowEmptyValue: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            default: "false"
+            enum:
+              - "true"
+              - "false"
+        - name: showcase
+          in: query
+          description: |
+            When true, only showcased networksets are returned
+          required: false
+          allowEmptyValue: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            default: "false"
+            enum:
+              - "true"
+              - "false"
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -2749,7 +2749,7 @@ paths:
   /user/{userid}/networksummary:
     get:
       tags:
-      - User
+        - User
       summary: Get User's Account Page Networks
       description: |
         - Returns a list of *NetworkSummary* objects of which:
@@ -2757,35 +2757,35 @@ paths:
           - the networks are shared with the user directly
         - **Userid** path parameter must be an authenticated user's UUID
       parameters:
-      - name: userid
-        in: path
-        description: The User object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: offset
-        in: query
-        description: Index to first object to return.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
-          default: 0
-      - name: limit
-        in: query
-        description: Number of elements to retrieve in the query.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          format: int32
+        - name: userid
+          in: path
+          description: The User object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: offset
+          in: query
+          description: Index to first object to return.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: limit
+          in: query
+          description: Number of elements to retrieve in the query.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -2808,47 +2808,47 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
   /user/{userid}/permission:
     get:
       tags:
-      - User
+        - User
       summary: Get User's Permission for Networks
       description: |
         - Returns the permissions assigned to the authenticated user for the specified **networkId**.
         - Maps the **networkId** UUID to the highest permission assigned to the authenticated user.
         - If the **directonly=** query parameter is set to true, permissions granted through groups are not included in the result. The default value is false.
       parameters:
-      - name: userid
-        in: path
-        description: The User object UUID
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: networkId
-        in: query
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: uuid
-        example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      - name: directonly
-        in: query
-        description: Grant permissions are to be included in the result.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - "false"
-          - "true"
+        - name: userid
+          in: path
+          description: The User object UUID
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: networkId
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            format: uuid
+          example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        - name: directonly
+          in: query
+          description: Grant permissions are to be included in the result.
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            enum:
+              - "false"
+              - "true"
       responses:
         "200":
           description: 'OK: Operation successful.'
@@ -2872,7 +2872,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponseSchema'
       security:
-      - BASIC_AUTH: []
+        - BASIC_AUTH: []
 components:
   schemas:
     AdminStatusStandardSchema:
@@ -2918,8 +2918,8 @@ components:
         visibility:
           type: string
           enum:
-          - PUBLIC
-          - PRIVATE
+            - PUBLIC
+            - PRIVATE
         published:
           type: boolean
         nodeCount:
@@ -2977,9 +2977,9 @@ components:
       description: Nodes Aspect object
     AspectMetadataSchema:
       required:
-      - consistencyGroup
-      - name
-      - properties
+        - consistencyGroup
+        - name
+        - properties
       type: object
       properties:
         consistencyGroup:
@@ -3011,8 +3011,8 @@ components:
       description: Metadata Aspect object
     CX_NetworkObjectSchema:
       required:
-      - numberVerification
-      - status
+        - numberVerification
+        - status
       type: object
       properties:
         numberVerification:
@@ -3156,8 +3156,8 @@ components:
         visibility:
           type: string
           enum:
-          - PUBLIC
-          - PRIVATE
+            - PUBLIC
+            - PRIVATE
         indexed:
           type: boolean
         completed:
@@ -3246,7 +3246,7 @@ components:
         format: uuid
     NetworkSetRequestBodySchema:
       required:
-      - name
+        - name
       type: object
       properties:
         name:
@@ -3323,7 +3323,7 @@ components:
       description: Search result for User objects
     SearchStringRequestPayloadSchema:
       required:
-      - searchString
+        - searchString
       type: object
       properties:
         searchString:
@@ -3423,8 +3423,8 @@ components:
       description: User object
     inline_response_200:
       oneOf:
-      - $ref: '#/components/schemas/AdminStatusStandardSchema'
-      - $ref: '#/components/schemas/AdminStatusFullSchema'
+        - $ref: '#/components/schemas/AdminStatusStandardSchema'
+        - $ref: '#/components/schemas/AdminStatusFullSchema'
     body:
       type: object
       properties:
@@ -3445,7 +3445,7 @@ components:
             example: cac8ec21-2d32-11e8-b939-0ac135e8bacf
     body_1:
       required:
-      - groupName
+        - groupName
       type: object
       properties:
         properties:
@@ -3466,7 +3466,7 @@ components:
       description: Group object
     body_2:
       required:
-      - groupName
+        - groupName
       type: object
       properties:
         properties:
@@ -3604,8 +3604,8 @@ components:
         visibility:
           type: string
           enum:
-          - PUBLIC
-          - PRIVATE
+            - PUBLIC
+            - PRIVATE
         showcase:
           type: boolean
       example:
@@ -3614,7 +3614,7 @@ components:
         showcase: true
     body_7:
       required:
-      - showcase
+        - showcase
       type: object
       properties:
         showcase:
@@ -3625,7 +3625,7 @@ components:
         showcase: true
     body_8:
       required:
-      - searchString
+        - searchString
       type: object
       properties:
         searchString:
@@ -3683,7 +3683,7 @@ components:
       description: SearchResult object
     body_9:
       required:
-      - searchString
+        - searchString
       type: object
       properties:
         searchString:
@@ -3729,7 +3729,7 @@ components:
             $ref: '#/components/schemas/CX_NetworkObjectSchema'
     body_10:
       required:
-      - searchString
+        - searchString
       type: object
       properties:
         searchString:
@@ -3880,8 +3880,8 @@ components:
         type: string
         default: enable
         enum:
-        - enable
-        - disable
+          - enable
+          - disable
     AccessKeyValueParam:
       name: accesskey
       in: query
@@ -3907,8 +3907,8 @@ components:
       schema:
         type: string
         enum:
-        - standard
-        - full
+          - standard
+          - full
     AspectNamePath:
       name: aspectName
       in: path
@@ -3950,8 +3950,8 @@ components:
       schema:
         type: string
         enum:
-        - "false"
-        - "true"
+          - "false"
+          - "true"
     DownloadParam:
       name: download
       in: query
@@ -3961,7 +3961,7 @@ components:
       schema:
         type: string
         enum:
-        - "true"
+          - "true"
     GroupIdPath:
       name: groupid
       in: path
@@ -3982,8 +3982,8 @@ components:
       schema:
         type: string
         enum:
-        - GROUPADMIN
-        - MEMBER
+          - GROUPADMIN
+          - MEMBER
     LimitParam:
       name: limit
       in: query
@@ -4070,8 +4070,8 @@ components:
         type: string
         default: "false"
         enum:
-        - "false"
-        - "true"
+          - "false"
+          - "true"
     SizeParam:
       name: size
       in: query
@@ -4107,8 +4107,8 @@ components:
         type: string
         default: "false"
         enum:
-        - "true"
-        - "false"
+          - "true"
+          - "false"
     SummaryParam:
       name: summary
       in: query
@@ -4122,8 +4122,8 @@ components:
         type: string
         default: "false"
         enum:
-        - "true"
-        - "false"
+          - "true"
+          - "false"
     TaskIdPath:
       name: taskid
       in: path
@@ -4146,10 +4146,10 @@ components:
       schema:
         type: string
         enum:
-        - COMPLETED
-        - PROCESSING
-        - QUEUED
-        - FAILED
+          - COMPLETED
+          - PROCESSING
+          - QUEUED
+          - FAILED
     UserIdParam:
       name: userid
       in: query
@@ -4185,8 +4185,8 @@ components:
         type: string
         default: PRIVATE
         enum:
-        - PRIVATE
-        - PUBLIC
+          - PRIVATE
+          - PUBLIC
   securitySchemes:
     BASIC_AUTH:
       type: http
